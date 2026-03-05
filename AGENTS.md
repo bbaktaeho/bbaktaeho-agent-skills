@@ -4,22 +4,6 @@
 
 ---
 
-# Prerequisites
-
-이 프로젝트는 **mise** 를 사용하여 다음을 관리합니다.
-
-- tool 버전
-- 환경 변수
-- 프로젝트 작업(task)
-
-다음 명령어를 실행하면 `mise.toml`에 정의된 올바른 tool 버전을 설치합니다.
-
-```bash
-mise install
-```
-
----
-
 # Repository 구조
 
 ```
@@ -31,43 +15,6 @@ skills/
     references/
       _sections.md        # 필수: 섹션 정의
       {prefix}-{name}.md  # reference 파일
-
-packages/
-  skills-build/           # 모든 skills를 위한 generic build 시스템
-  evals/                  # skills를 평가하기 위한 LLM evaluation 시스템
-
-```
-
----
-
-# Commands
-
-모든 작업(task)은 `mise.toml`에 정의되어 있으며  
-`mise run` 으로 실행할 수 있습니다.
-
-또는 `npm run` 도 같은 명령을 실행하도록 연결되어 있습니다.
-
-```
-mise install          # tool 버전 설치 (Node.js 등)
-mise run install      # 모든 npm dependency 설치
-mise run build        # 모든 skill build
-mise run validate     # 모든 skill 검증
-mise run check        # format + lint 자동 수정
-mise run test         # 테스트 실행
-mise run eval         # 모든 LLM evaluation 실행
-mise run eval:code-fix   # code-fix eval만 실행
-mise run eval:workflow   # workflow eval만 실행
-
-```
-
-`mise.toml`에 `sources` / `outputs`가 정의된 task는  
-**변경 사항이 없으면 자동으로 skip 됩니다.**
-
-작업을 완료하기 전에 다음 명령을 실행해 CI 통과 여부를 확인하세요.
-
-```
-mise run check
-mise run build
 ```
 
 ---
@@ -77,19 +24,18 @@ mise run build
 Skills는 **Agent Skills Open Standard** 를 따릅니다.
 
 1. 디렉토리 생성
-  ```
-    mkdir -p skills/{skill-name}/references
-  ```
+
+```
+  mkdir -p skills/{skill-name}/references
+```
+
 2. `SKILL.md` 생성 (아래 형식 준수)
 3. `references/_sections.md` 생성 (섹션 정의)
 4. reference 파일 추가
-  ```
-    {prefix}-{reference-name}.md
-  ```
-5. build 실행
-  ```
-    mise run build
-  ```
+
+```
+  {prefix}-{reference-name}.md
+```
 
 ---
 
@@ -115,17 +61,14 @@ Markdown instructions
 name: skill-name
 description: What this skill does and when to use it.
 ---
-
 ```
 
-
-| Field       | Required | 설명                                 |
-| ----------- | -------- | ---------------------------------- |
-| name        | Yes      | 1~64자. 소문자 영숫자 + 하이픈               |
+| Field       | Required | 설명                                              |
+| ----------- | -------- | ------------------------------------------------- |
+| name        | Yes      | 1~64자. 소문자 영숫자 + 하이픈                    |
 | description | Yes      | 1~1024자. 무엇을 하는 skill인지 + 언제 사용하는지 |
-| license     | No       | 라이선스 이름 또는 파일                      |
-| metadata    | No       | 추가 key-value (author, version 등)   |
-
+| license     | No       | 라이선스 이름 또는 파일                           |
+| metadata    | No       | 추가 key-value (author, version 등)               |
 
 ---
 
@@ -248,13 +191,11 @@ Create a table with RLS:
 
 Skill은 **3단계 로딩 구조**를 사용합니다.
 
-
-| 단계         | 설명                               |
-| ---------- | -------------------------------- |
+| 단계       | 설명                                      |
+| ---------- | ----------------------------------------- |
 | Metadata   | 모든 skill에 대해 항상 로드 (~100 tokens) |
-| Body       | skill이 트리거될 때 로드                 |
-| References | 필요할 때만 로드                        |
-
+| Body       | skill이 트리거될 때 로드                  |
+| References | 필요할 때만 로드                          |
 
 따라서
 
@@ -286,11 +227,10 @@ Skill에는 **AI가 작업하는 데 필요한 최소 파일만 포함**해야 �
 
 다음 파일은 만들지 마세요.
 
-
 ```
-README.md  
-INSTALLATION_GUIDE.md  
-QUICK_REFERENCE.md  
+README.md
+INSTALLATION_GUIDE.md
+QUICK_REFERENCE.md
 CHANGELOG.md
 ```
 
