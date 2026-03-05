@@ -1,8 +1,0 @@
-{
-	"name": "bbaktaeho-agent-skills",
-	"description": "Agent skills for Go development, Elasticsearch, and Postgres best practices",
-	"version": "1.0.0",
-	"author": {
-		"name": "bbaktaeho"
-	}
-}
