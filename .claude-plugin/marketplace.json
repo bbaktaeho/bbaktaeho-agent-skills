@@ -1,0 +1,39 @@
+{
+	"name": "bbaktaeho-agent-skills",
+	"owner": {
+		"name": "bbaktaeho"
+	},
+	"metadata": {
+		"description": "Agent skills for Go development, Elasticsearch, and Postgres best practices",
+		"version": "1.0.0"
+	},
+	"plugins": [
+		{
+			"name": "golang-best-practices",
+			"description": "Idiomatic Go patterns, best practices, and conventions for building robust, efficient, and maintainable Go applications. Use when writing, reviewing, or optimizing Go code, designing packages, writing tests, or benchmarking performance.",
+			"source": "./",
+			"strict": false,
+			"skills": [
+				"./skills/golang-best-practices"
+			]
+		},
+		{
+			"name": "elasticsearch-best-practices",
+			"description": "Elasticsearch development best practices for indexing, querying, mapping, and search optimization. Use when designing indices, writing queries, configuring analyzers, or optimizing Elasticsearch cluster performance.",
+			"source": "./",
+			"strict": false,
+			"skills": [
+				"./skills/elasticsearch-best-practices"
+			]
+		},
+		{
+			"name": "postgres-best-practices",
+			"description": "Postgres performance optimization and best practices from Supabase. Use when writing, reviewing, or optimizing Postgres queries, schema designs, or database configurations.",
+			"source": "./",
+			"strict": false,
+			"skills": [
+				"./skills/postgres-best-practices"
+			]
+		}
+	]
+}
