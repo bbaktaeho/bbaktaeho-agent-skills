@@ -1,81 +1,65 @@
 ---
 name: golang-patterns
-description: >
-  Idiomatic Go patterns, best practices, and conventions for building robust,
-  efficient, and maintainable Go applications. Use when writing new Go code,
-  reviewing Go code, refactoring existing Go code, designing Go packages
-  and modules, writing tests, creating benchmarks, or implementing fuzz tests.
+description: Idiomatic Go patterns, best practices, and conventions for building robust, efficient, and maintainable Go applications. Use this skill when writing, reviewing, or optimizing Go code, designing packages, writing tests, or benchmarking performance.
+license: MIT
+metadata:
+  author: bbaktaeho
+  version: "1.0.0"
+  date: March 2026
+  abstract: Comprehensive Go development guide covering idiomatic patterns across 13 categories, prioritized by impact from critical (error handling, concurrency) to medium (tooling, anti-patterns). Each reference includes detailed explanations, incorrect vs. correct Go examples, and specific guidance to enable automated code generation and review.
 ---
 
 # Go Development Patterns
 
-Idiomatic Go patterns and best practices for building robust, efficient, and maintainable applications.
+Comprehensive idiomatic Go patterns and best practices guide. Contains rules across 13 categories, prioritized by impact to guide automated code generation, review, and optimization.
 
-## Core Principles
+## When to Apply
 
-### Simplicity and Clarity
+Reference these guidelines when:
+- Writing new Go functions, methods, or packages
+- Reviewing or refactoring existing Go code
+- Designing interfaces and package boundaries
+- Implementing error handling or concurrency
+- Writing tests, benchmarks, or fuzz tests
+- Optimizing memory usage or performance
+- Setting up linters and CI pipelines
 
-Go favors simplicity over cleverness. Code should be obvious and easy to read.
+## Rule Categories by Priority
 
-```go
-// Good: Clear and direct
-func GetUser(id string) (*User, error) {
-    user, err := db.FindUser(id)
-    if err != nil {
-        return nil, fmt.Errorf("get user %s: %w", id, err)
-    }
-    return user, nil
-}
+| Priority | Category | Impact | Prefix |
+|----------|----------|--------|--------|
+| 1 | Error Handling | CRITICAL | `err-` |
+| 2 | Concurrency | CRITICAL | `conc-` |
+| 3 | Table-Driven Tests | CRITICAL | `tpat-` |
+| 4 | Interface Design | HIGH | `iface-` |
+| 5 | Package Organization | HIGH | `pkg-` |
+| 6 | Struct Design | HIGH | `struct-` |
+| 7 | TDD Workflow | HIGH | `tdd-` |
+| 8 | Mocking & Test Helpers | HIGH | `tmock-` |
+| 9 | Benchmarks & Fuzzing | HIGH | `tbench-` |
+| 10 | HTTP Handler Testing | HIGH | `thttp-` |
+| 11 | Memory & Performance | MEDIUM-HIGH | `perf-` |
+| 12 | Tooling Integration | MEDIUM | `tool-` |
+| 13 | Anti-Patterns | MEDIUM | `anti-` |
 
-// Bad: Overly clever
-func GetUser(id string) (*User, error) {
-    return func() (*User, error) {
-        if u, e := db.FindUser(id); e == nil {
-            return u, nil
-        } else {
-            return nil, e
-        }
-    }()
-}
+## How to Use
+
+Read individual rule files for detailed explanations and Go examples:
+
+```
+references/error-handling.md
+references/concurrency.md
+references/testing-patterns.md
+references/_sections.md
 ```
 
-### Make the Zero Value Useful
+Each rule file contains:
+- Brief explanation of why it matters
+- Incorrect Go example with explanation
+- Correct Go example with explanation
+- Additional context and best practices
 
-Design types so their zero value is immediately usable without initialization.
-
-```go
-// Good: Zero value is useful
-type Counter struct {
-    mu    sync.Mutex
-    count int
-}
-
-func (c *Counter) Inc() {
-    c.mu.Lock()
-    c.count++
-    c.mu.Unlock()
-}
-
-// Bad: Requires initialization
-type BadCounter struct {
-    counts map[string]int // nil map will panic
-}
-```
-
-### Accept Interfaces, Return Structs
-
-```go
-// Good: Accepts interface, returns concrete type
-func ProcessData(r io.Reader) (*Result, error) {
-    data, err := io.ReadAll(r)
-    if err != nil {
-        return nil, err
-    }
-    return &Result{Data: data}, nil
-}
-```
-
-## Quick Reference: Go Idioms
+## Core Idioms
 
 | Idiom | Description |
 |-------|-------------|
@@ -87,18 +71,10 @@ func ProcessData(r io.Reader) (*Result, error) {
 | Clear is better than clever | Prioritize readability over cleverness |
 | Return early | Handle errors first, keep happy path unindented |
 
-## Detailed References
+## References
 
-- **Error handling patterns**: See [references/error-handling.md](references/error-handling.md)
-- **Concurrency patterns**: See [references/concurrency.md](references/concurrency.md)
-- **Interface design**: See [references/interface-design.md](references/interface-design.md)
-- **Package organization**: See [references/package-organization.md](references/package-organization.md)
-- **Struct design**: See [references/struct-design.md](references/struct-design.md)
-- **Memory and performance**: See [references/memory-performance.md](references/memory-performance.md)
-- **Tooling integration**: See [references/tooling.md](references/tooling.md)
-- **Anti-patterns**: See [references/anti-patterns.md](references/anti-patterns.md)
-- **TDD workflow**: See [references/testing-tdd.md](references/testing-tdd.md)
-- **Table-driven tests & subtests**: See [references/testing-patterns.md](references/testing-patterns.md)
-- **Mocking & test helpers**: See [references/testing-mocking.md](references/testing-mocking.md)
-- **Benchmarks & fuzzing**: See [references/testing-benchmarks.md](references/testing-benchmarks.md)
-- **HTTP handler testing**: See [references/testing-http.md](references/testing-http.md)
+- https://go.dev/doc/effective_go
+- https://go.dev/blog/error-handling-and-go
+- https://go.dev/doc/modules/developing
+- https://github.com/golang/go/wiki/CodeReviewComments
+- https://google.github.io/styleguide/go/

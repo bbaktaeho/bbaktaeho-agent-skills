@@ -10,8 +10,6 @@
 skills/
   {skill-name}/
     SKILL.md              # 필수: skill manifest (Agent Skills spec)
-    AGENTS.md             # 생성됨: SKILL.md 본문 (frontmatter 제거됨)
-    CLAUDE.md             # 생성됨: AGENTS.md 를 가리키는 symlink
     references/
       _sections.md        # 필수: 섹션 정의
       {prefix}-{name}.md  # reference 파일
@@ -59,7 +57,16 @@ Markdown instructions
 ```yaml
 ---
 name: skill-name
-description: What this skill does and when to use it.
+description: What this skill does. Use this skill when [trigger contexts].
+license: MIT
+metadata:
+  author: author-name
+  version: "1.0.0"
+  date: Month Year
+  abstract: >
+    Comprehensive description for indexing. Contains rules across N categories,
+    prioritized by impact. Each rule includes explanations, incorrect vs. correct
+    examples, and specific guidance.
 ---
 ```
 
@@ -68,7 +75,7 @@ description: What this skill does and when to use it.
 | name        | Yes      | 1~64자. 소문자 영숫자 + 하이픈                    |
 | description | Yes      | 1~1024자. 무엇을 하는 skill인지 + 언제 사용하는지 |
 | license     | No       | 라이선스 이름 또는 파일                           |
-| metadata    | No       | 추가 key-value (author, version 등)               |
+| metadata    | No       | author, version, date, abstract 등                |
 
 ---
 
@@ -142,47 +149,57 @@ Helps with databases.
 
 # Body Content
 
-Markdown body에는 **skill 사용 방법**을 작성합니다.
+Markdown body에는 **skill 메타 정보와 reference 탐색 가이드**를 작성합니다.
 
 원칙
 
-- 명령형 사용
-- 500줄 이하 유지
-- 상세 내용은 `references/`로 이동
-- 긴 설명보다 **짧은 예제** 선호
+- **코드 예제를 SKILL.md에 넣지 마세요** — 모든 코드는 `references/`로 이동
+- 100줄 이하 유지 (토큰 절약)
+- 카테고리별 우선순위 테이블 제공
+- reference 파일 구조 설명
+- 외부 공식 문서 링크 포함
 
 권장 구조
 
 ```
-Quick start
+# Skill Title
 
-Core workflow
+1줄 요약.
 
-Key patterns
+## When to Apply
 
-Advanced reference links
-```
+Reference these guidelines when:
+- trigger context 1
+- trigger context 2
 
-예시
+## Rule Categories by Priority
 
-```
-## Quick Start
+| Priority | Category | Impact | Prefix |
+|----------|----------|--------|--------|
+| 1 | Category Name | CRITICAL | `prefix-` |
+| 2 | Category Name | HIGH | `prefix-` |
 
-Create a table with RLS:
+## How to Use
 
-[간단한 코드 예제]
+Read individual rule files for detailed explanations and examples:
 
-## Common Patterns
+references/prefix-example.md
+references/_sections.md
 
-### Authentication
+Each rule file contains:
+- Brief explanation of why it matters
+- Incorrect example with explanation
+- Correct example with explanation
 
-[패턴 + 예제]
+## Quick Reference (optional)
 
-## Advanced Topics
+| Key Concept | Description |
+|-------------|-------------|
+| Concept 1 | Short description |
 
-- Complex policies → references/rls-patterns.md
-- Performance tuning → references/optimization.md
+## References
 
+- https://official-docs.example.com
 ```
 
 ---
