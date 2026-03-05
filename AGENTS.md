@@ -1,0 +1,297 @@
+# [AGENTS.md](http://AGENTS.md)
+
+이 문서는 이 저장소에서 작업하는 **AI 코딩 에이전트를 위한 가이드**입니다.
+
+---
+
+# Prerequisites
+
+이 프로젝트는 **mise** 를 사용하여 다음을 관리합니다.
+
+- tool 버전
+- 환경 변수
+- 프로젝트 작업(task)
+
+다음 명령어를 실행하면 `mise.toml`에 정의된 올바른 tool 버전을 설치합니다.
+
+```bash
+mise install
+```
+
+---
+
+# Repository 구조
+
+```
+skills/
+  {skill-name}/
+    SKILL.md              # 필수: skill manifest (Agent Skills spec)
+    AGENTS.md             # 생성됨: SKILL.md 본문 (frontmatter 제거됨)
+    CLAUDE.md             # 생성됨: AGENTS.md 를 가리키는 symlink
+    references/
+      _sections.md        # 필수: 섹션 정의
+      {prefix}-{name}.md  # reference 파일
+
+packages/
+  skills-build/           # 모든 skills를 위한 generic build 시스템
+  evals/                  # skills를 평가하기 위한 LLM evaluation 시스템
+
+```
+
+---
+
+# Commands
+
+모든 작업(task)은 `mise.toml`에 정의되어 있으며  
+`mise run` 으로 실행할 수 있습니다.
+
+또는 `npm run` 도 같은 명령을 실행하도록 연결되어 있습니다.
+
+```
+mise install          # tool 버전 설치 (Node.js 등)
+mise run install      # 모든 npm dependency 설치
+mise run build        # 모든 skill build
+mise run validate     # 모든 skill 검증
+mise run check        # format + lint 자동 수정
+mise run test         # 테스트 실행
+mise run eval         # 모든 LLM evaluation 실행
+mise run eval:code-fix   # code-fix eval만 실행
+mise run eval:workflow   # workflow eval만 실행
+
+```
+
+`mise.toml`에 `sources` / `outputs`가 정의된 task는  
+**변경 사항이 없으면 자동으로 skip 됩니다.**
+
+작업을 완료하기 전에 다음 명령을 실행해 CI 통과 여부를 확인하세요.
+
+```
+mise run check
+mise run build
+```
+
+---
+
+# 새로운 Skill 만들기
+
+Skills는 **Agent Skills Open Standard** 를 따릅니다.
+
+1. 디렉토리 생성
+  ```
+    mkdir -p skills/{skill-name}/references
+  ```
+2. `SKILL.md` 생성 (아래 형식 준수)
+3. `references/_sections.md` 생성 (섹션 정의)
+4. reference 파일 추가
+  ```
+    {prefix}-{reference-name}.md
+  ```
+5. build 실행
+  ```
+    mise run build
+  ```
+
+---
+
+# SKILL.md 작성 방법
+
+`SKILL.md`는 **모든 skill의 핵심 파일**입니다.
+
+구성:
+
+```
+YAML frontmatter
++
+Markdown instructions
+
+```
+
+---
+
+# Frontmatter
+
+```yaml
+---
+name: skill-name
+description: What this skill does and when to use it.
+---
+
+```
+
+
+| Field       | Required | 설명                                 |
+| ----------- | -------- | ---------------------------------- |
+| name        | Yes      | 1~64자. 소문자 영숫자 + 하이픈               |
+| description | Yes      | 1~1024자. 무엇을 하는 skill인지 + 언제 사용하는지 |
+| license     | No       | 라이선스 이름 또는 파일                      |
+| metadata    | No       | 추가 key-value (author, version 등)   |
+
+
+---
+
+# name 규칙
+
+허용 문자
+
+```
+a-z
+0-9
+-
+```
+
+제약 조건
+
+- `-` 로 시작 또는 끝나면 안됨
+- `--` 연속 사용 금지
+- 디렉토리 이름과 반드시 동일해야 함
+
+예시
+
+```
+# 올바른 예
+name: pdf-processing
+name: data-analysis
+
+# 잘못된 예
+name: PDF-Processing
+name: -pdf
+name: pdf--processing
+```
+
+---
+
+# description 필드 (매우 중요)
+
+`description` 은 **skill 트리거 메커니즘의 핵심**입니다.
+
+Claude는 이 설명을 보고  
+**언제 이 skill을 사용할지 판단합니다.**
+
+반드시 포함해야 하는 내용
+
+- skill이 무엇을 하는지
+- 언제 사용하는지 (trigger context)
+
+좋은 예
+
+```
+Supabase database best practices for schema design, RLS policies,
+indexing, and query optimization.
+
+Use when working with Supabase projects,
+writing PostgreSQL migrations,
+configuring Row Level Security,
+or optimizing database performance.
+```
+
+나쁜 예
+
+```
+Helps with databases.
+```
+
+주의:
+
+> "when to use" 를 body에 넣지 마세요.  
+> body는 skill이 트리거된 후에만 로드됩니다.
+
+---
+
+# Body Content
+
+Markdown body에는 **skill 사용 방법**을 작성합니다.
+
+원칙
+
+- 명령형 사용
+- 500줄 이하 유지
+- 상세 내용은 `references/`로 이동
+- 긴 설명보다 **짧은 예제** 선호
+
+권장 구조
+
+```
+Quick start
+
+Core workflow
+
+Key patterns
+
+Advanced reference links
+```
+
+예시
+
+```
+## Quick Start
+
+Create a table with RLS:
+
+[간단한 코드 예제]
+
+## Common Patterns
+
+### Authentication
+
+[패턴 + 예제]
+
+## Advanced Topics
+
+- Complex policies → references/rls-patterns.md
+- Performance tuning → references/optimization.md
+
+```
+
+---
+
+# Progressive Disclosure
+
+Skill은 **3단계 로딩 구조**를 사용합니다.
+
+
+| 단계         | 설명                               |
+| ---------- | -------------------------------- |
+| Metadata   | 모든 skill에 대해 항상 로드 (~100 tokens) |
+| Body       | skill이 트리거될 때 로드                 |
+| References | 필요할 때만 로드                        |
+
+
+따라서
+
+> **SKILL.md 는 최대한 가볍게 유지해야 합니다.**
+
+---
+
+# Reference File Format
+
+`references/` 파일은 skill의 상세 문서를 제공합니다.
+
+```
+---
+title: Action-Oriented Title
+impact: CRITICAL|HIGH|MEDIUM-HIGH|MEDIUM|LOW-MEDIUM|LOW
+impactDescription: Quantified benefit
+tags: keywords
+---
+
+[내용]
+
+```
+
+---
+
+# 포함하면 안되는 파일
+
+Skill에는 **AI가 작업하는 데 필요한 최소 파일만 포함**해야 합니다.
+
+다음 파일은 만들지 마세요.
+
+
+```
+README.md  
+INSTALLATION_GUIDE.md  
+QUICK_REFERENCE.md  
+CHANGELOG.md
+```
+
+Skill은 **AI agent가 작업을 수행하는 데 필요한 정보만 포함**해야 합니다.
