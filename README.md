@@ -1,6 +1,6 @@
 # bbaktaeho-agent-skills
 
-Go 언어 백엔드 개발을 위한 Claude Code Agent Skills 모음.
+Go 언어 백엔드 개발을 위한 Agent Skills 모음.
 
 ## Installation
 
@@ -16,6 +16,7 @@ claude plugin marketplace add bbaktaeho/bbaktaeho-agent-skills
 claude plugin install golang-best-practices@bbaktaeho-agent-skills
 claude plugin install postgres-best-practices@bbaktaeho-agent-skills
 claude plugin install elasticsearch-best-practices@bbaktaeho-agent-skills
+...
 ```
 
 ### 3. 확인
