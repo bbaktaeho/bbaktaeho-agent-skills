@@ -39,6 +39,20 @@ Skills는 **Agent Skills Open Standard** 를 따릅니다.
   {prefix}-{reference-name}.md
 ```
 
+5. `.claude-plugin/marketplace.json`의 `plugins` 배열에 새 skill 항목 추가
+
+```json
+{
+  "name": "skill-name",
+  "description": "skill description. Use when [trigger contexts].",
+  "source": "./",
+  "strict": false,
+  "skills": [
+    "./skills/skill-name"
+  ]
+}
+```
+
 ---
 
 # SKILL.md 작성 방법
