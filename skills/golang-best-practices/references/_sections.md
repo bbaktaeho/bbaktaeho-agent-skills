@@ -21,6 +21,9 @@ sections:
   - id: tooling
     title: Go Tooling Integration
     prefix: tool
+  - id: doc-comments
+    title: Doc Comments
+    prefix: doc
   - id: anti-patterns
     title: Anti-Patterns to Avoid
     prefix: anti

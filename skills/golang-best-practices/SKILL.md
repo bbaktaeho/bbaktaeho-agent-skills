@@ -6,12 +6,12 @@ metadata:
   author: bbaktaeho
   version: "1.0.0"
   date: March 2026
-  abstract: Comprehensive Go development guide covering idiomatic patterns across 13 categories, prioritized by impact from critical (error handling, concurrency) to medium (tooling, anti-patterns). Each reference includes detailed explanations, incorrect vs. correct Go examples, and specific guidance to enable automated code generation and review.
+  abstract: Comprehensive Go development guide covering idiomatic patterns across 14 categories, prioritized by impact from critical (error handling, concurrency) to medium (tooling, anti-patterns). Each reference includes detailed explanations, incorrect vs. correct Go examples, and specific guidance to enable automated code generation and review.
 ---
 
 # Go Development Patterns
 
-Comprehensive idiomatic Go patterns and best practices guide. Contains rules across 13 categories, prioritized by impact to guide automated code generation, review, and optimization.
+Comprehensive idiomatic Go patterns and best practices guide. Contains rules across 14 categories, prioritized by impact to guide automated code generation, review, and optimization.
 
 ## When to Apply
 
@@ -39,9 +39,10 @@ Reference these guidelines when:
 | 8        | Mocking & Test Helpers | HIGH        | `tmock-`  |
 | 9        | Benchmarks & Fuzzing   | HIGH        | `tbench-` |
 | 10       | HTTP Handler Testing   | HIGH        | `thttp-`  |
-| 11       | Memory & Performance   | MEDIUM-HIGH | `perf-`   |
-| 12       | Tooling Integration    | MEDIUM      | `tool-`   |
-| 13       | Anti-Patterns          | MEDIUM      | `anti-`   |
+| 11       | Doc Comments           | HIGH        | `doc-`    |
+| 12       | Memory & Performance   | MEDIUM-HIGH | `perf-`   |
+| 13       | Tooling Integration    | MEDIUM      | `tool-`   |
+| 14       | Anti-Patterns          | MEDIUM      | `anti-`   |
 
 ## How to Use
 
