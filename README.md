@@ -25,6 +25,29 @@ claude plugin install elasticsearch-best-practices@bbaktaeho-agent-skills
 claude plugin list
 ```
 
+## Update
+
+### Marketplace 갱신
+
+```shell
+claude plugin marketplace update bbaktaeho-agent-skills
+```
+
+### Plugin 업데이트
+
+```shell
+claude plugin update golang-best-practices@bbaktaeho-agent-skills
+claude plugin update postgres-best-practices@bbaktaeho-agent-skills
+claude plugin update elasticsearch-best-practices@bbaktaeho-agent-skills
+```
+
+업데이트가 반영되지 않는 경우 marketplace를 제거 후 재등록한다.
+
+```shell
+claude plugin marketplace remove bbaktaeho-agent-skills
+claude plugin marketplace add bbaktaeho/bbaktaeho-agent-skills
+```
+
 ## Usage
 
 설치 후 별도 명령 없이 자동으로 동작한다. Claude Code가 대화 컨텍스트를 분석하여 관련 skill을 자동 트리거한다.
