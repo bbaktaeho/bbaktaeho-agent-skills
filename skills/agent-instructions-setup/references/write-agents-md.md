@@ -9,6 +9,8 @@ tags: agents-md, writing, best-practices, instructions
 
 AGENTS.md는 AI coding agent에게 프로젝트 컨텍스트를 전달하는 파일이다. 필수 필드는 없으며 표준 Markdown을 사용한다.
 
+**핵심 원칙: AGENTS.md는 간결하게 유지한다.** 상세 내용은 `docs/guide.md`와 `docs/workflow.md`로 분리한다. `docs-structure.md` 참조.
+
 ## 권장 섹션 구조
 
 ```markdown
@@ -24,21 +26,16 @@ AGENTS.md는 AI coding agent에게 프로젝트 컨텍스트를 전달하는 파
 
 코딩 컨벤션, 네이밍 규칙, 포매터 설정.
 
-## Architecture
-
-디렉토리 구조, 주요 모듈, 의존성 관계.
-
-## Testing
-
-테스트 전략, 커버리지 기준, 테스트 실행 방법.
-
-## Security
-
-민감 정보 처리 규칙, 환경변수 관리.
-
 ## Rules
 
 agent가 반드시 따라야 할 규칙.
+
+## Documentation
+
+상세 가이드는 아래 문서를 참고한다.
+
+- [docs/guide.md](docs/guide.md) - 프로젝트 가이드
+- [docs/workflow.md](docs/workflow.md) - 개발 워크플로우
 ```
 
 ## 작성 원칙
@@ -84,6 +81,6 @@ go test -race ./...
 ## 피해야 할 것
 
 - 일반적인 프로그래밍 조언 (agent가 이미 알고 있음)
-- 너무 긴 문서 (토큰 낭비)
+- 너무 긴 문서 (토큰 낭비). Architecture, Testing, Security 등 상세 내용은 docs/로 분리한다
 - 모호한 지시 ("적절하게 처리하세요")
 - 도구별 특화 문법 (symlink로 공유하므로 범용적으로 작성)
