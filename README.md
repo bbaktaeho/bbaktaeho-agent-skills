@@ -50,6 +50,10 @@ claude plugin marketplace remove bbaktaeho-agent-skills
 claude plugin marketplace add bbaktaeho/bbaktaeho-agent-skills
 ```
 
+## Skills
+
+각 skill의 상세 내용은 [skills/](./skills) 디렉토리에서 확인할 수 있다.
+
 ## Usage
 
 설치 후 별도 명령 없이 자동으로 동작한다. Claude Code가 대화 컨텍스트를 분석하여 관련 skill을 자동 트리거한다.
