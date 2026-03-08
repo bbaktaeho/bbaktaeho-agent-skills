@@ -1,4 +1,4 @@
-# [AGENTS.md](http://AGENTS.md)
+# AGENTS.md
 
 이 문서는 이 저장소에서 작업하는 **AI 코딩 에이전트를 위한 가이드**입니다.
 
@@ -11,47 +11,69 @@
 # Repository 구조
 
 ```
-skills/
-  {skill-name}/
-    SKILL.md              # 필수: skill manifest (Agent Skills spec)
-    references/
-      _sections.md        # 필수: 섹션 정의
-      {prefix}-{name}.md  # reference 파일
+.claude-plugin/
+  marketplace.json                # 마켓플레이스 정의 (전체 플러그인 목록)
+
+plugins/
+  {plugin-name}/
+    .claude-plugin/
+      plugin.json                 # 필수: 플러그인 매니페스트
+    skills/
+      {skill-name}/
+        SKILL.md                  # 필수: skill manifest (Agent Skills spec)
+        references/
+          _sections.md            # 필수: 섹션 정의
+          {prefix}-{name}.md      # reference 파일
 ```
 
 ---
 
-# 새로운 Skill 만들기
+# 새로운 Plugin/Skill 만들기
 
-Skills는 **Agent Skills Open Standard** 를 따릅니다.
-
-1. 디렉토리 생성
+## 1. 디렉토리 생성
 
 ```
-  mkdir -p skills/{skill-name}/references
+mkdir -p plugins/{plugin-name}/.claude-plugin
+mkdir -p plugins/{plugin-name}/skills/{skill-name}/references
 ```
 
-2. `SKILL.md` 생성 (아래 형식 준수)
-3. `references/_sections.md` 생성 (섹션 정의)
-4. reference 파일 추가
+## 2. `plugin.json` 생성
 
-```
-  {prefix}-{reference-name}.md
-```
-
-5. `.claude-plugin/marketplace.json`의 `plugins` 배열에 새 skill 항목 추가
+`plugins/{plugin-name}/.claude-plugin/plugin.json`:
 
 ```json
 {
-  "name": "skill-name",
-  "description": "skill description. Use when [trigger contexts].",
-  "source": "./",
-  "strict": false,
-  "skills": [
-    "./skills/skill-name"
-  ]
+  "name": "plugin-name",
+  "description": "plugin description. Use when [trigger contexts].",
+  "author": {
+    "name": "bbaktaeho"
+  },
+  "version": "1.0.0"
 }
 ```
+
+## 3. `SKILL.md` 생성 (아래 형식 준수)
+
+## 4. `references/_sections.md` 생성 (섹션 정의)
+
+## 5. reference 파일 추가
+
+```
+{prefix}-{reference-name}.md
+```
+
+## 6. `.claude-plugin/marketplace.json`의 `plugins` 배열에 새 항목 추가
+
+```json
+{
+  "name": "plugin-name",
+  "description": "plugin description. Use when [trigger contexts].",
+  "source": "./plugins/plugin-name",
+  "category": "development"
+}
+```
+
+`category` 값: `development`, `database`, `productivity` 등
 
 ---
 
@@ -65,7 +87,6 @@ Skills는 **Agent Skills Open Standard** 를 따릅니다.
 YAML frontmatter
 +
 Markdown instructions
-
 ```
 
 ---
@@ -132,7 +153,7 @@ name: pdf--processing
 
 `description` 은 **skill 트리거 메커니즘의 핵심**입니다.
 
-Claude는 이 설명을 보고  
+Claude는 이 설명을 보고
 **언제 이 skill을 사용할지 판단합니다.**
 
 반드시 포함해야 하는 내용
@@ -160,7 +181,7 @@ Helps with databases.
 
 주의:
 
-> "when to use" 를 body에 넣지 마세요.  
+> "when to use" 를 body에 넣지 마세요.
 > body는 skill이 트리거된 후에만 로드됩니다.
 
 ---
@@ -171,7 +192,7 @@ Markdown body에는 **skill 메타 정보와 reference 탐색 가이드**를 작
 
 원칙
 
-- **코드 예제를 SKILL.md에 넣지 마세요** — 모든 코드는 `references/`로 이동
+- **코드 예제를 SKILL.md에 넣지 마세요** -- 모든 코드는 `references/`로 이동
 - 100줄 이하 유지 (토큰 절약)
 - 카테고리별 우선순위 테이블 제공
 - reference 파일 구조 설명
@@ -251,7 +272,6 @@ tags: keywords
 ---
 
 [내용]
-
 ```
 
 ---
