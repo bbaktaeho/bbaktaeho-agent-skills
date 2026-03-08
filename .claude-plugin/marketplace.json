@@ -43,6 +43,15 @@
 			"skills": [
 				"./skills/agent-instructions-setup"
 			]
+		},
+		{
+			"name": "programming-principles",
+			"description": "Programming principles and philosophy based on Rob Pike's 5 Rules of Programming. Use when making optimization decisions, choosing between simple and complex algorithms, designing data structures, or evaluating performance tuning approaches.",
+			"source": "./",
+			"strict": false,
+			"skills": [
+				"./skills/programming-principles"
+			]
 		}
 	]
 }
