@@ -12,7 +12,7 @@ claude plugin marketplace add bbaktaeho/bbaktaeho-agent-skills
 
 ### 2. Skill 설치
 
-각 skill의 상세 내용은 [skills/](./skills) 디렉토리에서 확인할 수 있다.
+각 skill의 상세 내용은 [plugins/](./plugins) 디렉토리에서 확인할 수 있다.
 
 ```shell
 claude plugin install golang-best-practices@bbaktaeho-agent-skills

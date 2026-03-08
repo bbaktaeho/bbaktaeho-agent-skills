@@ -1,0 +1,8 @@
+{
+  "name": "postgres-best-practices",
+  "description": "Postgres performance optimization and best practices. Use when writing, reviewing, or optimizing Postgres queries, schema designs, or database configurations.",
+  "author": {
+    "name": "bbaktaeho"
+  },
+  "version": "1.0.0"
+}

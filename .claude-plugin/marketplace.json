@@ -1,42 +1,40 @@
 {
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "bbaktaeho-agent-skills",
+  "description": "Agent skills for Go development, Elasticsearch, Postgres best practices, programming principles, and AI agent instruction setup",
   "owner": {
     "name": "bbaktaeho"
-  },
-  "metadata": {
-    "description": "Agent skills for Go development, Elasticsearch, and Postgres best practices",
-    "version": "1.0.0"
   },
   "plugins": [
     {
       "name": "golang-best-practices",
       "description": "Idiomatic Go patterns, best practices, and conventions for building robust, efficient, and maintainable Go applications. Use when writing, reviewing, or optimizing Go code, designing packages, writing tests, or benchmarking performance.",
-      "source": "./skills/golang-best-practices",
-      "strict": false
+      "source": "./plugins/golang-best-practices",
+      "category": "development"
     },
     {
       "name": "elasticsearch-best-practices",
       "description": "Elasticsearch development best practices for indexing, querying, mapping, and search optimization. Use when designing indices, writing queries, configuring analyzers, or optimizing Elasticsearch cluster performance.",
-      "source": "./skills/elasticsearch-best-practices",
-      "strict": false
+      "source": "./plugins/elasticsearch-best-practices",
+      "category": "development"
     },
     {
       "name": "postgres-best-practices",
-      "description": "Postgres performance optimization and best practices from Supabase. Use when writing, reviewing, or optimizing Postgres queries, schema designs, or database configurations.",
-      "source": "./skills/postgres-best-practices",
-      "strict": false
+      "description": "Postgres performance optimization and best practices. Use when writing, reviewing, or optimizing Postgres queries, schema designs, or database configurations.",
+      "source": "./plugins/postgres-best-practices",
+      "category": "database"
     },
     {
       "name": "agent-instructions-setup",
-      "description": "AI coding agent instruction file setup and management. Configures AGENTS.md as single source of truth and creates symlinks for tool-specific files. Use when initializing a new project for AI-assisted development or unifying configuration across multiple AI coding tools.",
-      "source": "./skills/agent-instructions-setup",
-      "strict": false
+      "description": "AI coding agent instruction file setup and management. Configures AGENTS.md as single source of truth and creates symlinks for tool-specific files. Use when initializing a new project for AI-assisted development.",
+      "source": "./plugins/agent-instructions-setup",
+      "category": "productivity"
     },
     {
       "name": "programming-principles",
       "description": "Programming principles and philosophy based on Rob Pike's 5 Rules of Programming. Use when making optimization decisions, choosing between simple and complex algorithms, designing data structures, or evaluating performance tuning approaches.",
-      "source": "./skills/programming-principles",
-      "strict": false
+      "source": "./plugins/programming-principles",
+      "category": "development"
     }
   ]
 }

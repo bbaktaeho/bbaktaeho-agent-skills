@@ -1,0 +1,8 @@
+{
+  "name": "golang-best-practices",
+  "description": "Idiomatic Go patterns, best practices, and conventions for building robust, efficient, and maintainable Go applications. Use when writing, reviewing, or optimizing Go code, designing packages, writing tests, or benchmarking performance.",
+  "author": {
+    "name": "bbaktaeho"
+  },
+  "version": "1.0.0"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "elasticsearch-best-practices",
+  "description": "Elasticsearch development best practices for indexing, querying, mapping, and search optimization. Use when designing indices, writing queries, configuring analyzers, or optimizing Elasticsearch cluster performance.",
+  "author": {
+    "name": "bbaktaeho"
+  },
+  "version": "1.0.0"
+}
