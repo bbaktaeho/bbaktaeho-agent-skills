@@ -78,6 +78,16 @@ go test -race ./...
 - 배포 환경 (로컬, staging, production)
 - 외부 서비스 의존성
 
+### LLM 의 응답 형식
+
+LLM이 사용자에게 응답해줄 때 응답 마지막에 읽은 파일 목록을 나열한다.
+
+```markdown
+### 읽은 파일
+1. path/to/file1
+2. path/to/file2
+```
+
 ## 피해야 할 것
 
 - 일반적인 프로그래밍 조언 (agent가 이미 알고 있음)
