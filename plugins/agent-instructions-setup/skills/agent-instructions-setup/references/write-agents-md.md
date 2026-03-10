@@ -10,6 +10,7 @@ tags: agents-md, writing, best-practices, instructions
 AGENTS.md는 AI coding agent에게 프로젝트 컨텍스트를 전달하는 파일이다. 필수 필드는 없으며 표준 Markdown을 사용한다.
 
 **핵심 원칙: AGENTS.md는 간결하게 유지한다.** 상세 내용은 `docs/guide.md`와 `docs/workflow.md`로 분리한다. `docs-structure.md` 참조.
+또한 agent는 작업을 시작하기 전에 `docs/guide.md`를 반드시 읽도록 AGENTS.md에 명시한다.
 
 ## 권장 섹션 구조
 
@@ -17,6 +18,11 @@ AGENTS.md는 AI coding agent에게 프로젝트 컨텍스트를 전달하는 파
 # Project Name
 
 프로젝트 1줄 설명.
+
+## Required Reading
+
+작업을 시작하기 전에 반드시 [docs/guide.md](docs/guide.md)를 읽는다.
+작업 전에 항상 `docs/` 안의 파일과 디렉토리 목록을 먼저 확인하고, 관련된 문서를 찾아 읽는다.
 
 ## Build & Run
 
@@ -39,6 +45,11 @@ agent가 반드시 따라야 할 규칙.
 ```
 
 ## 작성 원칙
+
+### 필수 문서를 먼저 읽게 한다
+
+AGENTS.md에는 agent가 작업 시작 전에 `docs/guide.md`를 반드시 읽어야 한다는 지시를 포함한다.
+필요하면 이어서 `docs/workflow.md`나 추가 문서를 읽도록 연결한다.
 
 ### 명확하고 구체적으로 작성한다
 

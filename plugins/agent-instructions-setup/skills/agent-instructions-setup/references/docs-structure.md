@@ -25,6 +25,11 @@ AGENTS.md에는 최소한의 프로젝트 정보만 두고 docs/를 가리킨다
 
 프로젝트 1줄 설명.
 
+## Required Reading
+
+작업을 시작하기 전에 반드시 [docs/guide.md](docs/guide.md)를 읽는다.
+작업 전에 항상 `docs/` 안의 파일과 디렉토리 목록을 먼저 확인하고, 관련된 문서를 찾아 읽는다.
+
 ## Documentation
 
 상세 가이드는 아래 문서를 참고한다.
@@ -37,11 +42,18 @@ AGENTS.md에는 최소한의 프로젝트 정보만 두고 docs/를 가리킨다
 
 - 간단 명료하게 작성한다. 장황한 설명을 넣지 않는다
 - 프로젝트 구조, 주요 모듈, 기술 스택 등 핵심 정보를 담는다
+- AGENTS.md에서 가장 먼저 읽도록 지정되는 문서임을 전제로 작성한다
+- 작업 전에 항상 `docs/` 안의 파일과 디렉토리를 먼저 확인하고 적절한 문서를 찾으라고 명시한다
 - 개발 시 workflow.md를 참고하라고 명시한다
 - 추가 문서가 필요하면 guide.md에서 `docs/<topic>.md`를 참조한다
 
 ```markdown
 # Project Guide
+
+## Documentation Discovery
+
+작업을 시작하기 전에 항상 `docs/` 안의 파일과 디렉토리 목록을 먼저 확인한다.
+현재 작업과 관련된 문서를 찾은 뒤 필요한 내용을 읽는다.
 
 ## Tech Stack
 
