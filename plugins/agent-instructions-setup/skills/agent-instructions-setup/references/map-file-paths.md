@@ -12,9 +12,9 @@ tags: agents-md, claude-md, cursorrules, copilot, windsurf, cline, gemini
 | AI Tool | File Path | Notes |
 |---------|-----------|-------|
 | OpenAI Codex | `AGENTS.md` | Source of truth |
-| Claude Code | `CLAUDE.md` | 프로젝트 루트. `~/.claude/CLAUDE.md`로 user-level 설정도 가능 |
-| Cursor | `.cursorrules` | 프로젝트 루트. `.cursor/rules/*.md`로 scoped rule도 지원 |
-| GitHub Copilot | `.github/copilot-instructions.md` | Chat에만 적용. autocomplete에는 미적용 |
+| Claude Code | `CLAUDE.md` | 프로젝트 루트. 서브디렉토리에도 배치 가능 (가장 가까운 파일 우선). `~/.claude/CLAUDE.md`로 user-level 설정 가능 |
+| Cursor | `.cursorrules` | 프로젝트 루트 (legacy). `.cursor/rules/*.mdc`로 scoped rule 지원 |
+| GitHub Copilot | `.github/copilot-instructions.md` | Chat에만 적용. `.github/instructions/*.instructions.md`로 파일별 instruction 지원 |
 | Windsurf | `.windsurfrules` | 프로젝트 루트 |
 | Cline | `.clinerules` | 프로젝트 루트 |
 | Gemini CLI | `GEMINI.md` | 프로젝트 루트 |
@@ -26,14 +26,16 @@ tags: agents-md, claude-md, cursorrules, copilot, windsurf, cline, gemini
 AGENTS.md를 직접 읽는 도구:
 - OpenAI Codex
 - Zed
-- Aider (`.aider.conf.yml` 설정 후)
 
-AGENTS.md를 직접 읽지 않는 도구:
+AGENTS.md를 직접 읽지 않는 도구 (symlink 필요):
 - Claude Code (CLAUDE.md 필요)
 - Cursor (.cursorrules 필요)
 - GitHub Copilot (.github/copilot-instructions.md 필요)
 - Windsurf (.windsurfrules 필요)
+- Cline (.clinerules 필요)
+- Gemini CLI (GEMINI.md 필요)
+- Google Antigravity (.agent/rules/rules.md 필요)
 
 ## 파일 우선순위
 
-프로젝트 루트에 AGENTS.md를 작성하고, 나머지 도구별 파일은 symlink로 연결한다. 이렇게 하면 하나의 파일만 관리하면 된다.
+프로젝트 루트에 AGENTS.md를 작성하고, 나머지 도구별 파일은 symlink로 연결한다. 하나의 파일만 관리하면 된다.

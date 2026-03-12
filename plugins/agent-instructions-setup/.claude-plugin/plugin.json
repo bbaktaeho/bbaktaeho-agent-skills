@@ -1,8 +1,8 @@
 {
   "name": "agent-instructions-setup",
-  "description": "AI coding agent instruction file setup and management. Configures AGENTS.md as single source of truth and creates symlinks for tool-specific files. Use when initializing a new project for AI-assisted development.",
+  "description": "AI coding agent instruction file init setup. Creates AGENTS.md, symlinks for 8 AI tools, and docs/ structure. Use when initializing a new project for AI-assisted development.",
   "author": {
     "name": "bbaktaeho"
   },
-  "version": "1.0.0"
+  "version": "2.0.0"
 }

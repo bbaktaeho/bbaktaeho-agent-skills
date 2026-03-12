@@ -6,10 +6,10 @@ sections:
   - id: symlink-strategy
     title: Symlink Unification Strategy
     prefix: link
-  - id: docs-structure
-    title: Documentation Structure
-    prefix: docs
-  - id: writing-guide
-    title: AGENTS.md Writing Guide
-    prefix: write
+  - id: frontmatter
+    title: Documentation Frontmatter Rules
+    prefix: meta
+  - id: templates
+    title: Project Templates
+    prefix: template
 ---
