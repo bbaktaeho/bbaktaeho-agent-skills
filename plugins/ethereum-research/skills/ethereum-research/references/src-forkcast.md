@@ -9,7 +9,7 @@ tags: forkcast, hardfork, upgrade
 
 Forkcast (https://forkcast.org) is the official Ethereum upgrade tracker. It aggregates EIP inclusion status, protocol call decisions, devnet progress, and upgrade schedules into a single queryable interface.
 
-Local submodule path: `.ethereum-research/forkcast`
+Local submodule path: `<RESEARCH_ROOT>/forkcast`
 
 ## Repository Overview
 

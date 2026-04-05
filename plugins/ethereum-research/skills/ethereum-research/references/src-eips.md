@@ -9,7 +9,7 @@ tags: eip, proposal, standard
 
 The EIPs repository (https://github.com/ethereum/EIPs) is the canonical source of all Ethereum Improvement Proposals. Every protocol change, interface standard, and meta process goes through this repository.
 
-Local submodule path: `.ethereum-research/EIPs`
+Local submodule path: `<RESEARCH_ROOT>/EIPs`
 
 ## Directory Structure
 
@@ -97,30 +97,30 @@ Living     (continuously updated; e.g., EIP-1)
 
 **By number** (when you know the EIP):
 ```bash
-cat .ethereum-research/EIPs/EIPS/eip-4844.md
+cat <RESEARCH_ROOT>/EIPs/EIPS/eip-4844.md
 ```
 
 **By status** (find all Final Core EIPs):
 ```bash
-grep -l "status: Final" .ethereum-research/EIPs/EIPS/ | xargs grep -l "category: Core"
+grep -l "status: Final" <RESEARCH_ROOT>/EIPs/EIPS/ | xargs grep -l "category: Core"
 ```
 
 **By category**:
 ```bash
-grep -rl "category: Core" .ethereum-research/EIPs/EIPS/
-grep -rl "category: ERC" .ethereum-research/EIPs/EIPS/
+grep -rl "category: Core" <RESEARCH_ROOT>/EIPs/EIPS/
+grep -rl "category: ERC" <RESEARCH_ROOT>/EIPs/EIPS/
 ```
 
 **By keyword in body**:
 ```bash
-grep -rl "blob\|shard" .ethereum-research/EIPs/EIPS/
-grep -rl "account abstraction" .ethereum-research/EIPs/EIPS/
+grep -rl "blob\|shard" <RESEARCH_ROOT>/EIPs/EIPS/
+grep -rl "account abstraction" <RESEARCH_ROOT>/EIPs/EIPS/
 ```
 
 **Using the machine-readable index**:
 ```bash
 # List all EIPs with status and type
-cat .ethereum-research/EIPs/config/eips.json | jq '.[] | select(.status == "Final") | {eip, title, category}'
+cat <RESEARCH_ROOT>/EIPs/config/eips.json | jq '.[] | select(.status == "Final") | {eip, title, category}'
 ```
 
 **On the web** -- https://eips.ethereum.org/ provides a searchable interface.

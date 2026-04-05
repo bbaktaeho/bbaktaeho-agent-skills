@@ -31,15 +31,15 @@ Explain the topic at the protocol specification level:
 ### Code-Level Analysis
 
 Reference the go-ethereum implementation directly:
-- Relevant packages and files within `.ethereum-research/go-ethereum/`
+- Relevant packages and files within `<RESEARCH_ROOT>/go-ethereum/`
 - Implementation details explaining how the protocol rule is encoded in code
-- File path references in the format `.ethereum-research/go-ethereum/<path>:<line>`
+- File path references in the format `<RESEARCH_ROOT>/go-ethereum/<path>:<line>`
 - Code snippets where the exact implementation text is necessary for understanding
 
 Example code reference format:
 
 ```
-.ethereum-research/go-ethereum/core/vm/evm.go:312
+<RESEARCH_ROOT>/go-ethereum/core/vm/evm.go:312
 ```
 
 Use fenced code blocks for all go-ethereum source excerpts.
@@ -58,7 +58,7 @@ List related hardforks using a table:
 |----------|------|--------|-------|
 | Name | YYYY-MM-DD | Active / Scheduled / Proposed | Brief note |
 
-Data for both tables must be drawn from `.ethereum-research/EIPs/` and `.ethereum-research/forkcast/`. Cross-reference both sources.
+Data for both tables must be drawn from `<RESEARCH_ROOT>/EIPs/` and `<RESEARCH_ROOT>/forkcast/`. Cross-reference both sources.
 
 ### Community Discussion
 
@@ -66,13 +66,14 @@ Summarize key community content:
 - Notable threads from ethresear.ch (title, URL, one-sentence summary)
 - Relevant Ethereum blog posts (title, URL, date)
 - Relevant Vitalik blog posts or writings (title, URL, one-sentence summary)
+- Relevant organmo blog posts or writings (title, URL, one-sentence summary)
 - Any significant open debates or unresolved questions visible in the community sources
 
 ### References
 
 List every source used in the report. Include:
 - All local file paths referenced (go-ethereum, EIPs, forkcast)
-- All web URLs accessed (ethresear.ch, blog.ethereum.org, vitalik.eth.limo)
+- All web URLs accessed (ethresear.ch, blog.ethereum.org, vitalik.eth.limo, medium.com/@organmo)
 - EIP specification links
 - Any external documentation referenced
 
@@ -91,7 +92,7 @@ Code blocks must be used for:
 File references to go-ethereum must include line numbers when citing specific logic:
 
 ```
-.ethereum-research/go-ethereum/core/state_processor.go:87
+<RESEARCH_ROOT>/go-ethereum/core/state_processor.go:87
 ```
 
 Web links must be full URLs, not shortened or abbreviated. Every claim derived from a web source must have a corresponding URL in the References section.

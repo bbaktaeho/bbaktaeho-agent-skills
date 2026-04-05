@@ -2,53 +2,73 @@
 title: Submodule Setup Guide
 impact: CRITICAL
 impactDescription: Skill cannot function without submodule setup
-tags: submodule, git, setup
+tags: submodule, git, setup, path
 ---
 
 # Submodule Setup Guide
 
 This file explains how to configure the git submodules required for local Ethereum source analysis.
 
+## Path Configuration
+
+The submodule root path is user-configurable. Ask the user where they want to place the research submodules.
+
+Default path: `.ethereum-research`
+
+If the user specifies a custom path, use that path throughout all subsequent commands and references. All other reference files in this skill use `<RESEARCH_ROOT>` as a placeholder -- replace it with the user's chosen path.
+
+Examples of valid custom paths:
+
+```
+.ethereum-research          (default)
+research/ethereum
+libs/ethereum-sources
+~/ethereum-research          (absolute path outside project)
+../shared-ethereum-research  (relative path outside project)
+```
+
+Store the resolved path and use it consistently for all submodule operations and source navigation.
+
 ## Prerequisite Check
 
 Before running any setup commands, verify whether submodules are already configured.
 
-Check for the `.ethereum-research/` directory in the user's project root:
+Check for the `<RESEARCH_ROOT>/` directory:
 
 ```
-ls -la .ethereum-research/
+ls -la <RESEARCH_ROOT>/
 ```
 
 Check for existing `.gitmodules` entries:
 
 ```
-cat .gitmodules 2>/dev/null | grep ethereum-research
+cat .gitmodules 2>/dev/null | grep -E "go-ethereum|forkcast|EIPs"
 ```
 
 If both of the following are true, skip to the Verification section:
-- `.ethereum-research/` exists and contains non-empty subdirectories
-- `.gitmodules` contains entries for `go-ethereum`, `forkcast`, and `EIPs` under `.ethereum-research/`
+- `<RESEARCH_ROOT>/` exists and contains non-empty subdirectories
+- `.gitmodules` contains entries for `go-ethereum`, `forkcast`, and `EIPs` under `<RESEARCH_ROOT>/`
 
 ## Setup Commands
 
-Run these commands from the user project root. Each command adds one submodule.
+Run these commands from the user project root. Each command adds one submodule. Replace `<RESEARCH_ROOT>` with the user's chosen path.
 
 Add go-ethereum:
 
 ```
-git submodule add https://github.com/ethereum/go-ethereum .ethereum-research/go-ethereum
+git submodule add https://github.com/ethereum/go-ethereum <RESEARCH_ROOT>/go-ethereum
 ```
 
 Add forkcast:
 
 ```
-git submodule add https://github.com/ethereum/forkcast .ethereum-research/forkcast
+git submodule add https://github.com/ethereum/forkcast <RESEARCH_ROOT>/forkcast
 ```
 
 Add EIPs:
 
 ```
-git submodule add https://github.com/ethereum/EIPs .ethereum-research/EIPs
+git submodule add https://github.com/ethereum/EIPs <RESEARCH_ROOT>/EIPs
 ```
 
 ## Post-Setup Initialization
@@ -63,10 +83,10 @@ This ensures all nested submodules within each repository are also initialized.
 
 ## .gitignore Recommendation
 
-If the user does not want to track the submodule state in their project (optional), add the following to `.gitignore`:
+If the user does not want to track the submodule state in their project (optional), add the chosen path to `.gitignore`:
 
 ```
-.ethereum-research/
+<RESEARCH_ROOT>/
 ```
 
 Note: adding this to `.gitignore` means the submodule configuration in `.gitmodules` will still exist, but the directory contents will be ignored by git status. This is appropriate for projects that treat the research directories as purely local tooling.
@@ -86,19 +106,19 @@ Expected output: each submodule line begins with a space (initialized) rather th
 Verify go-ethereum contains source files:
 
 ```
-ls .ethereum-research/go-ethereum/core/
+ls <RESEARCH_ROOT>/go-ethereum/core/
 ```
 
 Verify forkcast contains data:
 
 ```
-ls .ethereum-research/forkcast/
+ls <RESEARCH_ROOT>/forkcast/
 ```
 
 Verify EIPs contains EIP documents:
 
 ```
-ls .ethereum-research/EIPs/EIPS/ | head -10
+ls <RESEARCH_ROOT>/EIPs/EIPS/ | head -10
 ```
 
 If any directory is empty, re-run:

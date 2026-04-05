@@ -10,12 +10,12 @@ metadata:
   version: "1.0.0"
   date: April 2026
   abstract: >
-    Comprehensive Ethereum research skill that manages local git submodules
-    (go-ethereum, forkcast, EIPs) and guides web-based research across
-    ethresear.ch, blog.ethereum.org, and vitalik.eth.limo. Provides setup
-    verification, automatic submodule updates, multi-source research
-    procedures, and structured report generation covering protocol-level,
-    code-level, and community-level analysis.
+    Comprehensive Ethereum research skill with user-configurable submodule
+    paths (go-ethereum, forkcast, EIPs) and web-based research across
+    ethresear.ch, blog.ethereum.org, vitalik.eth.limo, and medium.com/@organmo.
+    Provides path configuration, setup verification, automatic submodule updates,
+    multi-source research procedures, and structured report generation covering
+    protocol-level, code-level, and community-level analysis.
 ---
 
 # Ethereum Research
@@ -33,9 +33,12 @@ Reference these guidelines when:
 
 ## Skill Trigger Flow
 
-1. **Setup Check** -- verify submodules exist in user project (see `references/setup-submodules.md`)
-2. **Update** -- run `git submodule update --remote`, report changes
-3. **Research** -- combine sources per question type, output structured report
+1. **Path Resolution** -- ask user for submodule root path or use default `.ethereum-research` (see `references/setup-submodules.md`)
+2. **Setup Check** -- verify submodules exist at the resolved path
+3. **Update** -- run `git submodule update --remote`, report changes
+4. **Research** -- combine sources per question type, output structured report
+
+All reference files use `<RESEARCH_ROOT>` as a placeholder for the submodule root path. Replace with the user's configured path.
 
 See `references/flow-research.md` for the full research procedure.
 
@@ -54,13 +57,14 @@ See `references/flow-research.md` for the full research procedure.
 Read reference files for navigation guides and procedures:
 
 ```
-references/setup-submodules.md    -- submodule setup commands
+references/setup-submodules.md    -- submodule setup and path configuration
 references/src-go-ethereum.md     -- go-ethereum code navigation
 references/src-forkcast.md        -- hardfork data navigation
 references/src-eips.md            -- EIP repository navigation
 references/web-ethresearch.md     -- ethresear.ch search guide
 references/web-ethereum-blog.md   -- Ethereum blog access
 references/web-vitalik-blog.md    -- Vitalik blog access
+references/web-organmo-blog.md    -- organmo researcher blog access
 references/report-template.md     -- research report format
 references/flow-research.md       -- research procedure and source selection
 ```
@@ -69,12 +73,13 @@ references/flow-research.md       -- research procedure and source selection
 
 | Source | Location | Purpose |
 |--------|----------|---------|
-| go-ethereum | `.ethereum-research/go-ethereum` | Protocol implementation |
-| forkcast | `.ethereum-research/forkcast` | Hardfork tracking |
-| EIPs | `.ethereum-research/EIPs` | EIP documents |
+| go-ethereum | `<RESEARCH_ROOT>/go-ethereum` | Protocol implementation |
+| forkcast | `<RESEARCH_ROOT>/forkcast` | Hardfork tracking |
+| EIPs | `<RESEARCH_ROOT>/EIPs` | EIP documents |
 | ethresear.ch | https://ethresear.ch/ | Research discussions |
 | Ethereum Blog | https://blog.ethereum.org/ | Official announcements |
 | Vitalik Blog | https://vitalik.eth.limo/ | Protocol philosophy |
+| organmo Blog | https://medium.com/@organmo | Researcher analysis |
 
 ## References
 
@@ -83,3 +88,4 @@ references/flow-research.md       -- research procedure and source selection
 - https://github.com/ethereum/EIPs
 - https://github.com/ethereum/forkcast
 - https://eips.ethereum.org/
+- https://medium.com/@organmo

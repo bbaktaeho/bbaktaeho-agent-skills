@@ -9,7 +9,7 @@ tags: go-ethereum, geth, source code
 
 go-ethereum (geth) is the official Go implementation of the Ethereum protocol. It is the reference implementation used by most Ethereum nodes and is the primary source for understanding how Ethereum rules are enforced in production.
 
-Local submodule path: `.ethereum-research/go-ethereum`
+Local submodule path: `<RESEARCH_ROOT>/go-ethereum`
 
 ## Key Directory Map
 
@@ -30,7 +30,7 @@ Local submodule path: `.ethereum-research/go-ethereum`
 
 ## How to Search
 
-Useful grep patterns inside `.ethereum-research/go-ethereum`:
+Useful grep patterns inside `<RESEARCH_ROOT>/go-ethereum`:
 
 ```bash
 # Find opcode definition
