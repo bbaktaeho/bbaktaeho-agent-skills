@@ -14,6 +14,14 @@ tags: agents-md, template, rules, setup
 
 {프로젝트 1줄 설명}
 
+## MANDATORY: Read Before Any Work
+
+**어떤 작업이든 시작하기 전에 반드시 `docs/guide.md`를 읽어라.** 이 규칙은 예외 없이 적용된다.
+
+- 코드 작성, 수정, 리뷰, 디버깅 등 모든 작업 전에 `docs/guide.md`를 먼저 읽어라.
+- 이미 읽었다고 판단하더라도 새 대화 세션에서는 다시 읽어라.
+- `docs/guide.md`를 읽지 않고 작업을 진행하지 마라.
+
 ## Rules
 
 - 이모지를 사용하지 마라.
@@ -23,14 +31,13 @@ tags: agents-md, template, rules, setup
 - 파일을 수정하기 전에 해당 파일을 먼저 읽어라. 기억에 의존하지 마라.
 - 확실하지 않은 내용은 "확실하지 않다"고 말해라. 그럴듯하게 지어내지 마라.
 - 요청받은 범위만 작업해라. 요청하지 않은 리팩토링, 개선, 추가 기능을 임의로 하지 마라.
-- 작업을 시작하기 전에 반드시 docs/guide.md를 읽어라.
 - 적절한 skill이 있는지 찾아보고, 있다면 참고해라.
 
 ## Documentation
 
 상세 가이드는 아래 문서를 참고한다.
 
-- [docs/guide.md](docs/guide.md) - 프로젝트 가이드
+- [docs/guide.md](docs/guide.md) - 프로젝트 가이드 (필수 선행 읽기)
 - [docs/workflow.md](docs/workflow.md) - 작업 워크플로우
 ```
 
