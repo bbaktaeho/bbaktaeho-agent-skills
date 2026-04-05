@@ -42,12 +42,12 @@ ls -la <RESEARCH_ROOT>/
 Check for existing `.gitmodules` entries:
 
 ```
-cat .gitmodules 2>/dev/null | grep -E "go-ethereum|forkcast|EIPs"
+cat .gitmodules 2>/dev/null | grep -E "go-ethereum|forkcast|EIPs|prysm"
 ```
 
 If both of the following are true, skip to the Verification section:
 - `<RESEARCH_ROOT>/` exists and contains non-empty subdirectories
-- `.gitmodules` contains entries for `go-ethereum`, `forkcast`, and `EIPs` under `<RESEARCH_ROOT>/`
+- `.gitmodules` contains entries for `go-ethereum`, `forkcast`, `EIPs`, and `prysm` under `<RESEARCH_ROOT>/`
 
 ## Setup Commands
 
@@ -69,6 +69,12 @@ Add EIPs:
 
 ```
 git submodule add https://github.com/ethereum/EIPs <RESEARCH_ROOT>/EIPs
+```
+
+Add prysm (beacon chain consensus client):
+
+```
+git submodule add https://github.com/offchainlabs/prysm <RESEARCH_ROOT>/prysm
 ```
 
 ## Post-Setup Initialization
@@ -119,6 +125,12 @@ Verify EIPs contains EIP documents:
 
 ```
 ls <RESEARCH_ROOT>/EIPs/EIPS/ | head -10
+```
+
+Verify prysm contains beacon chain source:
+
+```
+ls <RESEARCH_ROOT>/prysm/beacon-chain/
 ```
 
 If any directory is empty, re-run:

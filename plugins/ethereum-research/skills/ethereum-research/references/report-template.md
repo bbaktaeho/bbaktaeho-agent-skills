@@ -30,19 +30,20 @@ Explain the topic at the protocol specification level:
 
 ### Code-Level Analysis
 
-Reference the go-ethereum implementation directly:
-- Relevant packages and files within `<RESEARCH_ROOT>/go-ethereum/`
+Reference the go-ethereum (EL) and prysm (CL) implementations directly:
+- Relevant packages and files within `<RESEARCH_ROOT>/go-ethereum/` and `<RESEARCH_ROOT>/prysm/`
 - Implementation details explaining how the protocol rule is encoded in code
-- File path references in the format `<RESEARCH_ROOT>/go-ethereum/<path>:<line>`
+- File path references in the format `<RESEARCH_ROOT>/go-ethereum/<path>:<line>` or `<RESEARCH_ROOT>/prysm/<path>:<line>`
 - Code snippets where the exact implementation text is necessary for understanding
 
 Example code reference format:
 
 ```
 <RESEARCH_ROOT>/go-ethereum/core/vm/evm.go:312
+<RESEARCH_ROOT>/prysm/beacon-chain/core/state/transition.go:45
 ```
 
-Use fenced code blocks for all go-ethereum source excerpts.
+Use fenced code blocks for all source excerpts.
 
 ### EIP / Hardfork Mapping
 
@@ -72,7 +73,7 @@ Summarize key community content:
 ### References
 
 List every source used in the report. Include:
-- All local file paths referenced (go-ethereum, EIPs, forkcast)
+- All local file paths referenced (go-ethereum, prysm, EIPs, forkcast)
 - All web URLs accessed (ethresear.ch, blog.ethereum.org, vitalik.eth.limo, medium.com/@organmo)
 - EIP specification links
 - Any external documentation referenced
@@ -89,10 +90,11 @@ Code blocks must be used for:
 - All go-ethereum source references and excerpts
 - All shell commands referenced in the report
 
-File references to go-ethereum must include line numbers when citing specific logic:
+File references to go-ethereum and prysm must include line numbers when citing specific logic:
 
 ```
 <RESEARCH_ROOT>/go-ethereum/core/state_processor.go:87
+<RESEARCH_ROOT>/prysm/beacon-chain/blockchain/process_block.go:120
 ```
 
 Web links must be full URLs, not shortened or abbreviated. Every claim derived from a web source must have a corresponding URL in the References section.

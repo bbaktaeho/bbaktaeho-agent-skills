@@ -11,8 +11,9 @@ metadata:
   date: April 2026
   abstract: >
     Comprehensive Ethereum research skill with user-configurable submodule
-    paths (go-ethereum, forkcast, EIPs) and web-based research across
+    paths (go-ethereum, prysm, forkcast, EIPs) and web-based research across
     ethresear.ch, blog.ethereum.org, vitalik.eth.limo, and medium.com/@organmo.
+    Covers both execution layer (go-ethereum) and consensus layer (prysm).
     Provides path configuration, setup verification, automatic submodule updates,
     multi-source research procedures, and structured report generation covering
     protocol-level, code-level, and community-level analysis.
@@ -27,7 +28,7 @@ Multi-source Ethereum protocol research with local submodule analysis and struct
 Reference these guidelines when:
 - Investigating Ethereum protocol, EVM, or consensus mechanisms
 - Analyzing EIPs (status, content, implementation)
-- Exploring go-ethereum codebase for implementation details
+- Exploring go-ethereum (EL) or prysm (CL) codebase for implementation details
 - Tracking hardfork history or upcoming network upgrades
 - Researching Ethereum ecosystem topics (ethresear.ch, Vitalik blog, Ethereum blog)
 
@@ -58,7 +59,8 @@ Read reference files for navigation guides and procedures:
 
 ```
 references/setup-submodules.md    -- submodule setup and path configuration
-references/src-go-ethereum.md     -- go-ethereum code navigation
+references/src-go-ethereum.md     -- go-ethereum (EL) code navigation
+references/src-prysm.md           -- prysm (CL) beacon chain code navigation
 references/src-forkcast.md        -- hardfork data navigation
 references/src-eips.md            -- EIP repository navigation
 references/web-ethresearch.md     -- ethresear.ch search guide
@@ -73,7 +75,8 @@ references/flow-research.md       -- research procedure and source selection
 
 | Source | Location | Purpose |
 |--------|----------|---------|
-| go-ethereum | `<RESEARCH_ROOT>/go-ethereum` | Protocol implementation |
+| go-ethereum | `<RESEARCH_ROOT>/go-ethereum` | Execution layer implementation |
+| prysm | `<RESEARCH_ROOT>/prysm` | Consensus layer (beacon chain) implementation |
 | forkcast | `<RESEARCH_ROOT>/forkcast` | Hardfork tracking |
 | EIPs | `<RESEARCH_ROOT>/EIPs` | EIP documents |
 | ethresear.ch | https://ethresear.ch/ | Research discussions |
@@ -88,4 +91,5 @@ references/flow-research.md       -- research procedure and source selection
 - https://github.com/ethereum/EIPs
 - https://github.com/ethereum/forkcast
 - https://eips.ethereum.org/
+- https://github.com/offchainlabs/prysm
 - https://medium.com/@organmo

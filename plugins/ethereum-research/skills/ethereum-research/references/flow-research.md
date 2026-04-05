@@ -29,11 +29,12 @@ If not found at the default path, ask the user to specify where they placed (or 
 
 ```
 ls <RESEARCH_ROOT>/go-ethereum/core/ 2>/dev/null && echo "go-ethereum: OK" || echo "go-ethereum: MISSING"
+ls <RESEARCH_ROOT>/prysm/beacon-chain/ 2>/dev/null && echo "prysm: OK" || echo "prysm: MISSING"
 ls <RESEARCH_ROOT>/forkcast/ 2>/dev/null && echo "forkcast: OK" || echo "forkcast: MISSING"
 ls <RESEARCH_ROOT>/EIPs/EIPS/ 2>/dev/null && echo "EIPs: OK" || echo "EIPs: MISSING"
 ```
 
-If any submodule is missing, stop and instruct the user to complete setup. Refer them to `references/setup-submodules.md` for the full setup procedure. Do not proceed with research until all three submodules are present and non-empty.
+If any submodule is missing, stop and instruct the user to complete setup. Refer them to `references/setup-submodules.md` for the full setup procedure. Do not proceed with research until all four submodules are present and non-empty.
 
 If all three are present, continue to Phase 2.
 
@@ -55,6 +56,12 @@ go-ethereum recent changes:
 git -C <RESEARCH_ROOT>/go-ethereum log --oneline -10
 ```
 
+prysm recent changes:
+
+```
+git -C <RESEARCH_ROOT>/prysm log --oneline -10
+```
+
 forkcast recent changes:
 
 ```
@@ -74,6 +81,8 @@ Submodule Update Summary
 ------------------------
 go-ethereum: <N commits fetched or "already up to date">
   Recent: <first log line>
+prysm: <N commits fetched or "already up to date">
+  Recent: <first log line>
 forkcast: <N commits fetched or "already up to date">
   Recent: <first log line>
 EIPs: <N commits fetched or "already up to date">
@@ -91,8 +100,10 @@ Select sources based on the question type. Use multiple sources when the questio
 | Question Type | Primary Sources | Secondary Sources |
 |---------------|----------------|-------------------|
 | Protocol or EVM internals | go-ethereum code, EIPs | ethresear.ch, organmo blog |
+| PoS consensus or beacon chain | prysm code, EIPs | ethresear.ch, Vitalik blog |
 | EIP analysis | EIPs repo, ethresear.ch | Vitalik blog, organmo blog |
-| Hardfork tracking | forkcast, go-ethereum | Ethereum blog |
+| Hardfork tracking | forkcast, go-ethereum, prysm | Ethereum blog |
+| Validator operations | prysm code, EIPs | ethresear.ch |
 | General ecosystem | all web sources, relevant repos | organmo blog |
 
 ### Source Navigation
@@ -100,6 +111,7 @@ Select sources based on the question type. Use multiple sources when the questio
 For each selected source, use the corresponding reference file for navigation instructions:
 
 - go-ethereum code: see `references/src-go-ethereum.md`
+- prysm beacon chain: see `references/src-prysm.md`
 - forkcast data: see `references/src-forkcast.md`
 - EIPs repository: see `references/src-eips.md`
 - ethresear.ch: see `references/web-ethresearch.md`
@@ -118,7 +130,7 @@ Every research report must cover all three levels of analysis. No level may be o
 | Level | Description |
 |-------|-------------|
 | Protocol level | Specification, EIPs, consensus rules, design rationale |
-| Code level | go-ethereum packages, implementation details, file and line references |
+| Code level | go-ethereum and prysm packages, implementation details, file and line references |
 | Community level | ethresear.ch threads, blog posts, Vitalik writings, organmo writings, open discussions |
 
 If a level cannot be covered due to missing sources or irrelevance, explicitly note why in the report rather than silently skipping it.
