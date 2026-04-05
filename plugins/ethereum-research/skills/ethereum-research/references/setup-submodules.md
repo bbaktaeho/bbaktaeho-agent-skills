@@ -42,12 +42,12 @@ ls -la <RESEARCH_ROOT>/
 Check for existing `.gitmodules` entries:
 
 ```
-cat .gitmodules 2>/dev/null | grep -E "go-ethereum|forkcast|EIPs|prysm"
+cat .gitmodules 2>/dev/null | grep -E "go-ethereum|reth|revm|forkcast|EIPs|prysm"
 ```
 
 If both of the following are true, skip to the Verification section:
 - `<RESEARCH_ROOT>/` exists and contains non-empty subdirectories
-- `.gitmodules` contains entries for `go-ethereum`, `forkcast`, `EIPs`, and `prysm` under `<RESEARCH_ROOT>/`
+- `.gitmodules` contains entries for `go-ethereum`, `reth`, `revm`, `forkcast`, `EIPs`, and `prysm` under `<RESEARCH_ROOT>/`
 
 ## Setup Commands
 
@@ -69,6 +69,18 @@ Add EIPs:
 
 ```
 git submodule add https://github.com/ethereum/EIPs <RESEARCH_ROOT>/EIPs
+```
+
+Add reth (Rust execution layer client):
+
+```
+git submodule add https://github.com/paradigmxyz/reth <RESEARCH_ROOT>/reth
+```
+
+Add revm (Rust EVM implementation, used by reth):
+
+```
+git submodule add https://github.com/bluealloy/revm <RESEARCH_ROOT>/revm
 ```
 
 Add prysm (beacon chain consensus client):
@@ -125,6 +137,18 @@ Verify EIPs contains EIP documents:
 
 ```
 ls <RESEARCH_ROOT>/EIPs/EIPS/ | head -10
+```
+
+Verify reth contains execution layer source:
+
+```
+ls <RESEARCH_ROOT>/reth/crates/
+```
+
+Verify revm contains EVM source:
+
+```
+ls <RESEARCH_ROOT>/revm/crates/interpreter/
 ```
 
 Verify prysm contains beacon chain source:

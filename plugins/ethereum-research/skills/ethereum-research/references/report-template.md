@@ -30,16 +30,19 @@ Explain the topic at the protocol specification level:
 
 ### Code-Level Analysis
 
-Reference the go-ethereum (EL) and prysm (CL) implementations directly:
-- Relevant packages and files within `<RESEARCH_ROOT>/go-ethereum/` and `<RESEARCH_ROOT>/prysm/`
+Reference client implementations directly. Multiple EL clients (go-ethereum, reth/revm) and the CL client (prysm) are available:
+- Relevant packages and files within `<RESEARCH_ROOT>/go-ethereum/`, `<RESEARCH_ROOT>/reth/`, `<RESEARCH_ROOT>/revm/`, and `<RESEARCH_ROOT>/prysm/`
 - Implementation details explaining how the protocol rule is encoded in code
-- File path references in the format `<RESEARCH_ROOT>/go-ethereum/<path>:<line>` or `<RESEARCH_ROOT>/prysm/<path>:<line>`
+- File path references in the format `<RESEARCH_ROOT>/{client}/<path>:<line>`
 - Code snippets where the exact implementation text is necessary for understanding
+- Cross-client comparison when implementations differ in approach
 
 Example code reference format:
 
 ```
 <RESEARCH_ROOT>/go-ethereum/core/vm/evm.go:312
+<RESEARCH_ROOT>/reth/crates/evm/src/execute.rs:85
+<RESEARCH_ROOT>/revm/crates/interpreter/src/instructions/host.rs:42
 <RESEARCH_ROOT>/prysm/beacon-chain/core/state/transition.go:45
 ```
 
@@ -73,7 +76,7 @@ Summarize key community content:
 ### References
 
 List every source used in the report. Include:
-- All local file paths referenced (go-ethereum, prysm, EIPs, forkcast)
+- All local file paths referenced (go-ethereum, reth, revm, prysm, EIPs, forkcast)
 - All web URLs accessed (ethresear.ch, blog.ethereum.org, vitalik.eth.limo, medium.com/@organmo)
 - EIP specification links
 - Any external documentation referenced
@@ -90,10 +93,12 @@ Code blocks must be used for:
 - All go-ethereum source references and excerpts
 - All shell commands referenced in the report
 
-File references to go-ethereum and prysm must include line numbers when citing specific logic:
+File references must include line numbers when citing specific logic:
 
 ```
 <RESEARCH_ROOT>/go-ethereum/core/state_processor.go:87
+<RESEARCH_ROOT>/reth/crates/ethereum/evm/src/execute.rs:95
+<RESEARCH_ROOT>/revm/crates/interpreter/src/instructions/host.rs:42
 <RESEARCH_ROOT>/prysm/beacon-chain/blockchain/process_block.go:120
 ```
 
