@@ -1,7 +1,7 @@
 ---
 title: Vitalik Buterin Blog Navigation Guide
 impact: HIGH
-impactDescription: Vitalik's technical writings on protocol design and philosophy
+impactDescription: Vitalik's technical writings navigation
 tags: vitalik, blog, protocol
 ---
 
