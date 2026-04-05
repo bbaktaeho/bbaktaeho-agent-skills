@@ -1,0 +1,8 @@
+{
+  "name": "ethereum-research",
+  "description": "Ethereum protocol research skill. Use when investigating Ethereum protocol, EVM, EIPs, hardforks, go-ethereum codebase, or Ethereum ecosystem research.",
+  "author": {
+    "name": "bbaktaeho"
+  },
+  "version": "1.0.0"
+}
