@@ -40,6 +40,12 @@
       "description": "Ethereum protocol research skill. Use when investigating Ethereum protocol, EVM, EIPs, hardforks, go-ethereum codebase, or Ethereum ecosystem research.",
       "source": "./plugins/ethereum-research",
       "category": "development"
+    },
+    {
+      "name": "solana-research",
+      "description": "Solana protocol research skill. Use when investigating Solana protocol, SVM, SIMDs, runtime internals, validator client codebase, or Solana ecosystem research.",
+      "source": "./plugins/solana-research",
+      "category": "development"
     }
   ]
 }

@@ -1,0 +1,8 @@
+{
+  "name": "solana-research",
+  "description": "Solana protocol research skill. Use when investigating Solana protocol, SVM, SIMDs, runtime internals, validator client codebase, or Solana ecosystem research.",
+  "author": {
+    "name": "bbaktaeho"
+  },
+  "version": "1.0.0"
+}
