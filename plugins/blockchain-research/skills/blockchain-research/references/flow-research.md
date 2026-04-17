@@ -143,31 +143,31 @@ If the update fails due to network issues, proceed with the locally cached versi
 For each selected source, use the corresponding reference file for navigation instructions:
 
 **Ethereum:**
-- go-ethereum: see `references/src-go-ethereum.md`
-- reth: see `references/src-reth.md`
-- revm: see `references/src-revm.md`
-- prysm: see `references/src-prysm.md`
-- forkcast: see `references/src-forkcast.md`
-- EIPs: see `references/src-eips.md`
-- ethresear.ch: see `references/web-ethresearch.md`
-- Ethereum blog: see `references/web-ethereum-blog.md`
-- Vitalik blog: see `references/web-vitalik-blog.md`
-- organmo blog: see `references/web-organmo-blog.md`
+- go-ethereum: see `references/ethereum/src-go-ethereum.md`
+- reth: see `references/ethereum/src-reth.md`
+- revm: see `references/ethereum/src-revm.md`
+- prysm: see `references/ethereum/src-prysm.md`
+- forkcast: see `references/ethereum/src-forkcast.md`
+- EIPs: see `references/ethereum/src-eips.md`
+- ethresear.ch: see `references/ethereum/web-ethresearch.md`
+- Ethereum blog: see `references/ethereum/web-ethereum-blog.md`
+- Vitalik blog: see `references/ethereum/web-vitalik-blog.md`
+- organmo blog: see `references/ethereum/web-organmo-blog.md`
 
 **Solana:**
-- solana runtime: see `references/src-solana.md`
-- agave validator: see `references/src-agave.md`
-- solana-program-library: see `references/src-spl.md`
-- forum.solana.com: see `references/web-solana-forum.md`
-- Solana and Anza blogs: see `references/web-solana-blog.md`
+- solana runtime: see `references/solana/src-solana.md`
+- agave validator: see `references/solana/src-agave.md`
+- solana-program-library: see `references/solana/src-spl.md`
+- forum.solana.com: see `references/solana/web-solana-forum.md`
+- Solana and Anza blogs: see `references/solana/web-solana-blog.md`
 
 **Tempo:**
-- tempo core: see `references/src-tempo.md`
-- tempo-go SDK: see `references/src-tempo-go.md`
-- mpp-go SDK: see `references/src-mpp-go.md`
-- mpp-rs SDK: see `references/src-mpp-rs.md`
-- Tempo docs and blog: see `references/web-tempo-docs.md`
-- MPP protocol docs: see `references/web-mpp.md`
+- tempo core: see `references/tempo/src-tempo.md`
+- tempo-go SDK: see `references/tempo/src-tempo-go.md`
+- mpp-go SDK: see `references/tempo/src-mpp-go.md`
+- mpp-rs SDK: see `references/tempo/src-mpp-rs.md`
+- Tempo docs and blog: see `references/tempo/web-tempo-docs.md`
+- MPP protocol docs: see `references/tempo/web-mpp.md`
 
 ### Report Assembly
 

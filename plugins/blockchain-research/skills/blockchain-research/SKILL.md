@@ -70,36 +70,36 @@ See `references/flow-research.md` for the full research procedure.
 Read reference files for navigation guides and procedures:
 
 ```
-references/setup-submodules.md         -- submodule setup and path configuration (all chains)
-references/flow-research.md            -- research procedure and source selection (all chains)
-references/report-template.md          -- research report format
+references/setup-submodules.md              -- submodule setup and path configuration (all chains)
+references/flow-research.md                 -- research procedure and source selection (all chains)
+references/report-template.md               -- research report format
 
 # Ethereum
-references/src-go-ethereum.md          -- go-ethereum EL code navigation
-references/src-reth.md                 -- reth EL code navigation (Rust)
-references/src-revm.md                 -- revm EVM engine code navigation
-references/src-prysm.md               -- prysm CL code navigation
-references/src-forkcast.md             -- forkcast hardfork data
-references/src-eips.md                 -- EIP repository navigation
-references/web-ethresearch.md          -- ethresear.ch search guide
-references/web-ethereum-blog.md        -- Ethereum blog access
-references/web-vitalik-blog.md         -- Vitalik blog access
-references/web-organmo-blog.md         -- organmo blog access
+references/ethereum/src-go-ethereum.md      -- go-ethereum EL code navigation
+references/ethereum/src-reth.md             -- reth EL code navigation (Rust)
+references/ethereum/src-revm.md             -- revm EVM engine code navigation
+references/ethereum/src-prysm.md            -- prysm CL code navigation
+references/ethereum/src-forkcast.md         -- forkcast hardfork data
+references/ethereum/src-eips.md             -- EIP repository navigation
+references/ethereum/web-ethresearch.md      -- ethresear.ch search guide
+references/ethereum/web-ethereum-blog.md    -- Ethereum blog access
+references/ethereum/web-vitalik-blog.md     -- Vitalik blog access
+references/ethereum/web-organmo-blog.md     -- organmo blog access
 
 # Solana
-references/src-solana.md               -- solana runtime code navigation
-references/src-agave.md                -- agave validator client code navigation
-references/src-spl.md                  -- SPL programs code navigation
-references/web-solana-forum.md         -- forum.solana.com search guide
-references/web-solana-blog.md          -- Solana and Anza blog access
+references/solana/src-solana.md             -- solana runtime code navigation
+references/solana/src-agave.md              -- agave validator client code navigation
+references/solana/src-spl.md                -- SPL programs code navigation
+references/solana/web-solana-forum.md       -- forum.solana.com search guide
+references/solana/web-solana-blog.md        -- Solana and Anza blog access
 
 # Tempo
-references/src-tempo.md                -- tempo core blockchain code navigation
-references/src-tempo-go.md             -- tempo-go SDK code navigation
-references/src-mpp-go.md               -- mpp-go SDK code navigation
-references/src-mpp-rs.md               -- mpp-rs SDK code navigation
-references/web-tempo-docs.md           -- Tempo docs and blog access
-references/web-mpp.md                  -- MPP protocol docs access
+references/tempo/src-tempo.md               -- tempo core blockchain code navigation
+references/tempo/src-tempo-go.md            -- tempo-go SDK code navigation
+references/tempo/src-mpp-go.md              -- mpp-go SDK code navigation
+references/tempo/src-mpp-rs.md              -- mpp-rs SDK code navigation
+references/tempo/web-tempo-docs.md          -- Tempo docs and blog access
+references/tempo/web-mpp.md                 -- MPP protocol docs access
 ```
 
 ## References
