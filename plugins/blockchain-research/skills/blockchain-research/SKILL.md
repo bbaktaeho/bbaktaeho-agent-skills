@@ -67,58 +67,25 @@ See `references/flow-research.md` for the full research procedure.
 
 ## How to Use
 
-Read reference files for navigation guides and procedures:
+Reference files are organized by chain under `references/`:
 
-```
-references/setup-submodules.md              -- submodule setup and path configuration (all chains)
-references/flow-research.md                 -- research procedure and source selection (all chains)
-references/report-template.md               -- research report format
-
-# Ethereum
-references/ethereum/src-go-ethereum.md      -- go-ethereum EL code navigation
-references/ethereum/src-reth.md             -- reth EL code navigation (Rust)
-references/ethereum/src-revm.md             -- revm EVM engine code navigation
-references/ethereum/src-prysm.md            -- prysm CL code navigation
-references/ethereum/src-forkcast.md         -- forkcast hardfork data
-references/ethereum/src-eips.md             -- EIP repository navigation
-references/ethereum/web-ethresearch.md      -- ethresear.ch search guide
-references/ethereum/web-ethereum-blog.md    -- Ethereum blog access
-references/ethereum/web-vitalik-blog.md     -- Vitalik blog access
-references/ethereum/web-organmo-blog.md     -- organmo blog access
-
-# Solana
-references/solana/src-solana.md             -- solana runtime code navigation
-references/solana/src-agave.md              -- agave validator client code navigation
-references/solana/src-spl.md                -- SPL programs code navigation
-references/solana/web-solana-forum.md       -- forum.solana.com search guide
-references/solana/web-solana-blog.md        -- Solana and Anza blog access
-
-# Tempo
-references/tempo/src-tempo.md               -- tempo core blockchain code navigation
-references/tempo/src-tempo-go.md            -- tempo-go SDK code navigation
-references/tempo/src-mpp-go.md              -- mpp-go SDK code navigation
-references/tempo/src-mpp-rs.md              -- mpp-rs SDK code navigation
-references/tempo/src-tidx.md                -- tidx chain indexer (raw + indexed data, ABI decoding)
-references/tempo/web-tempo-docs.md          -- Tempo docs and blog access
-references/tempo/web-mpp.md                 -- MPP protocol docs access
-```
+| Path | Contents |
+|------|----------|
+| `setup-submodules.md` | Submodule setup and path config (all chains) |
+| `flow-research.md` | Research procedure and source selection (all chains) |
+| `report-template.md` | Research report format |
+| `ethereum/` | src-go-ethereum, src-reth, src-revm, src-prysm, src-forkcast, src-eips, web-ethresearch, web-ethereum-blog, web-vitalik-blog, web-organmo-blog |
+| `solana/` | src-solana, src-agave, src-spl, web-solana-forum, web-solana-blog |
+| `tempo/` | src-tempo, src-tempo-go, src-mpp-go, src-mpp-rs, src-tidx, web-tempo-docs, web-mpp |
 
 ## References
 
 - https://ethereum.org/en/developers/docs/
 - https://github.com/ethereum/go-ethereum
-- https://github.com/ethereum/EIPs
 - https://github.com/paradigmxyz/reth
-- https://github.com/bluealloy/revm
-- https://github.com/offchainlabs/prysm
 - https://solana.com/docs
-- https://github.com/solana-labs/solana
 - https://github.com/anza-xyz/agave
-- https://github.com/solana-labs/solana-program-library
 - https://docs.tempo.xyz
 - https://github.com/tempoxyz/tempo
-- https://github.com/tempoxyz/tempo-go
-- https://github.com/tempoxyz/mpp-go
-- https://github.com/tempoxyz/mpp-rs
 - https://github.com/tempoxyz/tidx
 - https://mpp.dev
