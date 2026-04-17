@@ -1,6 +1,6 @@
 {
   "name": "bbaktaeho-agent-skills",
-  "description": "Agent skills for Go development, Elasticsearch, Postgres best practices, programming principles, AI agent instruction setup, and Ethereum research",
+  "description": "Agent skills for Go development, Elasticsearch, Postgres best practices, programming principles, AI agent instruction setup, and blockchain research (Ethereum, Solana, Tempo)",
   "owner": {
     "name": "bbaktaeho"
   },
@@ -36,15 +36,9 @@
       "category": "development"
     },
     {
-      "name": "ethereum-research",
-      "description": "Ethereum protocol research skill. Use when investigating Ethereum protocol, EVM, EIPs, hardforks, go-ethereum codebase, or Ethereum ecosystem research.",
-      "source": "./plugins/ethereum-research",
-      "category": "development"
-    },
-    {
-      "name": "solana-research",
-      "description": "Solana protocol research skill. Use when investigating Solana protocol, SVM, SIMDs, runtime internals, validator client codebase, or Solana ecosystem research.",
-      "source": "./plugins/solana-research",
+      "name": "blockchain-research",
+      "description": "Multi-chain blockchain protocol research skill. Use when investigating Ethereum (EVM, EIPs, go-ethereum, reth, revm, prysm), Solana (SVM, SIMDs, PoH, agave, SPL), or Tempo (TIP-20, MPP, Simplex BFT, Payment Lanes, Fee AMM).",
+      "source": "./plugins/blockchain-research",
       "category": "development"
     }
   ]

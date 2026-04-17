@@ -1,0 +1,8 @@
+{
+  "name": "blockchain-research",
+  "description": "Multi-chain blockchain protocol research skill. Use when investigating Ethereum (EVM, EIPs, go-ethereum, reth, revm, prysm), Solana (SVM, SIMDs, PoH, agave, SPL), or Tempo (TIP-20, MPP, Simplex BFT, Payment Lanes, Fee AMM).",
+  "author": {
+    "name": "bbaktaeho"
+  },
+  "version": "1.0.0"
+}
