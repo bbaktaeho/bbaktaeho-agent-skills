@@ -56,7 +56,7 @@ cat .gitmodules 2>/dev/null | grep -E "solana|agave|solana-program-library"
 
 ```bash
 ls -la <RESEARCH_ROOT>/
-cat .gitmodules 2>/dev/null | grep -E "tempo|tempo-go|mpp-go|mpp-rs"
+cat .gitmodules 2>/dev/null | grep -E "tempo|tempo-go|mpp-go|mpp-rs|tidx"
 ```
 
 If submodule directories exist and are non-empty, and `.gitmodules` contains the relevant entries, skip to the Verification section for that chain.
@@ -93,6 +93,7 @@ git submodule add https://github.com/tempoxyz/tempo.git <RESEARCH_ROOT>/tempo
 git submodule add https://github.com/tempoxyz/tempo-go.git <RESEARCH_ROOT>/tempo-go
 git submodule add https://github.com/tempoxyz/mpp-go.git <RESEARCH_ROOT>/mpp-go
 git submodule add https://github.com/tempoxyz/mpp-rs.git <RESEARCH_ROOT>/mpp-rs
+git submodule add https://github.com/tempoxyz/tidx.git <RESEARCH_ROOT>/tidx
 ```
 
 ## Post-Setup Initialization
@@ -144,6 +145,7 @@ ls <RESEARCH_ROOT>/tempo/crates/
 ls <RESEARCH_ROOT>/tempo-go/
 ls <RESEARCH_ROOT>/mpp-go/
 ls <RESEARCH_ROOT>/mpp-rs/crates/
+ls <RESEARCH_ROOT>/tidx/src/
 ```
 
 If any directory is empty, re-run:

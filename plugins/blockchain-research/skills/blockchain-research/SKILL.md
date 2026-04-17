@@ -98,6 +98,7 @@ references/tempo/src-tempo.md               -- tempo core blockchain code naviga
 references/tempo/src-tempo-go.md            -- tempo-go SDK code navigation
 references/tempo/src-mpp-go.md              -- mpp-go SDK code navigation
 references/tempo/src-mpp-rs.md              -- mpp-rs SDK code navigation
+references/tempo/src-tidx.md                -- tidx chain indexer (raw + indexed data, ABI decoding)
 references/tempo/web-tempo-docs.md          -- Tempo docs and blog access
 references/tempo/web-mpp.md                 -- MPP protocol docs access
 ```
@@ -119,4 +120,5 @@ references/tempo/web-mpp.md                 -- MPP protocol docs access
 - https://github.com/tempoxyz/tempo-go
 - https://github.com/tempoxyz/mpp-go
 - https://github.com/tempoxyz/mpp-rs
+- https://github.com/tempoxyz/tidx
 - https://mpp.dev

@@ -61,6 +61,7 @@ ls <RESEARCH_ROOT>/tempo/crates/ 2>/dev/null && echo "tempo: OK" || echo "tempo:
 ls <RESEARCH_ROOT>/tempo-go/ 2>/dev/null && echo "tempo-go: OK" || echo "tempo-go: MISSING"
 ls <RESEARCH_ROOT>/mpp-go/ 2>/dev/null && echo "mpp-go: OK" || echo "mpp-go: MISSING"
 ls <RESEARCH_ROOT>/mpp-rs/crates/ 2>/dev/null && echo "mpp-rs: OK" || echo "mpp-rs: MISSING"
+ls <RESEARCH_ROOT>/tidx/src/ 2>/dev/null && echo "tidx: OK" || echo "tidx: MISSING"
 ```
 
 If any submodule is missing, stop and instruct the user to complete setup. Refer them to `references/setup-submodules.md`. Do not proceed with research until all submodules for the target chain are present and non-empty.
@@ -136,6 +137,11 @@ If the update fails due to network issues, proceed with the locally cached versi
 | MPP session intent | mpp-go, mpp-rs | mpp-specs |
 | Go SDK / client integration | tempo-go | Tempo docs |
 | Zones (privacy layer) | tempo core, Tempo docs | Tempo blog |
+| On-chain data analysis (raw) | tidx `db/` schema, `src/types.rs` | Tempo docs |
+| Indexed data queries (SQL) | tidx `/query` API, `db/functions.sql` | tidx README |
+| Tempo-specific tx fields (fee delegation, nonce key, validity) | tidx `db/txs.sql`, `src/types.rs` | tempo core |
+| ABI event decoding | tidx `src/service/mod.rs`, `db/functions.sql` | tidx API |
+| Sync pipeline / reorg handling | tidx `src/sync/engine.rs` | -- |
 | General Tempo ecosystem | all Tempo web sources, relevant repos | Tempo blog |
 
 ### Source Navigation
@@ -166,6 +172,7 @@ For each selected source, use the corresponding reference file for navigation in
 - tempo-go SDK: see `references/tempo/src-tempo-go.md`
 - mpp-go SDK: see `references/tempo/src-mpp-go.md`
 - mpp-rs SDK: see `references/tempo/src-mpp-rs.md`
+- tidx indexer: see `references/tempo/src-tidx.md`
 - Tempo docs and blog: see `references/tempo/web-tempo-docs.md`
 - MPP protocol docs: see `references/tempo/web-mpp.md`
 
