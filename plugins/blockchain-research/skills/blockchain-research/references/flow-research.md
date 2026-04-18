@@ -144,6 +144,23 @@ If the update fails due to network issues, proceed with the locally cached versi
 | Sync pipeline / reorg handling | tidx `src/sync/engine.rs` | -- |
 | General Tempo ecosystem | all Tempo web sources, relevant repos | Tempo blog |
 
+### Indexing Source Selection Matrix
+
+When the question involves on-chain data indexing concerns (reorg / finality behavior, asset standards, RPC methods, protocol-level transfers, official indexers, event decoding, transaction envelopes, or state commitment), prefer `idx-*.md` references in addition to the chain-specific source matrices above.
+
+| Indexing Question | Primary Sources | Secondary Sources |
+|-------------------|-----------------|-------------------|
+| Reorg handling and finality | `idx-reorg-finality.md` + chain consensus src-* | `idx-state-access.md` |
+| Asset standards (ERC / SPL / TIP) | `idx-asset-standards.md` + chain src-* (ethereum src-eips, solana src-spl, tempo src-tempo) | chain docs |
+| RPC / API / subscription methods | `idx-rpc-api.md` + chain src-* | chain docs, tidx README for Tempo |
+| Protocol-level value movement | `idx-protocol-transfers.md` + chain consensus src-* | EIPs / SIMDs / TIPs |
+| Official indexer implementations | `idx-official-indexers.md` | chain blogs, `src-tidx.md` for Tempo |
+| Event / log / ABI / IDL decoding | `idx-event-decoding.md` + chain src-* | chain docs, tidx ABI registry for Tempo |
+| Transaction envelope / encoding | `idx-tx-envelope.md` + chain src-* | EIPs 2718 / 4844 / 7702, Solana versioned-tx spec, tempo-go tx builder |
+| Commitment / archive / pruning / state sync | `idx-state-access.md` + chain src-* | chain docs |
+
+Combine these rows with the chain-specific matrices as needed. A question of the form "How should an indexer handle reorgs on {chain}?" selects `idx-reorg-finality.md` plus the reorg row of the {chain} matrix.
+
 ### Source Navigation
 
 For each selected source, use the corresponding reference file for navigation instructions:

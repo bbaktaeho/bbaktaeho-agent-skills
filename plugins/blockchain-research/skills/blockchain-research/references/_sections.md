@@ -15,4 +15,7 @@ sections:
   - id: flow
     title: Research Flow
     prefix: flow
+  - id: indexing
+    title: Indexing
+    prefix: idx
 ---

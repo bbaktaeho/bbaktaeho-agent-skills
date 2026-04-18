@@ -1,12 +1,19 @@
 ---
 name: blockchain-research
 description: >
-  Multi-chain blockchain protocol research combining local submodule-based
-  source analysis with web research. Use when investigating Ethereum protocol,
-  EVM, EIPs, hardforks, go-ethereum, reth, revm, prysm; Solana protocol, SVM,
-  SIMDs, PoH, Tower BFT, Turbine, Sealevel, agave, SPL programs; or Tempo
-  chain, TIP-20, TIP-403, MPP (Machine Payments Protocol), Simplex BFT,
-  Payment Lanes, Fee AMM, Tempo Transactions, Zones.
+  Multi-chain blockchain protocol and on-chain data indexing research
+  combining local submodule-based source analysis with web research. Use
+  when investigating Ethereum protocol, EVM, EIPs, hardforks, go-ethereum,
+  reth, revm, prysm; Solana protocol, SVM, SIMDs, PoH, Tower BFT, Turbine,
+  Sealevel, agave, SPL programs; or Tempo chain, TIP-20, TIP-403, MPP
+  (Machine Payments Protocol), Simplex BFT, Payment Lanes, Fee AMM, Tempo
+  Transactions, Zones. Also use when researching on-chain data indexing
+  concerns: reorg handling, finality and commitment levels, ABI / IDL
+  decoding, asset standards (ERC-20, ERC-721, ERC-1155, SPL Token, TIP-20),
+  RPC / gRPC / WebSocket methods, protocol-level value movement (block
+  rewards, fee recipients, withdrawals, MEV payments), transaction envelope
+  formats, state access and archive / pruning, or official indexer
+  implementations (Blockscout, Helius, tidx).
 license: MIT
 metadata:
   author: bbaktaeho
@@ -33,6 +40,8 @@ Reference these guidelines when:
 - Investigating Solana protocol, SVM, PoH, Tower BFT, SIMDs, or SPL programs
 - Investigating Tempo chain, TIP-20, MPP, Simplex BFT, Payment Lanes, or Zones
 - Exploring client codebases (go-ethereum, reth, revm, prysm, agave, tempo, tempo-go)
+- Researching on-chain data indexing concerns (reorg, finality, asset standards, RPC, protocol-level transfers, event decoding, transaction envelopes, state commitment)
+- Comparing official indexer implementations across chains
 - Researching cross-chain comparisons or general blockchain ecosystem topics
 
 ## Skill Trigger Flow
@@ -64,6 +73,7 @@ See `references/flow-research.md` for the full research procedure.
 | 3 | Research Flow | CRITICAL | `flow-` |
 | 4 | Report | CRITICAL | `report-` |
 | 5 | Web Sources | HIGH | `web-` |
+| 6 | Indexing | HIGH | `idx-` |
 
 ## How to Use
 
@@ -74,6 +84,14 @@ Reference files are organized by chain under `references/`:
 | `setup-submodules.md` | Submodule setup and path config (all chains) |
 | `flow-research.md` | Research procedure and source selection (all chains) |
 | `report-template.md` | Research report format |
+| `idx-reorg-finality.md` | Reorg and finality model comparison (all chains) |
+| `idx-state-access.md` | Commitment levels, archive, pruning, state sync |
+| `idx-rpc-api.md` | RPC / gRPC / subscription method comparison |
+| `idx-tx-envelope.md` | Transaction envelope formats and encoding |
+| `idx-event-decoding.md` | Log / event / ABI / IDL decoding patterns |
+| `idx-asset-standards.md` | Token and asset standards (all chains) |
+| `idx-protocol-transfers.md` | Block rewards, fee recipients, withdrawals, MEV |
+| `idx-official-indexers.md` | Reference indexer implementations per chain |
 | `ethereum/` | src-go-ethereum, src-reth, src-revm, src-prysm, src-forkcast, src-eips, web-ethresearch, web-ethereum-blog, web-vitalik-blog, web-organmo-blog |
 | `solana/` | src-solana, src-agave, src-spl, web-solana-forum, web-solana-blog |
 | `tempo/` | src-tempo, src-tempo-go, src-mpp-go, src-mpp-rs, src-tidx, web-tempo-docs, web-mpp |

@@ -60,6 +60,20 @@ Example code reference formats:
 
 Use fenced code blocks for all source excerpts.
 
+### Indexing Considerations
+
+Include this section **only when** the question involves an indexer-oriented lens (reorg / finality, asset standards, RPC / API choice, protocol-level transfers, official indexers, event decoding, transaction envelopes, or state commitment).
+
+Cover the following where relevant:
+
+- **Reorg / finality implications** -- the confirmation depth or commitment level required; how rollback should be handled for the topic.
+- **RPC / API methods** -- specific methods or subscription channels recommended for the data in question.
+- **Decoding artifacts** -- ABI, IDL, schema, or other decoding inputs the indexer must obtain or maintain.
+- **Protocol-level value movement to track** -- block rewards, fee sinks, withdrawals, MEV payments, or protocol mints / burns relevant to the topic.
+- **Comparable official indexer(s)** -- reference implementations for the topic, with a pointer to `idx-official-indexers.md` for detail.
+
+If the question does **not** involve an indexing lens, omit this section entirely.
+
 ### Improvement Proposal / Protocol Change Mapping
 
 List related improvement proposals using a table. Use the appropriate proposal type for each chain:
