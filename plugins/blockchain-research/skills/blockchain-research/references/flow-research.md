@@ -64,7 +64,11 @@ ls <RESEARCH_ROOT>/mpp-rs/crates/ 2>/dev/null && echo "mpp-rs: OK" || echo "mpp-
 ls <RESEARCH_ROOT>/tidx/src/ 2>/dev/null && echo "tidx: OK" || echo "tidx: MISSING"
 ```
 
-If any submodule is missing, stop and instruct the user to complete setup. Refer them to `references/setup-submodules.md`. Do not proceed with research until all submodules for the target chain are present and non-empty.
+### Step 3: Auto-Initialize Missing Submodules (First Use)
+
+If any submodule reports MISSING in Step 2, **automatically** run the corresponding `git submodule add` + `git submodule update --init --recursive` commands from `references/setup-submodules.md` for the target chain. Do not stop to ask for permission -- submodule initialization is a required prerequisite for this skill and is expected to run on first use.
+
+After running the setup commands, re-run the Step 2 verification. If verification still fails (network failure, upstream repo moved, auth issues, etc.), report the specific failure to the user and point them to `references/setup-submodules.md` for manual recovery. Only proceed to Phase 2 when all submodules for the target chain are present and non-empty.
 
 ## Phase 2 -- Update
 
@@ -192,6 +196,35 @@ For each selected source, use the corresponding reference file for navigation in
 - tidx indexer: see `references/tempo/src-tidx.md`
 - Tempo docs and blog: see `references/tempo/web-tempo-docs.md`
 - MPP protocol docs: see `references/tempo/web-mpp.md`
+
+### Local-First Research Policy
+
+Once submodules are initialized, **always prefer local file access over web fetches** when investigating code-level questions. The submodules are the authoritative snapshot, they are already on disk, and local search is both faster and less restricted than `WebFetch`.
+
+Preferred tool order:
+
+1. `Grep` with `path` pointed at `<RESEARCH_ROOT>/{submodule}/` -- keyword or regex search across a codebase.
+2. `Glob` with `path` pointed at `<RESEARCH_ROOT>/{submodule}/` -- locate files by name pattern.
+3. `Read` with an absolute local path -- read specific files and line ranges.
+4. `WebFetch` against github.com or upstream docs -- only when the information is not in the submodule.
+
+Use local for:
+
+- "How does geth verify a block header?" -- Grep / Read in `<RESEARCH_ROOT>/go-ethereum/consensus/`.
+- "Where is the EIP-1559 base fee logic in reth?" -- Grep in `<RESEARCH_ROOT>/reth/crates/`.
+- "What does tidx index about Tempo fee delegation?" -- Read `<RESEARCH_ROOT>/tidx/src/types.rs`.
+- "Which SPL Token instructions exist?" -- Grep in `<RESEARCH_ROOT>/solana-program-library/token/program/`.
+- "What does prysm do during fork choice?" -- Grep in `<RESEARCH_ROOT>/prysm/beacon-chain/forkchoice/`.
+
+Use web for:
+
+- Forum or research threads (ethresear.ch, forum.solana.com).
+- Official blog posts (ethereum.org, solana.com, Anza, Paradigm, Tempo).
+- Open pull requests, issues, or release notes on GitHub.
+- Off-repo specifications (MPP specs, Yellow Paper).
+- Community discussion that the submodule itself does not contain.
+
+If you find yourself reaching for `WebFetch` on a code-level question, stop and check the local submodule first. Cite files with the `<RESEARCH_ROOT>/{repo}/{path}:{line}` format defined in `report-template.md`.
 
 ### Report Assembly
 

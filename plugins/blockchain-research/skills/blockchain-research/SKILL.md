@@ -48,13 +48,14 @@ Reference these guidelines when:
 
 1. **Chain Detection** -- determine which chain(s) to research based on the question
 2. **Path Resolution** -- ask user for submodule root path or use defaults (see `references/setup-submodules.md`)
-3. **Setup Check** -- verify submodules exist at the resolved path
+3. **Auto-Initialize on First Use** -- if any submodule is missing, automatically run the setup commands from `references/setup-submodules.md`. Do not ask first; initialization is a required prerequisite for this skill
 4. **Update** -- run `git submodule update --remote`, report changes
-5. **Research** -- combine sources per question type, output structured report
+5. **Research (local-first)** -- prefer `Grep` / `Glob` / `Read` over local `<RESEARCH_ROOT>/{submodule}/` paths. Use `WebFetch` only when the answer is not in the submodule (forum threads, blog posts, PRs, off-repo specs)
+6. **Report** -- output structured report per `references/report-template.md`
 
 All reference files use `<RESEARCH_ROOT>` as a placeholder for the per-chain submodule root path.
 
-See `references/flow-research.md` for the full research procedure.
+See `references/flow-research.md` for the full research procedure, including auto-initialization and local-first policy.
 
 ## Supported Chains
 
