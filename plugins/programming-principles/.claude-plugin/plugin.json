@@ -1,6 +1,6 @@
 {
   "name": "programming-principles",
-  "description": "Programming principles and philosophy based on Rob Pike's 5 Rules of Programming. Use when making optimization decisions, choosing between simple and complex algorithms, designing data structures, or evaluating performance tuning approaches.",
+  "description": "Programming principles and philosophy based on Rob Pike's 5 Rules of Programming. Use when making optimization decisions, choosing between simple and complex algorithms, designing data structures, evaluating performance tuning approaches, reviewing code for unnecessary complexity, or pushing back on premature optimization and over-engineering.",
   "author": {
     "name": "bbaktaeho"
   },

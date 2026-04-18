@@ -1,12 +1,12 @@
 ---
 name: golang-best-practices
-description: Idiomatic Go patterns, best practices, and conventions for building robust, efficient, and maintainable Go applications. Use this skill when writing, reviewing, or optimizing Go code, designing packages, writing tests, or benchmarking performance.
+description: Idiomatic Go patterns and conventions for writing robust, efficient, and maintainable Go code. Use whenever working on .go files or Go modules - writing or reviewing Go code, designing packages or interfaces, handling errors, building concurrent code with goroutines/channels/context, writing table-driven tests, benchmarks or fuzz tests, tuning memory and performance, modernizing code with go fix, or configuring go vet, staticcheck, and golangci-lint.
 license: MIT
 metadata:
   author: bbaktaeho
   version: "1.0.0"
-  date: March 2026
-  abstract: Comprehensive Go development guide covering idiomatic patterns across 14 categories, prioritized by impact from critical (error handling, concurrency) to medium (tooling, anti-patterns). Each reference includes detailed explanations, incorrect vs. correct Go examples, and specific guidance to enable automated code generation and review.
+  date: April 2026
+  abstract: Go development guide covering idiomatic patterns across 14 categories, prioritized by impact from critical (error handling, concurrency, table-driven tests) to medium (tooling, anti-patterns). Each reference includes concise explanations and Go code examples to guide code generation and review.
 ---
 
 # Go Development Patterns
@@ -46,21 +46,7 @@ Reference these guidelines when:
 
 ## How to Use
 
-Read individual rule files for detailed explanations and Go examples:
-
-```
-references/error-handling.md
-references/concurrency.md
-references/testing-patterns.md
-references/_sections.md
-```
-
-Each rule file contains:
-
-- Brief explanation of why it matters
-- Incorrect Go example with explanation
-- Correct Go example with explanation
-- Additional context and best practices
+Load only the references relevant to the current task. Start with `references/_sections.md` for the full category map, then open files by prefix (for example `err-*`, `conc-*`, `tpat-*`). Each reference contains a short rationale plus Go code examples; some include explicit Bad vs Good comparisons.
 
 ## Core Idioms
 

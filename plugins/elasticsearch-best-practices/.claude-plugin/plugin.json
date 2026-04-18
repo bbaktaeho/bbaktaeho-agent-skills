@@ -1,6 +1,6 @@
 {
   "name": "elasticsearch-best-practices",
-  "description": "Elasticsearch development best practices for indexing, querying, mapping, and search optimization. Use when designing indices, writing queries, configuring analyzers, or optimizing Elasticsearch cluster performance.",
+  "description": "Elasticsearch best practices covering mapping, query DSL, index settings, bulk indexing, analyzers, shard sizing, aggregations, pagination, ILM, aliases, and cluster monitoring. Use when designing or changing index mappings, writing or tuning search queries, configuring analyzers, planning shards, building bulk indexing pipelines, or diagnosing Elasticsearch performance issues.",
   "author": {
     "name": "bbaktaeho"
   },

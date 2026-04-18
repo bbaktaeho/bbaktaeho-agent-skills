@@ -93,9 +93,9 @@ Reference files are organized by chain under `references/`:
 | `idx-asset-standards.md` | Token and asset standards (all chains) |
 | `idx-protocol-transfers.md` | Block rewards, fee recipients, withdrawals, MEV |
 | `idx-official-indexers.md` | Reference indexer implementations per chain |
-| `ethereum/` | src-go-ethereum, src-reth, src-revm, src-prysm, src-forkcast, src-eips, web-ethresearch, web-ethereum-blog, web-vitalik-blog, web-organmo-blog |
-| `solana/` | src-solana, src-agave, src-spl, web-solana-forum, web-solana-blog |
-| `tempo/` | src-tempo, src-tempo-go, src-mpp-go, src-mpp-rs, src-tidx, web-tempo-docs, web-mpp |
+| `ethereum/` | Per-source navigation for go-ethereum, reth, revm, prysm, forkcast, EIPs + ethresear.ch, Ethereum/Vitalik/organmo blogs |
+| `solana/` | Per-source navigation for solana, agave, solana-program-library + forum.solana.com, Solana/Anza blogs |
+| `tempo/` | Per-source navigation for tempo, tempo-go, mpp-go, mpp-rs, tidx + Tempo docs, MPP spec |
 
 ## References
 
