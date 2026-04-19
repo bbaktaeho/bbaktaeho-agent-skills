@@ -1,15 +1,19 @@
 ---
 name: agent-instructions-setup
 description: >
-  Initialize AI coding agent instruction files for a project.
-  Creates AGENTS.md as the single source of truth, generates symlinks for 7
-  tool-specific files (CLAUDE.md, .cursorrules, .windsurfrules, .clinerules,
-  GEMINI.md, .github/copilot-instructions.md, .agent/rules/rules.md), and
-  scaffolds docs/guide.md and docs/workflow.md from dev or docs templates.
-  Use this skill when initializing a new project for AI-assisted development,
-  bootstrapping AGENTS.md, unifying instruction files across Claude Code,
-  Cursor, Copilot, Windsurf, Cline, Gemini CLI, Codex, Zed, or Antigravity,
-  or migrating existing CLAUDE.md / .cursorrules into a single AGENTS.md.
+  Initialize AI coding agent instruction files for a project. Creates AGENTS.md
+  as the single source of truth, generates symlinks for 7 tool-specific files
+  (CLAUDE.md, .cursorrules, .windsurfrules, .clinerules, GEMINI.md,
+  .github/copilot-instructions.md, .agent/rules/rules.md), and scaffolds
+  docs/guide.md and docs/workflow.md from dev or docs templates. Make sure to
+  use this skill whenever the user wants to initialize a new project for
+  AI-assisted development, bootstrap AGENTS.md, unify or consolidate
+  instruction files across Claude Code, Cursor, Copilot, Windsurf, Cline,
+  Gemini CLI, Codex, Zed, or Antigravity, migrate existing CLAUDE.md /
+  .cursorrules / .windsurfrules into a single AGENTS.md, or set up coding
+  conventions and workflow docs for multiple AI tools - even if they only
+  mention one tool by name or ask generically about "AI rules" or "agent
+  config".
 license: MIT
 metadata:
   author: bbaktaeho
