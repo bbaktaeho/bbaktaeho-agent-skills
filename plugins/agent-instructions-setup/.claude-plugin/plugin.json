@@ -1,6 +1,6 @@
 {
   "name": "agent-instructions-setup",
-  "description": "AI coding agent instruction file init setup. Creates AGENTS.md, symlinks for 8 AI tools, and docs/ structure. Use when initializing a new project for AI-assisted development.",
+  "description": "Initialize AI coding agent instruction files. Creates AGENTS.md as the single source of truth, 7 symlinks covering 9 AI tools (Claude Code, Cursor, Copilot, Windsurf, Cline, Gemini CLI, Codex, Zed, Antigravity), and scaffolds docs/guide.md and docs/workflow.md. Make sure to use this skill whenever the user wants to initialize a new project for AI-assisted development, bootstrap AGENTS.md, unify instruction files across multiple AI tools, or migrate existing CLAUDE.md / .cursorrules / .windsurfrules into a single AGENTS.md - even if they only mention one tool by name or ask generically about 'AI rules' or 'agent config'.",
   "author": {
     "name": "bbaktaeho"
   },

@@ -1,6 +1,6 @@
 ---
 name: postgres-best-practices
-description: Postgres performance optimization and best practices from Supabase. Use this skill when writing, reviewing, or optimizing Postgres queries, schema designs, or database configurations.
+description: Postgres performance optimization and best practices from Supabase, covering indexes, query plans, connection pooling, RLS, schema design, locking, and monitoring. Use this skill whenever writing, reviewing, or optimizing Postgres SQL, migrations, indexes, RLS policies, or connection configuration, and when diagnosing slow queries or deadlocks.
 license: MIT
 metadata:
   author: supabase
@@ -44,7 +44,7 @@ Read individual rule files for detailed explanations and SQL examples:
 
 ```
 references/query-missing-indexes.md
-references/schema-partial-indexes.md
+references/query-partial-indexes.md
 references/_sections.md
 ```
 
@@ -55,7 +55,6 @@ Each rule file contains:
 - Correct SQL example with explanation
 - Optional EXPLAIN output or metrics
 - Additional context and references
-- specific notes (when applicable)
 
 ## References
 

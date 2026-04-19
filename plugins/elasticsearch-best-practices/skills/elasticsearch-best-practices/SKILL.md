@@ -1,6 +1,6 @@
 ---
 name: elasticsearch-best-practices
-description: Elasticsearch development best practices for indexing, querying, mapping, and search optimization. Use this skill when designing indices, writing queries, configuring analyzers, or optimizing Elasticsearch cluster performance.
+description: Elasticsearch best practices covering mapping, query DSL, index settings, bulk indexing, analyzers, shard sizing, aggregations, pagination, ILM, aliases, and cluster monitoring. Use this skill whenever designing or changing Elasticsearch index mappings, writing or tuning search/aggregation queries, configuring analyzers or tokenizers, planning shards and replicas, building bulk indexing pipelines, setting up autocomplete or highlighting, implementing reindex/ILM, or diagnosing cluster and query performance issues.
 license: MIT
 metadata:
   author: bbaktaeho
@@ -47,16 +47,36 @@ Reference these guidelines when:
 Read individual rule files for detailed explanations and JSON examples:
 
 ```
+references/_sections.md                     # Section definitions
+
 references/mapping-explicit.md              # Explicit mapping, field types
 references/mapping-storage-optimization.md  # index, doc_values, _source tuning
+
 references/query-bool-filter.md             # Filter context caching
 references/query-term-vs-match.md           # Query type vs field type
-references/index-shard-sizing.md            # Shard sizing guidelines
+references/query-multi-match.md             # Multi-field search and boosting
+
+references/index-settings.md                # refresh_interval, translog, merge
+references/index-shard-sizing.md            # Shard sizing and oversharding
+references/index-lifecycle.md               # ILM for time-series data
+
 references/bulk-indexing.md                 # Bulk API throughput
-references/analysis-custom.md              # Custom analyzers
-references/perf-segment-merge.md           # Segment merge optimization
-references/perf-pagination.md              # search_after pagination
-references/_sections.md                    # Section definitions
+references/bulk-updates.md                  # Partial updates, update-by-query
+
+references/analysis-custom.md               # Custom analyzers and tokenizers
+
+references/perf-segment-merge.md            # Segment merge and force-merge
+references/perf-pagination.md               # search_after vs from/size
+references/perf-source-filtering.md         # _source filtering, doc_values
+
+references/search-autocomplete.md           # Completion suggester
+references/search-highlighting.md           # Result highlighting
+
+references/agg-patterns.md                  # Aggregation scoping and sizing
+
+references/monitor-cluster-health.md        # cat API, stats, slow log
+references/security-roles.md                # Index/field-level security
+references/alias-reindex.md                 # Aliases and zero-downtime reindex
 ```
 
 Each rule file contains:

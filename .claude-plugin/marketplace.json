@@ -13,7 +13,7 @@
     },
     {
       "name": "elasticsearch-best-practices",
-      "description": "Elasticsearch development best practices for indexing, querying, mapping, and search optimization. Use when designing indices, writing queries, configuring analyzers, or optimizing Elasticsearch cluster performance.",
+      "description": "Elasticsearch best practices covering mapping, query DSL, index settings, bulk indexing, analyzers, shard sizing, aggregations, pagination, ILM, aliases, and cluster monitoring. Use when designing or changing index mappings, writing or tuning search queries, configuring analyzers, planning shards, building bulk indexing pipelines, or diagnosing Elasticsearch performance issues.",
       "source": "./plugins/elasticsearch-best-practices",
       "category": "development"
     },
@@ -25,19 +25,19 @@
     },
     {
       "name": "agent-instructions-setup",
-      "description": "AI coding agent instruction file setup and management. Configures AGENTS.md as single source of truth and creates symlinks for tool-specific files. Use when initializing a new project for AI-assisted development.",
+      "description": "Initialize AI coding agent instruction files. Creates AGENTS.md as the single source of truth, 7 symlinks covering 9 AI tools (Claude Code, Cursor, Copilot, Windsurf, Cline, Gemini CLI, Codex, Zed, Antigravity), and scaffolds docs/guide.md and docs/workflow.md. Make sure to use this skill whenever the user wants to initialize a new project for AI-assisted development, bootstrap AGENTS.md, unify instruction files across multiple AI tools, or migrate existing CLAUDE.md / .cursorrules / .windsurfrules into a single AGENTS.md - even if they only mention one tool by name or ask generically about 'AI rules' or 'agent config'.",
       "source": "./plugins/agent-instructions-setup",
       "category": "productivity"
     },
     {
       "name": "programming-principles",
-      "description": "Programming principles and philosophy based on Rob Pike's 5 Rules of Programming. Use when making optimization decisions, choosing between simple and complex algorithms, designing data structures, or evaluating performance tuning approaches.",
+      "description": "Programming principles and philosophy based on Rob Pike's 5 Rules of Programming, with related wisdom from Tony Hoare, Ken Thompson, and Fred Brooks. Make sure to use this skill whenever the user is making optimization decisions, choosing between simple and complex algorithms, designing data structures, evaluating performance tuning approaches, reviewing code for unnecessary complexity, or pushing back on premature optimization and over-engineering - even if they do not explicitly mention Pike, principles, or philosophy.",
       "source": "./plugins/programming-principles",
       "category": "development"
     },
     {
       "name": "blockchain-research",
-      "description": "Multi-chain blockchain protocol and on-chain data indexing research skill. Use when investigating Ethereum (EVM, EIPs, go-ethereum, reth, revm, prysm), Solana (SVM, SIMDs, PoH, agave, SPL), or Tempo (TIP-20, MPP, Simplex BFT, Payment Lanes, Fee AMM); or when researching indexing concerns (reorg, finality, ABI/IDL, asset standards, RPC, protocol-level transfers, tx envelopes, state access).",
+      "description": "Multi-chain blockchain protocol and on-chain data indexing research skill. Make sure to use this skill whenever the user is investigating Ethereum (EVM, EIPs, go-ethereum, reth, revm, prysm), Solana (SVM, SIMDs, PoH, agave, SPL), or Tempo (TIP-20, MPP, Simplex BFT, Payment Lanes, Fee AMM), or when indexing concerns come up (reorg, finality, ABI/IDL, asset standards, RPC, protocol-level transfers, tx envelopes, state access) - even if they just ask 'how does X work' or 'why does Y behave this way' without the word 'research'.",
       "source": "./plugins/blockchain-research",
       "category": "development"
     }

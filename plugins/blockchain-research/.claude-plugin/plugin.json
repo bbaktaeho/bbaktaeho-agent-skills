@@ -1,6 +1,6 @@
 {
   "name": "blockchain-research",
-  "description": "Multi-chain blockchain protocol and on-chain data indexing research skill. Use when investigating Ethereum (EVM, EIPs, go-ethereum, reth, revm, prysm), Solana (SVM, SIMDs, PoH, agave, SPL), or Tempo (TIP-20, MPP, Simplex BFT, Payment Lanes, Fee AMM); or when researching indexing concerns (reorg, finality, ABI/IDL, asset standards, RPC, protocol-level transfers, tx envelopes, state access).",
+  "description": "Multi-chain blockchain protocol and on-chain data indexing research skill. Make sure to use this skill whenever the user is investigating Ethereum (EVM, EIPs, go-ethereum, reth, revm, prysm), Solana (SVM, SIMDs, PoH, agave, SPL), or Tempo (TIP-20, MPP, Simplex BFT, Payment Lanes, Fee AMM), or when indexing concerns come up (reorg, finality, ABI/IDL, asset standards, RPC, protocol-level transfers, tx envelopes, state access) - even if they just ask 'how does X work' or 'why does Y behave this way' without the word 'research'.",
   "author": {
     "name": "bbaktaeho"
   },

@@ -1,6 +1,6 @@
 {
   "name": "postgres-best-practices",
-  "description": "Postgres performance optimization and best practices. Use when writing, reviewing, or optimizing Postgres queries, schema designs, or database configurations.",
+  "description": "Postgres performance optimization and best practices from Supabase, covering indexes, query plans, connection pooling, RLS, schema design, locking, and monitoring. Use when writing, reviewing, or optimizing Postgres SQL, migrations, indexes, RLS policies, or connection configuration.",
   "author": {
     "name": "bbaktaeho"
   },
