@@ -4,19 +4,16 @@ description: >
   Multi-chain blockchain protocol and on-chain data indexing research
   combining local submodule-based source analysis with web research. Make
   sure to use this skill whenever the user is investigating Ethereum
-  protocol, EVM, EIPs, hardforks, go-ethereum, reth, revm, prysm; Solana
-  protocol, SVM, SIMDs, PoH, Tower BFT, Turbine, Sealevel, agave, SPL
-  programs; or Tempo chain, TIP-20, TIP-403, MPP (Machine Payments
-  Protocol), Simplex BFT, Payment Lanes, Fee AMM, Tempo Transactions,
-  Zones - even if they do not mention "research" explicitly and just ask
-  "how does X work" or "why does Y behave this way". Also use whenever
-  on-chain data indexing concerns come up: reorg handling, finality and
-  commitment levels, ABI / IDL decoding, asset standards (ERC-20, ERC-721,
-  ERC-1155, SPL Token, TIP-20), RPC / gRPC / WebSocket methods,
-  protocol-level value movement (block rewards, fee recipients,
-  withdrawals, MEV payments), transaction envelope formats, state access
-  and archive / pruning, or official indexer implementations (Blockscout,
-  Helius, tidx).
+  (EVM, EIPs, hardforks, go-ethereum, reth, revm, prysm), Solana (SVM,
+  SIMDs, PoH, Tower BFT, Turbine, Sealevel, agave, SPL), or Tempo (TIP-20,
+  TIP-403, MPP, Simplex BFT, Payment Lanes, Fee AMM, Zones) - even if
+  they just ask "how does X work" or "why does Y behave this way" without
+  the word "research". Also use whenever on-chain data indexing concerns
+  come up: reorg handling, finality, ABI/IDL decoding, asset standards
+  (ERC-20/721/1155, SPL Token), RPC/gRPC/WebSocket methods, protocol-level
+  value movement (rewards, fees, withdrawals, MEV), transaction envelopes,
+  state access and archive/pruning, or official indexer implementations
+  (Blockscout, Helius, tidx).
 license: MIT
 metadata:
   author: bbaktaeho
