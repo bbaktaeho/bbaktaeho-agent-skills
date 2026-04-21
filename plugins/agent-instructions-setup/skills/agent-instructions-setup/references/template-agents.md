@@ -66,3 +66,38 @@ references/link-symlink-strategy.md 의 "병합 절차" 에 따라 기존 파일
 - 프로젝트 구조·모듈 설명은 AGENTS.md 가 아니라 `agents/stack.md` 또는 `agents/structure.md` 로 옮긴다
 - 워크플로우·PR 규칙은 `agents/workflow.md` 로 옮긴다
 - AGENTS.md 는 끝까지 라우팅 루트로만 남긴다
+
+## 팀 모드 AGENTS.md 변형
+
+Q10=y (팀 모드) 선택 시 AGENTS.md 에 `Ownership` 섹션을 추가한다.
+
+```markdown
+## Ownership
+
+- agents/ 의 owner: `.github/CODEOWNERS` 참고
+- agents/ 변경은 PR 리뷰 필수 (팀 규모별 승인 수: agents/workflow.md)
+- 거버넌스 원칙 요약: agents/guide.md 의 "문서 진화" 섹션
+- 민감 정보 redaction 규칙: agents/security.md
+```
+
+또한 `Directory Map` 섹션에 팀 전용 파일이 추가된다:
+
+```markdown
+## Directory Map
+
+- AGENTS.md — 이 파일. 라우팅 루트
+- agents/guide.md — 문서 진입점·라우팅 테이블
+- agents/workflow.md — 작업 워크플로우
+- agents/onboarding.md — 신규 입사자 진입 (팀 모드)
+- agents/team.md — 팀 구조·Owner (팀 모드)
+- agents/glossary.md — 도메인 용어 (팀 모드)
+- agents/security.md — 민감 정보 금지 규칙 (팀 모드)
+- agents/stack.md — 기술 스택 상세 (팀 모드 또는 필요 시)
+- agents/decisions/ — ADR (T3=adr 선택 시)
+- agents/rfc/ — RFC (T3=rfc 선택 시)
+- agents/runbook/ — 운영 플레이북 (T3=runbook 선택 시)
+- agents/postmortem/ — 인시던트 포스트모템 (T3=postmortem 선택 시)
+- agents/*.md — 기타 주제별 상세 (각 파일 frontmatter description 참고)
+```
+
+Directory Map 에서 비선택 항목은 포함하지 않는다.

@@ -70,3 +70,44 @@ agents/ 하위 파일은 각 파일 상단의 frontmatter `description` 으로 �
 4. 문서 진화 섹션은 references/evolve-principles.md 의 축약 버전이다. 사용자가 셋업 이후 guide.md 만 봐도 규칙을 따를 수 있도록 포함한다
 5. guide.md 가 80줄 넘으면 가장 긴 섹션을 별도 파일로 분리하고 해당 섹션은 링크만 남긴다
 6. "기술 스택" 과 "디렉토리 맵" 은 분량이 커지면 반드시 `agents/stack.md`, `agents/structure.md` 로 분리한다
+
+## 팀 모드 확장 (Q10=y)
+
+팀 모드 선택 시 라우팅 테이블에 아래 행을 추가한다 (해당 문서가 생성된 경우만).
+
+```
+| Onboarding | agents/onboarding.md |
+| 팀 구조·Owner | agents/team.md |
+| 용어 확인 | agents/glossary.md |
+| agents/ 에 쓰기 전 | agents/security.md |
+| 기술 스택 상세 | agents/stack.md |
+| 과거 기술 결정 | agents/decisions/ (최근 3개는 guide.md 에 직접 링크) |
+| 설계 제안 | agents/rfc/ (Under Review 만 guide.md 에 직접 링크) |
+| 장애 대응·배포 | agents/runbook/ |
+| 인시던트 학습 | agents/postmortem/ |
+```
+
+"최근 ADR" / "Active RFC" 는 별도 미니 섹션으로 guide.md 에 포함한다 (최대 3개).
+
+```markdown
+## 최근 ADR
+
+- [ADR-007 {제목}](decisions/007-...) — {1줄 요약}
+- [ADR-006 {제목}](decisions/006-...)
+- [ADR-005 {제목}](decisions/005-...)
+
+전체 목록: agents/decisions/
+```
+
+팀 모드의 "문서 진화" 섹션에는 거버넌스 요약이 추가된다.
+
+```markdown
+## 문서 진화
+
+- 새 문서 추가: agents/{topic}.md. 라우팅 테이블에 한 줄 추가
+- 300줄 초과 또는 주제 혼재: agents/{topic}/{N}-{name}.md 로 분해
+- 수정 시 frontmatter `updated` 갱신
+- 삭제는 금지. 대신 agents/archive/ 로 이동 (ADR 은 Status 만 변경)
+- agents/ PR 은 최소 1명 승인 (팀 규모별 규칙: agents/workflow.md)
+- 민감 정보 금지: agents/security.md
+```

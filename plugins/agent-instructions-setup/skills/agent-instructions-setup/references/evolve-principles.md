@@ -94,3 +94,136 @@ agents/guide.md 의 라우팅 테이블은 프로젝트 문서 진입점이다.
 - 300줄 한도는 "당장" 지킨다
 - description 은 검색 키다. 공들여 작성한다
 - 구조를 유지하는 비용은 작고, 무너진 뒤 복구 비용은 크다
+
+## 팀 모드 추가 원칙
+
+팀에서 agents/ 를 운영할 때는 위 원칙에 더해 references/rule-team-governance.md 의 5 원칙을 적용한다.
+
+### Freshness 리뷰 (분기별)
+
+분기에 한 번 agents/ freshness 를 리뷰한다.
+
+1. `updated` 가 90일 이상 된 문서 목록 추출
+2. 각 문서를 Owner 가 검토:
+   - 여전히 유효 → `updated` 갱신만
+   - 수정 필요 → 수정 후 `updated` 갱신
+   - 더 이상 유효 X → deprecate 또는 archive
+3. ADR 은 Status 확인 (Accepted 상태가 여전히 유효한지)
+4. 리뷰 결과를 agents/postmortem/ 이 아닌 간단한 log 로 agents/changelog.md 에 기록 (선택)
+
+### Archive, Not Delete
+
+팀 맥락에서 문서 삭제는 역사 소실이다.
+
+- ADR: Status 변경만. 삭제 X
+- Runbook: `agents/runbook/archive/` 이동
+- RFC (기각/철회): Status 변경 + 그대로 유지
+- Postmortem: 영구 보존 (해당 사건의 맥락)
+- 기타: `agents/archive/` 이동
+
+archive 된 문서는 agents/guide.md 라우팅 테이블에서 제거하지만 파일은 남긴다.
+
+### PR 리뷰 규칙 (팀 규모별)
+
+rule-team-governance.md 의 Sign-Off 규칙 적용.
+
+| 팀 규모 | agents/ PR 승인 수 |
+|---------|--------------------|
+| solo | 0 |
+| small (2-5) | 1 |
+| medium (6-15) | 1 + owner |
+| large (16+) | 2 (owner 1명 포함) |
+
+이 규칙은 agents/workflow.md 의 PR 섹션에도 반영된다.
+
+### Redaction 확인
+
+팀 모드에서는 모든 agents/ PR 에서 민감 정보 혼입을 체크한다.
+
+- references/template-security.md 의 grep 패턴 활용
+- 반복 실수 발견 시 CI 에 자동 검사 step 추가
+
+### 신규 AI 도구 추가 시 팀 동기화
+
+개인 판단으로 AI 도구를 추가하지 않는다.
+
+1. 추가 제안은 short RFC (`agents/rfc/*.md`) 또는 Slack 논의
+2. 팀 합의 후 `.github/CODEOWNERS`, `.gitignore`, 심링크 반영
+3. agents/guide.md 의 "사용 도구" 섹션 업데이트
+
+### ADR / RFC / Postmortem 의 evolve
+
+이 세 종류는 일반 문서와 다른 evolve 규칙을 따른다.
+
+- **ADR**: Accepted 이후 본문 수정 금지. 번복은 새 ADR 로 Supersede
+- **RFC**: Under Review 에서 Accepted 전환 시 ADR 로 추출
+- **Postmortem**: Action Items 만 Status 갱신. 본문은 불변
+
+상세: references/template-decision.md, references/template-rfc.md, references/template-postmortem.md
+
+## 허브 모드 추가 원칙
+
+허브 (cross-project knowledge base) 를 운영할 때는 위 원칙에 더해 references/rule-hub-principles.md 의 6 원칙을 적용한다.
+
+### Project Registry Sync
+
+`agents/projects/{name}.md` 는 원본이 아니라 메타-인덱스다.
+
+- 프로젝트 레포의 상태 변경 (owner·stack·status) → 허브 registry 도 갱신
+- 분기별 registry 전수 리뷰:
+  - Owner 가 여전히 유효한가
+  - Status 가 정확한가 (active/maintenance/archived)
+  - Stack 이 실제와 일치하는가
+  - Depends On / Depended By 링크가 살아있는가
+- 90일 이상 `updated` 없는 registry 항목은 archive 후보
+
+### Registry 갱신 트리거
+
+- 프로젝트 레포의 AGENTS.md 변경 (대규모 변경 시)
+- Owner 변경
+- Stack 주요 변경
+- Status 변경
+- 새 ADR 이 해당 프로젝트에 중대한 영향
+
+자동화 옵션 (HUB6=automated): CI 가 각 프로젝트 레포의 변경을 감지하여 허브에 PR 자동 생성.
+
+### Cross-Project ADR vs Project ADR
+
+- 단일 프로젝트에만 영향 → 해당 프로젝트의 agents/decisions/
+- 여러 프로젝트에 영향 (예: API 계약 변경, 공유 기술 결정) → 허브의 agents/decisions/
+- 애매하면 허브에 올리고 각 프로젝트의 agents/decisions/ 에는 링크만
+
+### Tech Radar 갱신
+
+`agents/tech-radar.md` 상태 변경은 반드시 ADR 동반.
+
+- Approved → Deprecated: 마이그레이션 기한 포함 ADR
+- Deprecated → Banned: 기한 경과 또는 새 리스크 발견
+- Experimental → Approved: pilot 결과 ADR
+
+사용자 요청이 Deprecated/Banned 기술 사용이면 agent 는 거부하지 말고 agents/tech-radar.md 의 이유를 인용하며 대안 제시.
+
+### 프로젝트 Archive 절차
+
+프로젝트가 종료되면.
+
+1. 프로젝트 registry 의 Status 를 `archived` 로 변경
+2. `agents/projects/archived/{name}.md` 로 파일 이동
+3. agents/guide.md 의 프로젝트 대시보드에서 제거
+4. 다른 프로젝트의 `Depends On` 에 이 프로젝트가 있는지 grep 후 대체 경로 명시
+5. 허브 agents/decisions/ 에 archive 결정 ADR (선택, 하지만 권장)
+
+### 허브 owner 책임
+
+허브 owner 는 위 sync 를 주기적으로 확인. Owner 없는 허브는 3개월 내 부패한다.
+
+- CODEOWNERS 에 최소 2명 (bus factor)
+- 분기별 30분 freshness 리뷰 회의
+- 리뷰 결과는 허브 agents/changelog.md 에 간단히 기록 (선택)
+
+### 허브 vs 프로젝트 정보 상충 시
+
+허브와 프로젝트 내용이 불일치하면 **프로젝트가 우선**.
+
+- 발견 시 허브 registry 를 프로젝트 실제 상태로 갱신
+- 상충 자체가 허브가 썩고 있다는 신호 — sync 자동화 검토

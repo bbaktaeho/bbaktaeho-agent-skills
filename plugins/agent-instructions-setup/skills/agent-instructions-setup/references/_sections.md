@@ -3,6 +3,12 @@ sections:
   - id: findability
     title: AI Findability Philosophy
     prefix: rule
+  - id: team-governance
+    title: Team Governance Principles
+    prefix: rule
+  - id: hub-principles
+    title: Team Knowledge Hub Principles
+    prefix: rule
   - id: file-mapping
     title: AI Tool File Path Mapping
     prefix: map

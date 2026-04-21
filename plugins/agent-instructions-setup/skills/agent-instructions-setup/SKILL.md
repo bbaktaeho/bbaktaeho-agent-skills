@@ -1,29 +1,36 @@
 ---
 name: agent-instructions-setup
 description: >
-  AI coding agent instruction file init and retrofit. Creates AGENTS.md as the
+  AI coding agent instruction file init and retrofit across three modes: solo,
+  project-team, and cross-project knowledge hub. Creates AGENTS.md as the
   single source of truth, symlinks across major AI tools (Claude Code, Cursor,
-  Copilot, Windsurf, Cline, Roo Code, Gemini CLI, Codex, Zed, Antigravity, Amp,
-  Aider, Continue), and agents/ directory optimized for AI discoverability
-  (routing index + workflow). Make sure to use this skill whenever the user
-  wants to initialize a new project for AI-assisted development, bootstrap
-  AGENTS.md, unify or consolidate instruction files across multiple AI tools,
-  retrofit an existing project with AGENTS.md and agents/, add a new AI tool
-  to an existing setup, migrate CLAUDE.md / .cursorrules / .windsurfrules into
-  a single AGENTS.md, or evolve agents/ docs after initial setup - even if
-  they only mention one tool by name or ask generically about "AI rules" or
-  "agent config".
+  Copilot, Windsurf, Cline, Roo Code, Gemini CLI, Codex, Zed, Antigravity,
+  Amp, Aider, Continue), and an AI-first agents/ directory. Project-team mode
+  adds onboarding, ADR, RFC, runbook, postmortem, glossary, security, and
+  CODEOWNERS. Hub mode builds a cross-project catalog with project registry,
+  tech radar, shared libraries, infrastructure map, cross-service incident
+  response, and org-level ADRs - a single AI entry point for teams managing
+  multiple repos. Make sure to use this skill whenever the user wants to
+  initialize a new project, bootstrap AGENTS.md, unify instruction files
+  across AI tools, retrofit an existing project, set up a team shared knowledge
+  base, create a team knowledge hub across multiple projects, or evolve
+  agents/ docs - even if they only mention one tool by name or ask generically
+  about "AI rules" or "agent config".
 license: MIT
 metadata:
   author: bbaktaeho
-  version: "3.0.0"
+  version: "3.2.0"
   date: April 2026
   abstract: >
-    Init and retrofit skill for AI coding agent instruction files. Phase 0 scans
-    state, Phase 1 sets up AGENTS.md and idempotent symlinks, Phase 2 interactively
-    generates agents/guide.md (routing index) and agents/workflow.md from modular
-    templates, Phase 3 verifies. Philosophy: optimize docs for agent findability
-    rather than prescribing agent behavior.
+    Init and retrofit skill with three modes: solo, project-team, hub. Phase
+    0 scans state, Phase 1 sets up AGENTS.md and idempotent symlinks, Phase 2
+    interactively generates agents/guide.md (routing index) and workflow.
+    Phase 2B (project-team): onboarding, team, glossary, security, plus
+    ADR/RFC/runbook/postmortem templates and CODEOWNERS. Phase 2C (hub):
+    project registry, tech-radar, shared-libraries, infrastructure,
+    cross-service incident-response, org-level ADR. Phase 3 verifies.
+    Philosophy: AI-first. Hub is NOT a team wiki; it is a cross-project
+    meta-index for AI agents to route cross-project work.
 ---
 
 # Agent Instructions Setup
@@ -62,45 +69,52 @@ AGENTS.md 와 agents/guide.md 는 행동 지시문이 아니라 **탐색 라우�
 
 ### Phase 2: Interactive Setup
 
-5. references/ask-questions.md 스크립트로 Q1~Q9 질문
-6. Q3 답변에 따라 agents/guide.md 생성 (routing index, 80줄 이내)
-7. Q5 답변에 따라 agents/workflow.md 생성 (lite 5-step / full 14-step)
-8. 모든 agents/*.md 파일은 references/meta-frontmatter.md 규칙 적용
+5. references/ask-questions.md 로 Q1~Q10 질문 (Q10: n / project / hub)
+6. Q3 에 따라 agents/guide.md (routing index, 80줄 이내) 생성
+7. Q5 에 따라 agents/workflow.md (lite / full) 생성
+8. Q10=project → Phase 2B, Q10=hub → Phase 2C, Q10=n → Phase 3
+
+### Phase 2B: Project Team Mode (Q10=project)
+
+9. T1~T7 질문, 팀 전용 문서 생성:
+   - 기본: onboarding (T1≠solo), team, glossary, security, stack
+   - T3 선택 항목만: decisions / rfc / runbook / postmortem TEMPLATE.md
+10. T2=y 면 `.github/CODEOWNERS` 에 `agents/ @{handle}` 추가
+11. AGENTS.md 에 Ownership 섹션, guide.md 에 팀 라우팅 행 추가
+12. 거버넌스 원칙: references/rule-team-governance.md
+
+### Phase 2C: Hub Mode (Q10=hub)
+
+9. HUB1~HUB6 질문, 허브 문서 생성:
+   - AGENTS.md: template-hub-agents.md (카탈로그 루트)
+   - agents/guide.md: template-hub-guide.md (프로젝트 대시보드)
+   - agents/projects/{name}.md: HUB3 등록 프로젝트별 (template-project-registry.md)
+   - agents/decisions/ (org-level ADR)
+   - agents/team.md, glossary.md, security.md, onboarding.md (2-hop 버전)
+   - HUB4 선택 항목: tech-radar / shared-libraries / infrastructure / incident-response / architecture/
+10. `.github/CODEOWNERS` + HUB6=pr-template 시 PR 템플릿에 registry 체크박스 추가
+11. 허브 원칙: references/rule-hub-principles.md (AI-first, registry sync, 2-hop onboarding)
 
 ### Phase 3: Verification
 
-9. 심링크 타겟 검증: `ls -la`, `diff AGENTS.md CLAUDE.md`
-10. agents/ 파일의 frontmatter 6줄 이내 확인
-11. 응답 마지막에 읽은·생성한 파일 나열
+12. 심링크 타겟 검증: `ls -la`, `diff AGENTS.md CLAUDE.md`
+13. agents/ 파일 frontmatter 6~8줄 확인
+14. Project/Hub 모드: CODEOWNERS 동기화, security.md grep 패턴 스캔
+15. Hub 모드: agents/projects/ 양방향 링크 (프로젝트 레포 ↔ 허브 registry) 확인 권고
+16. 응답 마지막에 읽은·생성한 파일 나열
 
 ## Reference Categories
 
-| Priority | Category | Impact | Prefix |
-|----------|----------|--------|--------|
-| 1 | Findability Philosophy | CRITICAL | `rule-` |
-| 2 | File Mapping | CRITICAL | `map-` |
-| 3 | Frontmatter Rules | CRITICAL | `meta-` |
-| 4 | Symlink Strategy | HIGH | `link-` |
-| 5 | Doc Evolution | HIGH | `evolve-` |
-| 6 | Interactive Questions | HIGH | `ask-` |
-| 7 | Templates | HIGH | `template-` |
+| Priority | Category | Prefix | 대표 파일 |
+|----------|----------|--------|-----------|
+| CRITICAL | Findability / Team / Hub Principles | `rule-` | findability, team-governance, hub-principles |
+| CRITICAL | File Mapping / Frontmatter | `map-`, `meta-` | file-paths, frontmatter |
+| HIGH | Symlink / Evolve / Questions | `link-`, `evolve-`, `ask-` | symlink-strategy, principles, questions |
+| HIGH | Solo Templates | `template-` | agents, dev-guide, dev-workflow, docs-guide, docs-workflow |
+| HIGH (project-team) | Project Team Templates | `template-` | onboarding, team, glossary, security, decision, rfc, runbook, postmortem |
+| HIGH (hub) | Hub Templates | `template-` | hub-agents, hub-guide, project-registry, tech-radar, shared-libraries, infrastructure, incident-response |
 
-## References
-
-```
-references/rule-findability.md
-references/map-file-paths.md
-references/meta-frontmatter.md
-references/link-symlink-strategy.md
-references/evolve-principles.md
-references/ask-questions.md
-references/template-agents.md
-references/template-dev-guide.md
-references/template-dev-workflow.md
-references/template-docs-guide.md
-references/template-docs-workflow.md
-references/_sections.md
-```
+전체 목록은 references/_sections.md 참고.
 
 - https://agents.md
 - https://docs.cursor.com/context/rules
