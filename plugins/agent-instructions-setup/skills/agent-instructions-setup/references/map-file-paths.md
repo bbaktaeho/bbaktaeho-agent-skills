@@ -1,41 +1,80 @@
 ---
-title: Map AI Tool Instruction File Paths
+title: AI Tool Instruction File Paths
 impact: CRITICAL
-impactDescription: Correct file path mapping ensures every AI tool reads project instructions
-tags: agents-md, claude-md, cursorrules, copilot, windsurf, cline, gemini
+impactDescription: Correct path mapping ensures every AI tool reads the unified AGENTS.md
+tags: agents-md, claude-md, cursor, copilot, windsurf, cline, gemini, codex, zed, amp
 ---
 
-## AI Tool File Path Reference
+## Purpose
 
-각 AI coding tool은 고유한 경로에서 instruction 파일을 읽는다.
+각 AI coding tool 의 instruction 파일 경로를 정의한다. AGENTS.md 를 원본으로 두고, 직접 지원하지 않는 도구는 해당 경로에 심링크를 건다.
 
-| AI Tool | File Path | Notes |
-|---------|-----------|-------|
-| OpenAI Codex | `AGENTS.md` | Source of truth |
-| Claude Code | `CLAUDE.md` | 프로젝트 루트. 서브디렉토리에도 배치 가능 (가장 가까운 파일 우선). `~/.claude/CLAUDE.md`로 user-level 설정 가능 |
-| Cursor | `.cursorrules` | 프로젝트 루트 (legacy). `.cursor/rules/*.mdc`로 scoped rule 지원 |
-| GitHub Copilot | `.github/copilot-instructions.md` | Chat에만 적용. `.github/instructions/*.instructions.md`로 파일별 instruction 지원 |
-| Windsurf | `.windsurfrules` | 프로젝트 루트 |
-| Cline | `.clinerules` | 프로젝트 루트 |
-| Gemini CLI | `GEMINI.md` | 프로젝트 루트 |
-| Google Antigravity | `.agent/rules/rules.md` | 디렉토리 구조 필요 |
-| Zed | `AGENTS.md` | AGENTS.md 직접 지원 |
+## Tool File Path Reference
 
-## AGENTS.md 지원 현황
+| Tool | Primary Path | Secondary / Scoped | AGENTS.md Direct |
+|------|--------------|--------------------|------------------|
+| OpenAI Codex | `AGENTS.md` | — | Yes |
+| Zed | `AGENTS.md` | — | Yes |
+| Amp (Sourcegraph) | `AGENTS.md` | — | Yes |
+| Claude Code | `CLAUDE.md` | `~/.claude/CLAUDE.md` (user), 서브디렉토리 `CLAUDE.md` (nearest-wins) | No |
+| Cursor | `.cursor/rules/*.mdc` | `.cursorrules` (legacy) | No |
+| GitHub Copilot | `.github/copilot-instructions.md` | `.github/instructions/*.instructions.md` (scoped) | No |
+| Windsurf | `.windsurfrules` | — | No |
+| Cline | `.clinerules` | — | No |
+| Roo Code | `.roorules` | — | No |
+| Gemini CLI | `GEMINI.md` | — | No |
+| Google Antigravity | `.agent/rules/rules.md` | — | No |
+| Aider | `CONVENTIONS.md` | — | No |
+| Continue | `.continue/rules/*.md` | — | No |
 
-AGENTS.md를 직접 읽는 도구:
+## AGENTS.md Direct Support
+
+AGENTS.md 를 직접 읽는 도구 (심링크 불필요):
+
 - OpenAI Codex
 - Zed
+- Amp
 
-AGENTS.md를 직접 읽지 않는 도구 (symlink 필요):
-- Claude Code (CLAUDE.md 필요)
-- Cursor (.cursorrules 필요)
-- GitHub Copilot (.github/copilot-instructions.md 필요)
-- Windsurf (.windsurfrules 필요)
-- Cline (.clinerules 필요)
-- Gemini CLI (GEMINI.md 필요)
-- Google Antigravity (.agent/rules/rules.md 필요)
+그 외 모든 도구는 AGENTS.md 를 원본으로 두고 각자 경로에 심링크를 건다.
 
-## 파일 우선순위
+## Cursor 특별 주의
 
-프로젝트 루트에 AGENTS.md를 작성하고, 나머지 도구별 파일은 symlink로 연결한다. 하나의 파일만 관리하면 된다.
+Cursor 는 `.cursorrules` (legacy) 와 `.cursor/rules/*.mdc` (권장) 를 모두 지원한다.
+
+- `.cursorrules` → 단일 파일. AGENTS.md 심링크 가능
+- `.cursor/rules/{name}.mdc` → scoped rule. glob 패턴으로 적용 파일 제한 (frontmatter `globs` 필드)
+- 프로젝트 전체 규칙은 `.cursorrules` 심링크로 충분
+- 파일별 규칙이 필요하면 `.cursor/rules/` 에 별도 파일 작성 (심링크 대상 아님)
+
+## Copilot 특별 주의
+
+Copilot 은 `.github/copilot-instructions.md` (global) 와 `.github/instructions/*.instructions.md` (scoped) 를 지원한다.
+
+- Global 규칙 → `.github/copilot-instructions.md` 심링크
+- 파일별 규칙 → `.github/instructions/{name}.instructions.md` 에 frontmatter `applyTo: "**/*.ts"` 로 제한
+
+## Scoped Rules 는 심링크 대상 아님
+
+Cursor `.cursor/rules/*.mdc`, Copilot `.github/instructions/*.instructions.md` 는 심링크 대상이 아니다. 필요 시 `agents/scoped/{tool}-{name}.md` 에 원본을 두고 각 도구 경로로 복사·심링크를 관리한다.
+
+## 선택 기준
+
+- 프로젝트 전체 규칙 → AGENTS.md + 심링크 (모든 도구 커버)
+- 특정 파일·경로 전용 규칙 → 각 도구의 scoped 기능 사용
+
+## 감지 기준 (Phase 0)
+
+아래 파일 중 하나라도 존재하면 해당 도구가 사용 중일 가능성이 높다.
+
+| 파일 존재 | 추정 도구 |
+|-----------|-----------|
+| `CLAUDE.md` | Claude Code |
+| `.cursorrules` or `.cursor/` | Cursor |
+| `.github/copilot-instructions.md` | Copilot |
+| `.windsurfrules` | Windsurf |
+| `.clinerules` | Cline |
+| `.roorules` | Roo Code |
+| `GEMINI.md` | Gemini CLI |
+| `.agent/rules/rules.md` | Antigravity |
+| `CONVENTIONS.md` | Aider |
+| `.continue/` | Continue |

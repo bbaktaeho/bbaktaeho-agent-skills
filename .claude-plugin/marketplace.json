@@ -25,7 +25,7 @@
     },
     {
       "name": "agent-instructions-setup",
-      "description": "Initialize AI coding agent instruction files. Creates AGENTS.md as the single source of truth, 7 symlinks covering 9 AI tools (Claude Code, Cursor, Copilot, Windsurf, Cline, Gemini CLI, Codex, Zed, Antigravity), and scaffolds docs/guide.md and docs/workflow.md. Make sure to use this skill whenever the user wants to initialize a new project for AI-assisted development, bootstrap AGENTS.md, unify instruction files across multiple AI tools, or migrate existing CLAUDE.md / .cursorrules / .windsurfrules into a single AGENTS.md - even if they only mention one tool by name or ask generically about 'AI rules' or 'agent config'.",
+      "description": "AI coding agent instruction file init and retrofit. Creates AGENTS.md as the single source of truth, symlinks across major AI tools (Claude Code, Cursor, Copilot, Windsurf, Cline, Roo Code, Gemini CLI, Codex, Zed, Antigravity, Amp, Aider, Continue), and agents/ directory optimized for AI discoverability. Make sure to use this skill whenever the user wants to initialize a new project for AI-assisted development, bootstrap AGENTS.md, unify instruction files across multiple AI tools, retrofit an existing project, migrate CLAUDE.md / .cursorrules / .windsurfrules into a single AGENTS.md, add a new AI tool to an existing setup, or evolve agents/ docs after initial setup - even if they only mention one tool by name or ask generically about 'AI rules' or 'agent config'.",
       "source": "./plugins/agent-instructions-setup",
       "category": "productivity"
     },

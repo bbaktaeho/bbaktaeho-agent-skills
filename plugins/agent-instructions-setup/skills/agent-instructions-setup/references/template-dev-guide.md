@@ -1,70 +1,72 @@
 ---
 title: Development Project Guide Template
 impact: HIGH
-impactDescription: Provides consistent project guide structure for development projects
-tags: template, guide, development, project
+impactDescription: guide.md is a routing index for development projects, kept under 80 lines
+tags: template, guide, development, routing, index
 ---
 
-## 개발용 guide.md 템플릿
+## Purpose
 
-개발용 프로젝트의 guide.md를 생성할 때 이 템플릿을 기반으로 한다. `{placeholder}`는 사용자 답변으로 치환한다.
+개발 프로젝트용 `agents/guide.md` 템플릿. guide.md 는 **내용이 아니라 라우팅 index** 다. 80줄 이내로 유지한다.
+
+## Template
 
 ```markdown
 ---
 title: {Project Name} Guide
-description: 프로젝트 핵심 구조와 기술 스택 설명
+description: 작업 시작 전 필독. 작업 유형별 진입 문서 라우팅 제공
 type: guide
 created: {YYYY-MM-DD}
 ---
 
-# Project Guide
+# {Project Name}
 
-## Tech Stack
+{프로젝트 1줄 설명}
 
-- {언어/프레임워크}
-- {데이터베이스}
-- {기타 주요 기술}
+## 작업 유형별 라우팅
 
-## Project Structure
+| 작업 | 먼저 읽을 문서 |
+|------|----------------|
+| 코드 수정·추가 | agents/workflow.md, agents/stack.md |
+| 새 기능 계획 | agents/workflow.md `1. 계획 수립` |
+| 디버깅 | agents/stack.md |
+| 리뷰 | agents/workflow.md 리뷰 섹션 |
+| 문서 추가·수정 | 이 파일의 "문서 진화" 섹션 |
 
-> 이 구조는 개발 진행에 따라 변경될 수 있다. 변경 시 이 섹션을 갱신한다.
+## 기술 스택 (요약)
 
-{디렉토리 구조}
+- 언어: {언어}
+- 프레임워크: {프레임워크}
+- 상세: agents/stack.md
 
-## Key Modules
+## 디렉토리 맵 (루트 2 depth)
 
-- {모듈 1} - {역할}
-- {모듈 2} - {역할}
+{프로젝트 루트 간략 구조 — tree 2 depth}
 
-## Build & Run
+상세 구조가 필요하면 agents/structure.md 를 생성한다.
 
-{빌드 명령어}
-{실행 명령어}
-{테스트 명령어}
+## 문서 색인 방법
+
+agents/ 하위 파일은 각 파일 상단의 frontmatter `description` 으로 목적을 식별한다. 전체 목록을 여기 나열하지 않는다. 라우팅 테이블에 작업 유형별 진입 문서만 등록한다.
+
+## 문서 진화
+
+- 새 문서 추가: agents/{topic}.md 단일 파일로 시작. 라우팅 테이블에 한 줄 추가
+- 300줄 초과 또는 주제 혼재: agents/{topic}/{N}-{name}.md 로 분해
+- 문서 수정: frontmatter `updated` 갱신. 섹션 요약이 본문을 반영하는지 확인
+- 문서 삭제: agents/ 내 참조를 grep 확인 후 라우팅 테이블에서 제거
+- frontmatter 규칙: 6~8줄, description 은 "언제 읽어야 하는지 + 얻는 것" 형식
 
 ## Development Log
 
-개발 일지는 `docs/develop/daily/` 에 작성한다.
-
-파일 형식: `{YYYY-MM-DD}-{개발한 내용 요약}.md`
-
-예시: `2026-03-12-auth-api-구현.md`
-
-## Workflow
-
-작업 워크플로우는 [docs/workflow.md](workflow.md)를 참고한다.
-
-## Additional Docs
-
-필요시 아래 문서를 추가한다:
-- docs/{topic}.md
-
-특정 토픽의 문서가 여러 개가 되면 디렉토리로 분리한다:
-
-순서가 있는 문서:
-- docs/{topic}/001-{상세내용}.md
-- docs/{topic}/002-{상세내용}.md
-
-순서가 없는 문서:
-- docs/{topic}/{상세내용}.md
+개발 일지는 `agents/develop/daily/{YYYY-MM-DD}-{요약}.md` 에 작성한다. 예: `2026-04-21-auth-api-구현.md`
 ```
+
+## 작성 가이드
+
+1. 라우팅 테이블부터 작성한다. 프로젝트에 맞게 행을 추가·삭제
+2. 기술 스택은 요약 2~3줄만. 상세는 `agents/stack.md` 를 별도 생성
+3. 디렉토리 맵은 2 depth 이내만. 그 이상은 `agents/structure.md` 로 분리
+4. 문서 진화 섹션은 references/evolve-principles.md 의 축약 버전이다. 사용자가 셋업 이후 guide.md 만 봐도 규칙을 따를 수 있도록 포함한다
+5. guide.md 가 80줄 넘으면 가장 긴 섹션을 별도 파일로 분리하고 해당 섹션은 링크만 남긴다
+6. "기술 스택" 과 "디렉토리 맵" 은 분량이 커지면 반드시 `agents/stack.md`, `agents/structure.md` 로 분리한다

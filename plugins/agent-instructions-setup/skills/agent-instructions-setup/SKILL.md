@@ -1,96 +1,107 @@
 ---
 name: agent-instructions-setup
 description: >
-  Initialize AI coding agent instruction files for a project. Creates AGENTS.md
-  as the single source of truth, generates symlinks for 7 tool-specific files
-  (CLAUDE.md, .cursorrules, .windsurfrules, .clinerules, GEMINI.md,
-  .github/copilot-instructions.md, .agent/rules/rules.md), and scaffolds
-  docs/guide.md and docs/workflow.md from dev or docs templates. Make sure to
-  use this skill whenever the user wants to initialize a new project for
-  AI-assisted development, bootstrap AGENTS.md, unify or consolidate
-  instruction files across Claude Code, Cursor, Copilot, Windsurf, Cline,
-  Gemini CLI, Codex, Zed, or Antigravity, migrate existing CLAUDE.md /
-  .cursorrules / .windsurfrules into a single AGENTS.md, or set up coding
-  conventions and workflow docs for multiple AI tools - even if they only
-  mention one tool by name or ask generically about "AI rules" or "agent
-  config".
+  AI coding agent instruction file init and retrofit. Creates AGENTS.md as the
+  single source of truth, symlinks across major AI tools (Claude Code, Cursor,
+  Copilot, Windsurf, Cline, Roo Code, Gemini CLI, Codex, Zed, Antigravity, Amp,
+  Aider, Continue), and agents/ directory optimized for AI discoverability
+  (routing index + workflow). Make sure to use this skill whenever the user
+  wants to initialize a new project for AI-assisted development, bootstrap
+  AGENTS.md, unify or consolidate instruction files across multiple AI tools,
+  retrofit an existing project with AGENTS.md and agents/, add a new AI tool
+  to an existing setup, migrate CLAUDE.md / .cursorrules / .windsurfrules into
+  a single AGENTS.md, or evolve agents/ docs after initial setup - even if
+  they only mention one tool by name or ask generically about "AI rules" or
+  "agent config".
 license: MIT
 metadata:
   author: bbaktaeho
-  version: "2.0.0"
+  version: "3.0.0"
   date: April 2026
   abstract: >
-    Init skill for AI coding agent instruction files. Phase 1 auto-creates
-    AGENTS.md and 7 symlinks covering 9 AI tools. Phase 2 interactively
-    generates docs/guide.md and docs/workflow.md from dev or docs templates.
-    Phase 3 verifies all files and symlink targets.
+    Init and retrofit skill for AI coding agent instruction files. Phase 0 scans
+    state, Phase 1 sets up AGENTS.md and idempotent symlinks, Phase 2 interactively
+    generates agents/guide.md (routing index) and agents/workflow.md from modular
+    templates, Phase 3 verifies. Philosophy: optimize docs for agent findability
+    rather than prescribing agent behavior.
 ---
 
 # Agent Instructions Setup
 
-AGENTS.md를 single source of truth로 두고, symlink와 docs/ 구조를 자동 셋업하는 init skill이다.
+AGENTS.md 를 single source of truth 로 두고, `agents/` 디렉토리를 AI 탐색 최적화된 형태로 구축·유지한다.
+
+## Core Philosophy
+
+"AI 행동을 바꾸려 하지 말고, AI 가 잘 찾을 수 있도록 문서를 최적화한다."
+
+AGENTS.md 와 agents/guide.md 는 행동 지시문이 아니라 **탐색 라우팅** 역할이다. 상세: references/rule-findability.md
+
+## Directory Name
+
+생성되는 디렉토리 이름은 `agents/` 이다. AGENTS.md 와 네임스페이스가 일치하여 agent 가 한눈에 식별한다. 기존 소스에 `agents/` 디렉토리가 있으면 Phase 0 에서 충돌을 감지하고 fallback 이름(`.agents/`)을 제안한다.
 
 ## Execution Flow
 
-### Phase 1: Auto Setup
+### Phase 0: State Scan
 
-1. AGENTS.md 존재 확인. 없으면 `template-agents.md` 기반으로 생성한다
-2. 기존 instruction 파일(CLAUDE.md, .cursorrules, .windsurfrules, .clinerules, GEMINI.md, .github/copilot-instructions.md, .agent/rules/rules.md)이 존재하면 내용을 AGENTS.md로 병합한다
-3. `map-file-paths.md`로 대상 경로를 확인하고 `link-symlink-strategy.md`의 명령으로 7개 symlink를 생성한다
-4. `docs/` 디렉토리를 생성한다
+현재 프로젝트 상태를 스캔하여 진행 모드를 결정한다.
+
+1. AGENTS.md, 도구별 instruction 파일, `agents/` 디렉토리 유무 확인
+2. `package.json`, `pyproject.toml`, `Cargo.toml`, `go.mod`, `Gemfile` 스캔하여 스택 자동 감지
+3. 모드 분기:
+   - Fresh → Phase 1 부터 진행
+   - Legacy files only → 병합 후 Phase 1 (references/link-symlink-strategy.md 병합 절차)
+   - Already set up → 업그레이드·문서 추가 모드 (references/evolve-principles.md 원칙 적용)
+
+### Phase 1: Structure Setup
+
+1. AGENTS.md 생성 또는 병합 (references/template-agents.md)
+2. `agents/` 디렉토리 생성 (충돌 시 fallback)
+3. `ln -sfn` 으로 사용 도구별 심링크 멱등 생성 (references/link-symlink-strategy.md, references/map-file-paths.md)
+4. `.gitignore` 에 미사용 도구 파일 추가
 
 ### Phase 2: Interactive Setup
 
-5. 프로젝트 용도를 사용자에게 질문한다
-   - 개발용 (software development)
-   - 문서용 (documentation/writing)
-   - 기타 (사용자 직접 입력)
-6. 기술 스택, 프로젝트 이름 등 치환에 필요한 값을 질문한다
-7. 용도에 따라 `docs/guide.md`를 생성한다. `meta-frontmatter.md` 규칙을 적용한다
-   - 개발용: `template-dev-guide.md` 기반
-   - 문서용: `template-docs-guide.md` 기반
-8. 용도에 따라 `docs/workflow.md`를 생성한다
-   - 개발용: `template-dev-workflow.md` 기반
-   - 문서용: `template-docs-workflow.md` 기반
+5. references/ask-questions.md 스크립트로 Q1~Q9 질문
+6. Q3 답변에 따라 agents/guide.md 생성 (routing index, 80줄 이내)
+7. Q5 답변에 따라 agents/workflow.md 생성 (lite 5-step / full 14-step)
+8. 모든 agents/*.md 파일은 references/meta-frontmatter.md 규칙 적용
 
 ### Phase 3: Verification
 
-9. 생성된 파일 목록을 출력한다
-10. `ls -la`로 symlink 연결 상태를 검증한다. `diff AGENTS.md CLAUDE.md`로 내용 일치를 확인한다
-11. 응답 마지막에 읽은 파일과 생성한 파일을 나열한다
-
-## Tool Coverage
-
-| Category | Tools |
-|----------|-------|
-| AGENTS.md를 직접 읽음 (symlink 불필요) | OpenAI Codex, Zed |
-| symlink로 연결해야 함 | Claude Code, Cursor, GitHub Copilot, Windsurf, Cline, Gemini CLI, Google Antigravity |
-
-총 9개 도구, 7개 symlink.
+9. 심링크 타겟 검증: `ls -la`, `diff AGENTS.md CLAUDE.md`
+10. agents/ 파일의 frontmatter 6줄 이내 확인
+11. 응답 마지막에 읽은·생성한 파일 나열
 
 ## Reference Categories
 
 | Priority | Category | Impact | Prefix |
 |----------|----------|--------|--------|
-| 1 | File Mapping | CRITICAL | `map-` |
-| 2 | Symlink Strategy | HIGH | `link-` |
+| 1 | Findability Philosophy | CRITICAL | `rule-` |
+| 2 | File Mapping | CRITICAL | `map-` |
 | 3 | Frontmatter Rules | CRITICAL | `meta-` |
-| 4 | Templates | HIGH | `template-` |
+| 4 | Symlink Strategy | HIGH | `link-` |
+| 5 | Doc Evolution | HIGH | `evolve-` |
+| 6 | Interactive Questions | HIGH | `ask-` |
+| 7 | Templates | HIGH | `template-` |
 
 ## References
 
-- references/\_sections.md
-- references/map-file-paths.md
-- references/link-symlink-strategy.md
-- references/meta-frontmatter.md
-- references/template-agents.md
-- references/template-dev-guide.md
-- references/template-dev-workflow.md
-- references/template-docs-guide.md
-- references/template-docs-workflow.md
-
-## External Docs
+```
+references/rule-findability.md
+references/map-file-paths.md
+references/meta-frontmatter.md
+references/link-symlink-strategy.md
+references/evolve-principles.md
+references/ask-questions.md
+references/template-agents.md
+references/template-dev-guide.md
+references/template-dev-workflow.md
+references/template-docs-guide.md
+references/template-docs-workflow.md
+references/_sections.md
+```
 
 - https://agents.md
+- https://docs.cursor.com/context/rules
 - https://code.visualstudio.com/docs/copilot/customization/custom-instructions
-- https://docs.cursor.com/context/rules-for-ai
