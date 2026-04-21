@@ -6,16 +6,15 @@ description: >
   single source of truth, symlinks across major AI tools (Claude Code, Cursor,
   Copilot, Windsurf, Cline, Roo Code, Gemini CLI, Codex, Zed, Antigravity,
   Amp, Aider, Continue), and an AI-first agents/ directory. Project-team mode
-  adds onboarding, ADR, RFC, runbook, postmortem, glossary, security, and
+  adds onboarding, ADR, RFC, runbook, postmortem, glossary, security,
   CODEOWNERS. Hub mode builds a cross-project catalog with project registry,
-  tech radar, shared libraries, infrastructure map, cross-service incident
-  response, and org-level ADRs - a single AI entry point for teams managing
-  multiple repos. Make sure to use this skill whenever the user wants to
-  initialize a new project, bootstrap AGENTS.md, unify instruction files
-  across AI tools, retrofit an existing project, set up a team shared knowledge
-  base, create a team knowledge hub across multiple projects, or evolve
-  agents/ docs - even if they only mention one tool by name or ask generically
-  about "AI rules" or "agent config".
+  tech radar, shared libraries, infrastructure, cross-service incident
+  response, and org-level ADRs. Make sure to use this skill whenever the user
+  wants to initialize a project, bootstrap AGENTS.md, unify instruction files
+  across AI tools, retrofit an existing project, set up a team knowledge
+  base, create a hub across multiple projects, or evolve agents/ docs - even
+  if they only mention one tool or ask generically about "AI rules" or
+  "agent config".
 license: MIT
 metadata:
   author: bbaktaeho
