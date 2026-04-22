@@ -1,0 +1,8 @@
+{
+  "name": "knowledge-base-setup",
+  "description": "Markdown-based knowledge base init and retrofit. Creates .kb/ meta directory (entry point for AI, frontmatter schema, conventions, tag-index) plus preset top-level directories (team-docs, research, product, custom). Every .md file carries required frontmatter (title, created, updated, summary, tags, status, relations). Relations are a flat list of relative paths. A companion kb-validator skill syncs created/updated from git log, fixes broken relations, rebuilds tag-index, and enforces length and README.md-per-directory rules. Use this plugin when initializing a repository as a shared knowledge base, adding a knowledge base to an existing project, preparing docs for use as a git submodule, or standardizing team-wide research and runbooks so AI tools (Claude Code, Codex, Cursor) can read one entry point and immediately know where knowledge lives, how pieces relate, and where new knowledge should go.",
+  "author": {
+    "name": "bbaktaeho"
+  },
+  "version": "1.0.0"
+}
