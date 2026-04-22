@@ -11,21 +11,49 @@ tags: validation, recommended, confirm
 
 ## 1. Length Overflow
 
-### 검출
+### 임계값 (파일 유형별)
 
-- 파일 줄 수 > 1000 (일반)
-- 파일 줄 수 > 2000 (시각화 태그 있는 경우)
-- `tags` 에 `length-exempt` 있으면 제외
+| 유형 판단 | 임계값 |
+|-----------|--------|
+| 경로에 `research/` 포함 | 2500 줄 (soft) / 4000 줄 (strong) |
+| 태그에 `visualization` / `diagram` / `mermaid` | 2000 줄 |
+| 그 외 | 1000 줄 |
 
-### 확인 질문
+- `tags` 에 `length-exempt` 있으면 검사 제외
+- soft 초과: 사용자에게 한 번 확인. "keep" 선택 시 해당 파일은 이번 초과 분량에 대해 묵시적 허용
+- strong 초과 (리서치 4000+): 분할 강력 권장 문구. 메시지 다르게 출력
+
+### 확인 질문 (일반 / 시각화 / 리서치 soft)
 
 ```
-{path}: {lines}줄 (권장 {max}줄 초과)
+{path}: {lines}줄 (권장 {max}줄 초과, 유형: {type})
 
 이 파일을 분리할까요?
   y) 예 — 나는 지금 분리하겠습니다. (스킬이 분리 수행하진 않음, 나중에 수동)
   n) 아니오 — 현재 크기 유지
   e) 예외 처리 — 이 파일에 length-exempt 태그 추가
+
+선택 [n]: _
+```
+
+### 확인 질문 (리서치 strong — 4000줄 초과)
+
+```
+{path}: {lines}줄 (리서치 강력 분할 권장 임계값 4000줄 초과)
+
+권장 분할 패턴 (references/rule-length-guideline.md 의 "리서치 문서 분할 패턴"):
+  research/{topic}/
+    ├── README.md           # 요약 + TOC + 결론
+    ├── 01-background.md
+    ├── 02-methodology.md
+    ├── 03-results.md
+    ├── 04-discussion.md
+    └── 05-references.md
+
+분할을 강력 권장합니다. 어떻게 하시겠어요?
+  y) 예 — 지금 분리하겠습니다 (수동)
+  n) 아니오 — 현재 크기 유지 (AI 가 이 파일 전체를 로드하는 비용 감수)
+  e) 예외 처리 — length-exempt 태그 추가
 
 선택 [n]: _
 ```

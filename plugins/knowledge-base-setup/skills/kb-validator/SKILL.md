@@ -29,7 +29,8 @@ metadata:
     status enum, tag normalization, relations point to existing files,
     created/updated match git log, every directory has README.md,
     .tag-index rebuilt. Recommended checks: length overflow
-    (1000/2000), active file referencing deprecated/archived, orphan
+    (1000 general / 2000 visualization / 2500 soft and 4000 strong for
+    research), active file referencing deprecated/archived, orphan
     files, tag over/under count, summary too short. All rules
     documented in references/rule-*.md.
 ---
