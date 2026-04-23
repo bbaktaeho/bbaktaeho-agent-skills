@@ -122,20 +122,60 @@ references/rule-git-timestamp-sync.md 참조
 - 파싱 실패 → **수정 불가**. "knowledge-base-setup 으로 재초기화가 필요합니다" 오류
 - 알려지지 않은 `preset` → `custom` 으로 fallback (경고와 함께)
 
-## 9. `.gitignore` `.kb/.tag-index` 라인
+## 9. `.gitignore` 필수 라인
 
 ### 검출
 
 - `.gitignore` 에 `.kb/.tag-index` 라인 없음
+- `.gitignore` 에 `.kb/local/` 라인 없음
 - `.kb/` 전체가 ignore 되어 있음 (다른 .kb 파일이 커밋 안 됨)
 
 ### 자동 수정
 
-- 라인 없음 → 파일 끝에 추가 (멱등)
+- 누락된 라인 추가 (멱등)
 - `.kb/` 전체 ignore → **수정 안함. 경고 리포트만** (사용자가 직접 조정해야 함, 위험)
+
+## 10. Secret Scan
+
+### 검출
+
+지식베이스 내 `.md` 파일 + `.kb/*.md` (단, `.kb/local/` 및 gitignored 파일 제외) 를 스캔. 상세 패턴: references/rule-secret-scan.md
+
+- AWS access key (`AKIA[0-9A-Z]{16}`)
+- GitHub PAT / OAuth / Server / User / Refresh tokens
+- GitHub fine-grained PAT (`github_pat_`)
+- Google API keys (`AIza`)
+- Slack tokens (`xox[baprs]-`)
+- Private key blocks (`-----BEGIN ... PRIVATE KEY-----`)
+- JWT-shaped strings (`eyJ...\.eyJ...\..`)
+- Basic auth URLs (`https?://user:pass@`)
+- RFC1918 내부 IP URLs (`https?://(10.|172.16-31.|192.168.)...`)
+- 일반 credential 할당문 (`password`/`secret`/`token`/`api_key` 등 + 12자 이상 값)
+
+### 자동 수정
+
+**하지 않는다**. 본문 파괴 방지. 대신 kb-validator 를 **ERROR 상태로 마감** 하여 후속 작업 차단.
+
+- `.tag-index` 재생성은 secret 해결 전까지 보류 (인덱스에 위치 노출 방지)
+- 리포트에 매칭된 경로/라인/스니펫 제공
+- 사용자 해결 방법 안내:
+  1. 제거 + `.kb/local/` 로 이동
+  2. 플레이스홀더 (`{VAR}` / `${ENV_VAR}`) 로 치환
+  3. False positive 면 같은 줄에 `<!-- kb-secrets: allow -->` 추가
+- 이미 git 히스토리에 있으면 rotation + `git-filter-repo` / `BFG` 안내
+
+### Pragma 우회
+
+- 라인 단위: `<!-- kb-secrets: allow -->`
+- 파일 단위: frontmatter 바로 다음 줄에 `<!-- kb-secrets: allow-file -->`
+
+### pre-commit hook 과의 일관성
+
+`.kb/hooks/pre-commit-secrets.sh` 와 **동일한 패턴** 사용. 둘 중 하나만 관대하면 우회가 가능하므로, 패턴 변경 시 양쪽을 반드시 함께 수정.
 
 ## 자동 수정 원칙
 
 - 자동 수정은 **추가/정리** 방향만. 사용자 데이터 **파괴적 삭제** 는 하지 않음 (예: 본문 삭제, 파일 삭제)
 - 단 "스키마에 맞지 않아 무효한 값" 은 제거 허용 (broken relation, invalid tag 등)
+- **Secret 은 탐지만**. 파괴적 수정 금지 원칙 적용. ERROR 로 차단하여 사용자 개입 유도
 - 수정 결과는 최종 리포트에 카운트/목록으로 보고

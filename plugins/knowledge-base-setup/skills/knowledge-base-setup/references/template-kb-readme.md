@@ -35,8 +35,9 @@ relations: []
 1. 모든 `.md` 파일은 frontmatter 필수. 스키마: [./schema.md](./schema.md)
 2. 각 디렉토리에 `README.md` 필수
 3. 관계 판단이 애매하면 사용자에게 확인 (규칙: [./conventions.md](./conventions.md))
-4. 길이 권장: 일반 1000줄, 시각화 포함 2000줄. 초과 시 분리 검토
+4. 길이 권장: 일반 1000줄, 시각화 포함 2000줄, 리서치 2500줄. 초과 시 분리 검토
 5. 상태 `deprecated` / `archived` 문서는 답변 컨텍스트에서 제외
+6. **민감 정보 금지**: credentials / tokens / 내부 엔드포인트는 평문 저장 금지. `.kb/local/` (gitignored) 또는 플레이스홀더 사용. git pre-commit hook 자동 차단
 
 자세한 규칙: [./conventions.md](./conventions.md)
 
@@ -74,13 +75,21 @@ relations: []
 - **삭제**: 참조하는 문서들의 relations 에서 제거 → 삭제 → 인덱스 제거
 - **이동**: 참조 경로 일괄 업데이트 → 이동 → 인덱스 갱신
 
+## Secrets
+
+- `.kb/local/` (gitignored) 에 민감 정보 저장. 지식 본문에서는 경로만 참조
+- `.kb/local.example/` 에 템플릿 (커밋 대상)
+- git pre-commit hook: `.kb/hooks/pre-commit-secrets.sh` — AWS/GitHub/JWT/Basic-auth/내부 IP/credential 패턴 차단
+- False positive 시: 같은 줄에 `<!-- kb-secrets: allow -->` 추가
+- 상세: [./conventions.md](./conventions.md) (Secrets 섹션)
+
 ## Preset
 
 이 지식베이스는 **`{preset-name}`** 프리셋으로 셋업되었습니다. 설정: [./preset.json](./preset.json)
 
 ## Companion Skill
 
-`kb-validator` — frontmatter / 관계 / 타임스탬프 / 태그 인덱스 / 길이 검증 및 자동 수정
+`kb-validator` — frontmatter / 관계 / 타임스탬프 / 태그 인덱스 / 길이 / 민감정보 검증 및 자동 수정
 ```
 
 ## `{preset-directory-list}` 생성 규칙

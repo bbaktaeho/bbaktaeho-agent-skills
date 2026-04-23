@@ -137,6 +137,53 @@ AI 는 `status: deprecated` / `archived` 인 문서를 답변 컨텍스트로 �
 - JSON / CSV / 이미지 등 참조 데이터: frontmatter 없이 허용
 - 지식 본문에서 상대 경로로 링크하여 사용
 - `.tag-index` 는 `.md` 만 인덱싱
+
+## Secrets / Sensitive Data (중요)
+
+지식베이스에는 **민감 정보를 평문으로 넣지 않는다**.
+
+### 금지 대상
+
+- 패스워드, API 키, 토큰, secret
+- 내부 IP / 비공개 엔드포인트 (port 포함 주소)
+- Private key 파일 내용
+- `https://user:pass@host/` 형태 URL
+- 실제 PII (이메일, 전화번호, 실명)
+
+### 허용 방법
+
+1. **플레이스홀더 + 사용자 입력**: 본문에 `{DB_PASSWORD}` / `${ENV_VAR}` 만 남기고 실제 값은 런타임에 입력
+2. **로컬 전용 파일**: `.kb/local/` (gitignored) 에 값 저장 → 지식 본문에서 경로만 참조
+3. **외부 secret store**: 1Password / AWS Secrets Manager / Vault 등. 본문에는 "이름 + 획득 위치" 만
+
+### `.kb/local/` 사용법
+
+```
+.kb/local/            ← gitignored, 로컬 전용
+.kb/local.example/    ← 커밋 대상, 템플릿 (빈/샘플 값)
+```
+
+팀원은 `.kb/local.example/` 파일을 `.kb/local/` 로 복사 후 실제 값으로 채움. **절대 `.kb/local/` 를 커밋하지 않음.**
+
+### 자동 차단
+
+- git pre-commit hook (`.kb/hooks/pre-commit-secrets.sh`) 이 스테이징된 `.md` / `.kb/` 파일을 스캔
+- 패턴 매칭 (AWS / GitHub / JWT / Basic auth URL / 내부 IP / 일반 credential 할당) 시 커밋 차단
+- False positive 는 같은 줄에 `<!-- kb-secrets: allow -->` 추가로 우회
+- `KB_SKIP_SECRET_SCAN=1` 환경변수로 한 번 bypass 가능 (권장 안 함)
+
+### AI 의 행동 규칙
+
+- 새 지식 생성/수정 시 본문에 민감 정보가 포함될 위험이 있으면 **저장 전 사용자 확인**
+- `.kb/local/` 파일은 **읽기는 허용** 하되, 그 내용을 다른 `.md` 로 복사하지 않음
+
+### 이미 커밋된 민감 정보
+
+단순 삭제로 해결되지 않음. 다음 조치 필요:
+
+1. 자격증명 **즉시 rotation**
+2. git 히스토리 정리 (git-filter-repo / BFG)
+3. 팀/외부에 노출 가능성 보고
 ```
 
 ## 생성 시 치환

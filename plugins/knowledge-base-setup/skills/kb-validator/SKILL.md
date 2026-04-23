@@ -1,21 +1,21 @@
 ---
 name: kb-validator
 description: >
-  Validate and auto-fix a markdown-based knowledge base set up by the
-  knowledge-base-setup skill. Checks every .md file against the
-  frontmatter schema (title, created, updated, summary, tags, status,
-  relations), syncs created/updated from git log, prunes relations
-  pointing at deleted or moved files, rebuilds .kb/.tag-index, verifies
-  every directory has README.md, and enforces the 1000/2000-line
-  recommendation. Required checks (schema violations, broken relations,
-  timestamp drift, missing README.md, tag-index staleness) are fixed
-  automatically. Recommended checks (length overflow, deprecated
-  references, orphan files, tag normalization) prompt the user. Use
-  after adding or deleting knowledge, before merging, after retrofit,
-  when tag search returns stale results, when .kb/.tag-index is
-  missing, when frontmatter drifts, or whenever you want to verify the
-  knowledge base is well-formed - even if the user just says "check
-  the docs", "validate kb", or "fix frontmatter".
+  Validate and auto-fix a markdown knowledge base set up by the
+  knowledge-base-setup skill. Checks every .md against the frontmatter
+  schema (title, created, updated, summary, tags, status, relations),
+  syncs timestamps from git log, prunes relations pointing at deleted
+  files, rebuilds .kb/.tag-index, verifies every directory has
+  README.md, enforces the 1000/2000/2500-line recommendations, and
+  scans for secrets (credentials, tokens, private keys, basic-auth
+  URLs, internal endpoints) using the same patterns as the pre-commit
+  hook. Required checks auto-fix except secrets, which halt with
+  ERROR for safe manual review. Recommended checks (length, deprecated
+  refs, orphans, tag counts) prompt the user. Use after adding or
+  deleting knowledge, before merging, after retrofit, when tag search
+  is stale, when the pre-commit hook was bypassed, or to verify the
+  KB is well-formed - even if the user just says "check the docs",
+  "validate kb", "scan secrets", or "fix frontmatter".
 license: MIT
 metadata:
   author: bbaktaeho
@@ -28,11 +28,13 @@ metadata:
     only, no writes). Required checks: frontmatter schema compliance,
     status enum, tag normalization, relations point to existing files,
     created/updated match git log, every directory has README.md,
-    .tag-index rebuilt. Recommended checks: length overflow
-    (1000 general / 2000 visualization / 2500 soft and 4000 strong for
-    research), active file referencing deprecated/archived, orphan
-    files, tag over/under count, summary too short. All rules
-    documented in references/rule-*.md.
+    .tag-index rebuilt, secret scan (AWS / GitHub / Google / Slack /
+    private keys / JWT / basic-auth URLs / internal IPs / credential
+    assignments) with detection-only ERROR halt. Recommended checks:
+    length overflow (1000 general / 2000 visualization / 2500 soft
+    and 4000 strong for research), active file referencing deprecated
+    or archived, orphan files, tag over/under count, summary too
+    short. All rules documented in references/rule-*.md.
 ---
 
 # KB Validator
@@ -61,6 +63,7 @@ references/flow-modes.md
 | Priority | Category | Prefix | 대표 파일 |
 |----------|----------|--------|-----------|
 | CRITICAL | Required Checks (auto-fix) | `rule-` | required-checks |
+| CRITICAL | Secret Scan (detect, halt) | `rule-` | secret-scan |
 | HIGH | Recommended Checks (confirm) | `rule-` | recommended-checks |
 | CRITICAL | Git Timestamp Sync | `rule-` | git-timestamp-sync |
 | CRITICAL | Tag Index Rebuild | `rule-` | tag-index-rebuild |
@@ -85,11 +88,14 @@ references/flow-modes.md
 5. `relations` 각 경로 존재 여부 → 없으면 제거
 6. `created` / `updated` git log 동기화 (references/rule-git-timestamp-sync.md)
 7. 디렉토리마다 `README.md` 존재 확인. 없으면 템플릿으로 생성
+8. `.gitignore` 에 `.kb/.tag-index`, `.kb/local/` 라인 보장
+9. **Secret Scan** — 민감 정보 감지 (references/rule-secret-scan.md). 매칭되면 ERROR 로 마감 준비 + Phase 2 의 tag-index 재생성 보류
 
 ### Phase 2: Tag Index Rebuild
 
-- `.kb/.tag-index` 전체 재생성 (references/rule-tag-index-rebuild.md)
+- Phase 1 에서 secret 검출이 **없는 경우에만** `.kb/.tag-index` 전체 재생성 (references/rule-tag-index-rebuild.md)
 - `generated_at` 갱신
+- Secret 검출이 있으면 기존 인덱스 유지 (위치 노출 방지)
 
 ### Phase 3: Recommended Checks (full 모드만)
 

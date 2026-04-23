@@ -12,6 +12,12 @@ sections:
   - id: length-guideline
     title: Length Guidelines
     prefix: rule
+  - id: secrets-handling
+    title: Secrets Handling Rules
+    prefix: rule
+  - id: pre-commit-hook
+    title: Pre-commit Secret-Scan Hook
+    prefix: template
   - id: kb-readme-template
     title: AI Entry Point Template
     prefix: template

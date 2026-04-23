@@ -12,6 +12,9 @@ sections:
   - id: tag-index-rebuild
     title: Tag Index Rebuild Logic
     prefix: rule
+  - id: secret-scan
+    title: Secret Scan Rule
+    prefix: rule
   - id: modes
     title: Execution Modes
     prefix: flow

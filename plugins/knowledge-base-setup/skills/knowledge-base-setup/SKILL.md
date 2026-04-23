@@ -1,21 +1,21 @@
 ---
 name: knowledge-base-setup
 description: >
-  Markdown-based knowledge base init and retrofit. Creates .kb/ meta
-  directory (AI entry point, frontmatter schema, conventions, tag-index)
-  plus preset top-level directories (team-docs, research, product,
-  custom). Every .md file carries required frontmatter: title, created,
-  updated, summary, tags, status, relations (flat list of relative
-  paths). Generates .gitignore for .kb/.tag-index, background-indexes
-  tags, and wires the knowledge base so AI tools (Claude Code, Codex,
-  Cursor) can read one entry point and immediately know where knowledge
-  lives, how documents relate, and where to place new knowledge. Use
-  whenever the user wants to initialize a repository as a shared
-  knowledge base, add a knowledge base to an existing project, prepare
-  docs for use as a git submodule, standardize team-wide research or
-  runbooks, or set up markdown docs so AI can navigate them by
-  frontmatter relations and tags - even if they only say "docs init",
-  "research base", "set up wiki", or mention one AI tool.
+  Markdown knowledge base init and retrofit. Creates .kb/ meta dir
+  (AI entry point, schema, conventions, tag-index) plus preset top-
+  level dirs (team-docs, research, product, custom). Every .md file
+  carries required frontmatter (title, created, updated, summary,
+  tags, status, relations - flat list of relative paths). Adds
+  .gitignore for .kb/.tag-index and .kb/local/, background-indexes
+  tags, and installs a git pre-commit hook that blocks secrets
+  (credentials, tokens, private keys, basic-auth URLs, internal
+  endpoints). Lets AI tools (Claude Code, Codex, Cursor) read one
+  entry point and immediately know where knowledge lives, how docs
+  relate, and where to place new knowledge. Use when initializing a
+  repo as a shared KB, adding a KB to an existing project, preparing
+  docs for submodule use, standardizing team research or runbooks,
+  or making markdown docs AI-navigable - even if the user only says
+  "docs init", "research base", "set up wiki", or "block secrets".
 license: MIT
 metadata:
   author: bbaktaeho
@@ -43,7 +43,7 @@ metadata:
 
 "지식의 위치와 관계를 AI 가 한 파일 (`.kb/README.md`) 만 읽고 파악할 수 있도록 구조화한다."
 
-상세: references/rule-frontmatter-schema.md, references/rule-relations.md, references/rule-lifecycle.md
+상세: references/rule-frontmatter-schema.md, references/rule-relations.md, references/rule-lifecycle.md, references/rule-secrets-handling.md
 
 ## Directory Layout
 
@@ -54,9 +54,13 @@ metadata:
 ├── .kb/
 │   ├── README.md                # AI 진입점
 │   ├── schema.md                # frontmatter 스키마
-│   ├── conventions.md           # 관계/네이밍/라이프사이클 규칙
+│   ├── conventions.md           # 관계/네이밍/라이프사이클/민감정보 규칙
 │   ├── preset.json              # kb-validator 가 참조
-│   └── .tag-index               # gitignored. 태그 인덱스
+│   ├── .tag-index               # gitignored. 태그 인덱스
+│   ├── hooks/
+│   │   └── pre-commit-secrets.sh  # git pre-commit 훅 (민감정보 차단)
+│   ├── local/                   # gitignored. 로컬 전용 민감 정보
+│   └── local.example/           # 커밋 대상. 로컬 파일 템플릿
 ├── {preset-dir-1}/
 │   └── README.md                # 디렉토리별 필수
 └── ...
@@ -96,7 +100,14 @@ Q1~Q3 질문: references/ask-questions.md
    - research: references/preset-research.md
    - product: references/preset-product.md
    - custom: references/preset-custom.md
-4. `.gitignore` 생성/업데이트 (`.kb/.tag-index` 추가, 멱등)
+4. `.gitignore` 생성/업데이트 (`.kb/.tag-index`, `.kb/local/` 추가, 멱등)
+5. `.kb/local/` 디렉토리 + `.kb/local.example/` 템플릿 디렉토리 생성 (references/rule-secrets-handling.md)
+   - `.kb/local/README.md` (gitignored 사본) — 이 디렉토리가 왜 gitignored 인지 설명
+   - `.kb/local.example/README.md` — 로컬 파일 템플릿 사용 방법
+6. `.kb/hooks/pre-commit-secrets.sh` 생성 + `chmod +x` (references/template-pre-commit-hook.md)
+7. `.git/hooks/pre-commit` 자동 연결:
+   - 없으면 symlink: `ln -sfn ../../.kb/hooks/pre-commit-secrets.sh .git/hooks/pre-commit`
+   - 이미 다른 훅이 있으면 덮어쓰지 않고 사용자에게 병합 안내
 
 ### Phase 3: Background Tag Indexing
 
@@ -104,10 +115,12 @@ Q1~Q3 질문: references/ask-questions.md
 
 ### Phase 4: Verification
 
-6. `.kb/` 파일 frontmatter 유효성 확인
-7. 각 디렉토리에 `README.md` 존재 확인
-8. `.gitignore` 에 `.kb/.tag-index` 라인 존재 확인
-9. 사용자에게 다음 단계 안내: 첫 지식 추가 → kb-validator 실행
+8. `.kb/` 파일 frontmatter 유효성 확인
+9. 각 디렉토리에 `README.md` 존재 확인
+10. `.gitignore` 에 `.kb/.tag-index` / `.kb/local/` 라인 존재 확인
+11. `.git/hooks/pre-commit` 가 `.kb/hooks/pre-commit-secrets.sh` 로 연결되었는지 확인
+12. pre-commit 훅 self-test: `.kb/hooks/pre-commit-secrets.sh` 를 실행하여 정상 종료하는지 확인
+13. 사용자에게 다음 단계 안내: 첫 지식 추가 → kb-validator 실행
 
 ### Retrofit Mode (기존 프로젝트)
 
@@ -118,9 +131,11 @@ references/flow-retrofit.md 참조. 기존 `.md` 에 frontmatter 보강, 디렉�
 | Priority | Category | Prefix | 대표 파일 |
 |----------|----------|--------|-----------|
 | CRITICAL | Frontmatter / Relations / Lifecycle | `rule-` | frontmatter-schema, relations, lifecycle |
+| CRITICAL | Secrets Handling | `rule-` | secrets-handling |
 | CRITICAL | Length Guidelines | `rule-` | length-guideline |
 | HIGH | Meta Templates | `template-` | kb-readme, schema, conventions |
 | HIGH | Knowledge Templates | `template-` | root-readme, dir-readme |
+| HIGH | Hook Template | `template-` | pre-commit-hook |
 | HIGH | Presets | `preset-` | team-docs, research, product, custom |
 | HIGH | Flow | `ask-`, `flow-` | questions, retrofit |
 
