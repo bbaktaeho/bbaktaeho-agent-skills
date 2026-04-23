@@ -135,6 +135,27 @@ references/rule-git-timestamp-sync.md 참조
 - 누락된 라인 추가 (멱등)
 - `.kb/` 전체 ignore → **수정 안함. 경고 리포트만** (사용자가 직접 조정해야 함, 위험)
 
+## 9.5. AI Entry Points (AGENTS.md / README.md)
+
+### 검출
+
+- KB 루트에 `AGENTS.md` 부재 **또는** 존재하지만 멱등 마커 (`<!-- kb-setup: knowledge-base-entry-point -->`) 없음
+- KB 루트에 `README.md` 부재 **또는** 존재하지만 `## About` / `<!-- kb-setup: about -->` 섹션 없음
+- 두 파일 모두 `.kb/README.md` 를 링크하지 않음
+
+### 자동 수정
+
+- `AGENTS.md` 부재: 기본 템플릿 (knowledge-base-setup 의 template-agents.md) 으로 생성
+- 존재하지만 마커 블록 없음: 파일 끝에 블록 append (기존 본문 보존)
+- 마커 블록 있음: 블록 내부가 현재 스킬 버전과 다르면 **업데이트하지 않음** (사용자 커스터마이징 가능성 존중). 대신 WARN 리포트만 — full 모드에서 권장 항목으로 승격
+- `README.md` 부재: template-root-readme.md 로 생성 (About 섹션 placeholder 포함)
+- `README.md` 존재 + About 섹션 없음: 파일 시작부에 멱등 마커 블록으로 About placeholder 추가. 사용자에게 내용 채우기 안내
+
+### 링크 정합성
+
+- `AGENTS.md` 본문에 `./.kb/README.md` 와 `./README.md` 둘 다 링크되어 있는지 확인
+- `README.md` frontmatter `relations` 에 `./.kb/README.md`, `./AGENTS.md` 포함 확인. 없으면 추가
+
 ## 10. Secret Scan
 
 ### 검출

@@ -21,7 +21,7 @@ tags: flow, retrofit, migration
 
 ### C. AGENTS.md 는 있지만 지식베이스는 없음
 
-- 목표: A 와 동일. AGENTS.md 는 건드리지 않음 (Q3 에서 `note-path` 안내만)
+- 목표: A 와 동일. Q3 에서 `create/merge` (기본) 선택 시 기존 AGENTS.md 끝에 멱등 마커 블록만 append. 기존 본문은 보존.
 
 ## A. 시나리오 플로우
 
@@ -47,9 +47,10 @@ Q1~Q3 기본 질문 + retrofit 전용 질문 (references/ask-questions.md 의 "R
 ### Phase 2 (확장)
 
 1. `.kb/` 생성 (Fresh 와 동일)
-2. 루트 `README.md` — 기존에 있으면 frontmatter 만 추가 + 본문 끝에 "## Knowledge Base Structure" append (중복 방지)
-3. 프리셋 디렉토리 생성 — 기존과 충돌하면 skip + 경고
-4. 기존 `.md` 파일 frontmatter 보강:
+2. 루트 `README.md` — 기존에 있으면 frontmatter 만 추가 + `## About` / `## Knowledge Base Structure` 섹션을 멱등 마커 블록으로 append (중복 방지). 기존 본문은 손대지 않음
+3. `AGENTS.md` — 기존에 있으면 `<!-- kb-setup: knowledge-base-entry-point -->` 마커 블록만 append. 기존 본문 보존. 없으면 새로 생성
+4. 프리셋 디렉토리 생성 — 기존과 충돌하면 skip + 경고
+5. 기존 `.md` 파일 frontmatter 보강:
    - `auto-add` 선택: 누락된 필드를 기본값으로 채움
      - `title` — 파일명에서 추론 (첫 H1 있으면 그걸 사용)
      - `created` / `updated` — git log 기준 (없으면 현재 시각)
@@ -99,12 +100,23 @@ Q1~Q3 기본 질문 + retrofit 전용 질문 (references/ask-questions.md 의 "R
 
 ## C. AGENTS.md 만 있는 경우
 
-A 와 동일 처리. 마지막에 Q3 의 `note-path` 선택에 따라 AGENTS.md 수정 안내 출력:
+A 와 동일 처리. Q3 에서 `create/merge` (기본) 선택 시:
+
+1. 기존 AGENTS.md 읽기
+2. `<!-- kb-setup: knowledge-base-entry-point -->` 마커 확인
+3. 마커 없으면 파일 끝에 템플릿 블록 append (references/template-agents.md 의 "Retrofit 블록")
+4. 마커 있으면 마커 사이만 최신 버전으로 교체 (멱등)
+
+Q3 에서 `skip` 선택 시 AGENTS.md 를 건드리지 않고 Phase 4 끝에 수동 추가 안내만 출력:
 
 ```
-AGENTS.md 에 다음 줄을 추가하세요 (수동):
+AGENTS.md 에 다음 블록을 추가하세요:
 
-  지식베이스는 [.kb/README.md](./.kb/README.md) 를 참조하세요.
+  <!-- kb-setup: knowledge-base-entry-point -->
+  ## Knowledge Base
+  - [README.md](./README.md)
+  - [.kb/README.md](./.kb/README.md)
+  <!-- /kb-setup -->
 ```
 
 ## 주의 사항

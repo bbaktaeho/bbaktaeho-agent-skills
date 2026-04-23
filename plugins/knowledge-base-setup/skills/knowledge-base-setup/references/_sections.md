@@ -33,6 +33,9 @@ sections:
   - id: root-readme-template
     title: Root README Template
     prefix: template
+  - id: agents-template
+    title: AGENTS.md Template
+    prefix: template
   - id: preset-team-docs
     title: Team Docs Preset
     prefix: preset

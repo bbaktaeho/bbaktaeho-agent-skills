@@ -49,10 +49,11 @@ metadata:
 
 ```
 {kb-root}/
-├── README.md                    # 사람용 GitHub 랜딩
-├── .gitignore                   # .kb/.tag-index 포함
+├── AGENTS.md                    # AI 에이전트 공용 진입점 (README.md + .kb/README.md 로 라우팅)
+├── README.md                    # 사람용 GitHub 랜딩 + "이 지식베이스가 무엇인지" 설명
+├── .gitignore                   # .kb/.tag-index, .kb/local/ 포함
 ├── .kb/
-│   ├── README.md                # AI 진입점
+│   ├── README.md                # AI 탐색 진입점 (디렉토리 맵, 규칙 요약)
 │   ├── schema.md                # frontmatter 스키마
 │   ├── conventions.md           # 관계/네이밍/라이프사이클/민감정보 규칙
 │   ├── preset.json              # kb-validator 가 참조
@@ -94,18 +95,19 @@ Q1~Q3 질문: references/ask-questions.md
    - `schema.md` (references/template-schema.md)
    - `conventions.md` (references/template-conventions.md)
    - `preset.json` (Q2 결과 반영)
-2. 루트 `README.md` 생성 (references/template-root-readme.md)
-3. 프리셋별 디렉토리 생성 + 각 디렉토리 `README.md` (references/template-dir-readme.md)
+2. 루트 `README.md` 생성/갱신 (references/template-root-readme.md) — About 섹션에 "이 지식베이스가 무엇인지" 설명 포함
+3. `AGENTS.md` 생성/갱신 (references/template-agents.md) — AI 진입점. README.md + .kb/README.md 로 라우팅. 기존 파일 있으면 멱등 마커 블록만 append
+4. 프리셋별 디렉토리 생성 + 각 디렉토리 `README.md` (references/template-dir-readme.md)
    - team-docs: references/preset-team-docs.md
    - research: references/preset-research.md
    - product: references/preset-product.md
    - custom: references/preset-custom.md
-4. `.gitignore` 생성/업데이트 (`.kb/.tag-index`, `.kb/local/` 추가, 멱등)
-5. `.kb/local/` 디렉토리 + `.kb/local.example/` 템플릿 디렉토리 생성 (references/rule-secrets-handling.md)
+5. `.gitignore` 생성/업데이트 (`.kb/.tag-index`, `.kb/local/` 추가, 멱등)
+6. `.kb/local/` 디렉토리 + `.kb/local.example/` 템플릿 디렉토리 생성 (references/rule-secrets-handling.md)
    - `.kb/local/README.md` (gitignored 사본) — 이 디렉토리가 왜 gitignored 인지 설명
    - `.kb/local.example/README.md` — 로컬 파일 템플릿 사용 방법
-6. `.kb/hooks/pre-commit-secrets.sh` 생성 + `chmod +x` (references/template-pre-commit-hook.md)
-7. `.git/hooks/pre-commit` 자동 연결:
+7. `.kb/hooks/pre-commit-secrets.sh` 생성 + `chmod +x` (references/template-pre-commit-hook.md)
+8. `.git/hooks/pre-commit` 자동 연결:
    - 없으면 symlink: `ln -sfn ../../.kb/hooks/pre-commit-secrets.sh .git/hooks/pre-commit`
    - 이미 다른 훅이 있으면 덮어쓰지 않고 사용자에게 병합 안내
 
@@ -115,12 +117,14 @@ Q1~Q3 질문: references/ask-questions.md
 
 ### Phase 4: Verification
 
-8. `.kb/` 파일 frontmatter 유효성 확인
-9. 각 디렉토리에 `README.md` 존재 확인
-10. `.gitignore` 에 `.kb/.tag-index` / `.kb/local/` 라인 존재 확인
-11. `.git/hooks/pre-commit` 가 `.kb/hooks/pre-commit-secrets.sh` 로 연결되었는지 확인
-12. pre-commit 훅 self-test: `.kb/hooks/pre-commit-secrets.sh` 를 실행하여 정상 종료하는지 확인
-13. 사용자에게 다음 단계 안내: 첫 지식 추가 → kb-validator 실행
+9. `.kb/` 파일 frontmatter 유효성 확인
+10. 각 디렉토리에 `README.md` 존재 확인
+11. 루트 `README.md` 에 About 섹션 존재 확인
+12. `AGENTS.md` 존재 및 `.kb/README.md` / `README.md` 링크 포함 확인 (멱등 마커 사이)
+13. `.gitignore` 에 `.kb/.tag-index` / `.kb/local/` 라인 존재 확인
+14. `.git/hooks/pre-commit` 가 `.kb/hooks/pre-commit-secrets.sh` 로 연결되었는지 확인
+15. pre-commit 훅 self-test: `.kb/hooks/pre-commit-secrets.sh` 를 실행하여 정상 종료하는지 확인
+16. 사용자에게 다음 단계 안내: 첫 지식 추가 → kb-validator 실행
 
 ### Retrofit Mode (기존 프로젝트)
 
@@ -135,6 +139,7 @@ references/flow-retrofit.md 참조. 기존 `.md` 에 frontmatter 보강, 디렉�
 | CRITICAL | Length Guidelines | `rule-` | length-guideline |
 | HIGH | Meta Templates | `template-` | kb-readme, schema, conventions |
 | HIGH | Knowledge Templates | `template-` | root-readme, dir-readme |
+| HIGH | AI Entry Template | `template-` | agents |
 | HIGH | Hook Template | `template-` | pre-commit-hook |
 | HIGH | Presets | `preset-` | team-docs, research, product, custom |
 | HIGH | Flow | `ask-`, `flow-` | questions, retrofit |
