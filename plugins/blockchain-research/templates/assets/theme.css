@@ -1,0 +1,197 @@
+/* blockchain-research report theme
+ * White background, near-black body text, Times-style serif body,
+ * sans-serif metadata/tables, monospace code. Print-friendly.
+ */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Times New Roman', 'Noto Serif KR', Georgia, serif;
+  background: #fff;
+  color: #111;
+  line-height: 1.8;
+  font-size: 16px;
+}
+
+.container { max-width: 860px; margin: 0 auto; padding: 48px 24px 80px; }
+
+.report-header {
+  text-align: center;
+  padding: 72px 0 36px;
+  border-bottom: 1.5pt solid #111;
+  margin-bottom: 40px;
+}
+.report-header h1 {
+  font-size: 1.85rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 10px;
+}
+.report-header .meta {
+  color: #555;
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+.toc {
+  border: 1pt solid #ccc;
+  padding: 20px 28px;
+  margin-bottom: 40px;
+}
+.toc h2 { font-size: 1rem; margin-bottom: 10px; border: none; padding: 0; }
+.toc ol { padding-left: 20px; }
+.toc li { margin-bottom: 3px; font-size: 0.9rem; }
+.toc a {
+  color: #111;
+  text-decoration: none;
+  border-bottom: 0.5pt dotted #999;
+}
+.toc a:hover { border-bottom-style: solid; }
+
+a {
+  color: #111;
+  text-decoration: none;
+  border-bottom: 0.5pt solid #999;
+}
+a:hover { border-bottom-color: #111; }
+a code { color: #111; }
+
+h2 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin: 52px 0 20px;
+  padding-bottom: 6px;
+  border-bottom: 1.5pt solid #111;
+}
+h3 { font-size: 1.1rem; font-weight: 700; margin: 30px 0 12px; }
+h4 { font-size: 1rem; font-weight: 700; margin: 18px 0 8px; }
+p { margin-bottom: 10px; }
+ul, ol { margin-bottom: 10px; padding-left: 24px; }
+li { margin-bottom: 3px; }
+strong { font-weight: 700; }
+
+.section-intro {
+  font-size: 0.9rem;
+  color: #444;
+  margin-bottom: 16px;
+  padding: 10px 14px;
+  border-left: 2pt solid #999;
+  font-family: -apple-system, 'Noto Sans KR', sans-serif;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 14px 0 20px;
+  font-size: 0.86rem;
+  font-family: -apple-system, 'Noto Sans KR', sans-serif;
+}
+th, td {
+  text-align: left;
+  padding: 7px 10px;
+  border-bottom: 0.5pt solid #ccc;
+  vertical-align: top;
+}
+th {
+  font-weight: 700;
+  border-bottom: 1pt solid #111;
+  white-space: nowrap;
+  background: none;
+}
+tr:last-child td { border-bottom: 1pt solid #111; }
+tr.highlight td { font-weight: 600; background: #fafafa; }
+td.num { text-align: right; font-variant-numeric: tabular-nums; }
+
+code {
+  font-family: 'SF Mono', 'Consolas', 'Menlo', monospace;
+  font-size: 0.82em;
+  background: #f4f4f4;
+  padding: 1px 5px;
+  border: 0.5pt solid #ddd;
+}
+pre {
+  background: #f7f7f7;
+  border: 0.5pt solid #ddd;
+  padding: 14px 18px;
+  margin: 14px 0 20px;
+  overflow-x: auto;
+  font-size: 0.78rem;
+  line-height: 1.55;
+  color: #222;
+}
+pre code { background: none; border: none; padding: 0; color: inherit; }
+.kw { font-weight: 700; }
+.str { font-style: italic; }
+.cm { color: #888; font-style: italic; }
+.tp { font-weight: 600; }
+
+.callout {
+  padding: 12px 16px;
+  margin: 14px 0 20px;
+  font-size: 0.88rem;
+  border: 0.5pt solid #ccc;
+  border-left: 2pt solid #555;
+  font-family: -apple-system, 'Noto Sans KR', sans-serif;
+}
+.callout.warn { border-left-color: #a33; }
+
+hr { border: none; border-top: 0.5pt solid #ccc; margin: 44px 0; }
+
+.report-footer {
+  margin-top: 56px;
+  padding-top: 20px;
+  border-top: 1pt solid #ccc;
+  font-size: 0.82rem;
+  color: #888;
+  text-align: center;
+  font-style: italic;
+}
+
+.check-list { list-style: none; padding-left: 4px; }
+.check-list li {
+  padding-left: 24px;
+  position: relative;
+  font-family: -apple-system, 'Noto Sans KR', sans-serif;
+  font-size: 0.92rem;
+  margin-bottom: 6px;
+}
+.check-list li::before {
+  content: "\25A1";
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.diagram-wrap { margin: 22px 0 30px; text-align: center; }
+.diagram-wrap svg {
+  max-width: 100%;
+  height: auto;
+  border: 0.5pt solid #eee;
+}
+.diagram-caption {
+  font-size: 0.82rem;
+  color: #666;
+  margin-top: 8px;
+  font-style: italic;
+  font-family: -apple-system, 'Noto Sans KR', sans-serif;
+}
+
+.mermaid {
+  background: #fafafa;
+  border: 0.5pt solid #ddd;
+  padding: 16px;
+  margin: 16px 0;
+  border-radius: 2px;
+  text-align: center;
+  font-family: -apple-system, 'Noto Sans KR', sans-serif;
+}
+
+@media print {
+  body { font-size: 10.5pt; }
+  .container { max-width: none; padding: 0; }
+  pre { break-inside: avoid; }
+  h2, h3 { break-after: avoid; }
+  .toc { break-inside: avoid; }
+  a { border-bottom: none; }
+}
