@@ -54,4 +54,10 @@ sections:
   - id: retrofit
     title: Retrofit Mode Flow
     prefix: flow
+  - id: execution
+    title: Execution Flow (Phase 0~4)
+    prefix: flow
+  - id: overview
+    title: KB Directory Layout Overview
+    prefix: layout
 ---
