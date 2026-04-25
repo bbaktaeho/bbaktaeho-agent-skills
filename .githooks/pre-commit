@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+# Pre-commit hook: run the GitHub Actions skill-format validator, scoped to the
+# plugins actually touched by this commit. Activate with:
+#
+#   git config core.hooksPath .githooks
+#
+# Skips when no staged change touches plugins/** or .claude-plugin/marketplace.json.
+set -euo pipefail
+
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+cd "$REPO_ROOT"
+
+STAGED="$(git diff --cached --name-only --diff-filter=ACMR)"
+
+if ! echo "$STAGED" | grep -qE '^(plugins/|\.claude-plugin/marketplace\.json$)'; then
+  exit 0
+fi
+
+# Collect distinct plugin names from staged paths under plugins/<name>/...
+PLUGINS="$(echo "$STAGED" \
+  | awk -F/ '$1=="plugins" && NF>=2 {print $2}' \
+  | sort -u \
+  | paste -sd, -)"
+
+VALIDATOR=".github/scripts/validate-skills.sh"
+if [[ ! -f "$VALIDATOR" ]]; then
+  echo "[pre-commit] validator not found at $VALIDATOR" >&2
+  exit 1
+fi
+
+if [[ -n "$PLUGINS" ]]; then
+  echo "[pre-commit] validating plugins: $PLUGINS"
+else
+  echo "[pre-commit] marketplace.json changed; validating without plugin filter"
+fi
+
+if ! VALIDATE_PLUGINS="$PLUGINS" bash "$VALIDATOR" >/tmp/validate-skills.log 2>&1; then
+  echo "[pre-commit] validation FAILED. Last lines:" >&2
+  tail -n 40 /tmp/validate-skills.log >&2
+  echo "[pre-commit] full log: /tmp/validate-skills.log" >&2
+  exit 1
+fi
+
+echo "[pre-commit] skill-format validation passed."

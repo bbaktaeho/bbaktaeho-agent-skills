@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{TITLE}}</title>
+<link rel="stylesheet" href="assets/theme.css">
+<!--
+DESIGN CONTRACT (kept in CSS / mermaid-init; see also report.md header)
+
+Visual style    monochrome only, white bg, near-black text, no emoji, 860px container.
+Typography      serif body, sans-serif tables / captions / callouts / mermaid, monospace code.
+Visualizations  >=1 mermaid flowchart + >=1 sequenceDiagram + >=1 stateDiagram-v2 + >=1 inline svg.
+Consistency     mirror Markdown twin: same anchor ids, same mermaid source, same SVG, same table rows.
+-->
+</head>
+<body>
+<div class="container">
+
+<header class="report-header">
+  <h1>{{TITLE}}</h1>
+  <p class="meta">{{META_SUBTITLE}} &nbsp;|&nbsp; 작성일: {{YYYY-MM-DD}} &nbsp;|&nbsp; 대상: {{SAMPLE_OR_SCOPE}}</p>
+</header>
+
+<nav class="toc">
+  <h2>목차</h2>
+  <ol>
+    <li><a href="#sec-overview">1. 개요와 범위</a></li>
+    <li><a href="#sec-diagrams">2. Raw → 파생 뷰 다이어그램</a></li>
+    <li><a href="#sec-protocol">3. 프로토콜 수준 분석</a></li>
+    <li><a href="#sec-code">4. 코드 수준 분석</a></li>
+    <li><a href="#sec-onchain">5. 온체인 데이터 뷰</a></li>
+    <li><a href="#sec-derivations">6. 인덱서 파생 뷰</a></li>
+    <li><a href="#sec-examples">7. 예제 패턴</a></li>
+    <li><a href="#sec-combine">8. 조합 패턴 - 교차 분석</a></li>
+    <li><a href="#sec-checklist">9. 파싱 / 인덱싱 체크리스트</a></li>
+    <li><a href="#sec-references">10. References</a></li>
+  </ol>
+</nav>
+
+<section id="sec-overview">
+  <h2>1. 개요와 범위</h2>
+  <p>{{OVERVIEW_PARAGRAPH}}</p>
+  <h3>1.1 조사 질문</h3>
+  <ul><li>{{QUESTION_1}}</li></ul>
+  <h3>1.2 범위와 제약</h3>
+  <ul>
+    <li><strong>다룬다:</strong> {{IN_SCOPE}}</li>
+    <li><strong>다루지 않는다:</strong> {{OUT_OF_SCOPE}}</li>
+  </ul>
+</section>
+<hr>
+
+<section id="sec-diagrams">
+  <h2>2. Raw → 파생 뷰 다이어그램</h2>
+
+  <h3>2.1 데이터 파이프라인</h3>
+  <div class="mermaid">
+flowchart LR
+  {{FLOWCHART_BODY}}
+  </div>
+  <p class="diagram-caption">그림 1. {{FIG1_CAPTION}}</p>
+
+  <h3>2.2 시간 순 상호작용</h3>
+  <div class="mermaid">
+sequenceDiagram
+  autonumber
+  {{SEQUENCE_BODY}}
+  </div>
+  <p class="diagram-caption">그림 2. {{FIG2_CAPTION}}</p>
+
+  <h3>2.3 상태 전이</h3>
+  <div class="mermaid">
+stateDiagram-v2
+  {{STATE_BODY}}
+  </div>
+  <p class="diagram-caption">그림 3. {{FIG3_CAPTION}}</p>
+
+  <h3>2.4 구조 맵 (인라인 SVG)</h3>
+  <div class="diagram-wrap">
+    {{INLINE_SVG_OR_REPLACEMENT}}
+    <p class="diagram-caption">그림 4. {{FIG4_CAPTION}}</p>
+  </div>
+</section>
+<hr>
+
+<section id="sec-protocol">
+  <h2>3. 프로토콜 수준 분석</h2>
+  <p>{{PROTOCOL_PARAGRAPH}}</p>
+  <h3>3.1 관련 개선 제안</h3>
+  <table>
+    <thead><tr><th>번호</th><th>제목</th><th>상태</th><th>링크</th></tr></thead>
+    <tbody>
+      <tr><td>{{ID}}</td><td>{{TITLE}}</td><td>{{STATUS}}</td><td><a href="{{URL}}">{{URL}}</a></td></tr>
+    </tbody>
+  </table>
+</section>
+<hr>
+
+<section id="sec-code">
+  <h2>4. 코드 수준 분석</h2>
+  <ul><li><code>&lt;RESEARCH_ROOT&gt;/{repo}/{path}:{line}</code> -- {{WHAT}}</li></ul>
+  <pre><code>{{CODE_EXCERPT}}</code></pre>
+</section>
+<hr>
+
+<section id="sec-onchain">
+  <h2>5. 온체인 데이터 뷰</h2>
+  <h3>5.1 최상위 필드</h3>
+  <table>
+    <thead><tr><th>필드</th><th>의미</th><th>예시값</th></tr></thead>
+    <tbody>
+      <tr><td><code>{{FIELD}}</code></td><td>{{MEANING}}</td><td>{{SAMPLE}}</td></tr>
+    </tbody>
+  </table>
+  <h3>5.2 예시 응답</h3>
+  <pre><code>{{RAW_SAMPLE_JSON}}</code></pre>
+  <div class="callout"><strong>불변량:</strong> {{INVARIANT_STATEMENT}}.</div>
+</section>
+<hr>
+
+<section id="sec-derivations">
+  <h2>6. 인덱서 파생 뷰</h2>
+  <table>
+    <thead><tr><th>파생 뷰</th><th>입력 조합</th><th>용도</th></tr></thead>
+    <tbody>
+      <tr><td>{{VIEW}}</td><td>{{INPUTS}}</td><td>{{USE}}</td></tr>
+    </tbody>
+  </table>
+</section>
+<hr>
+
+<section id="sec-examples">
+  <h2>7. 예제 패턴</h2>
+  <pre><code>{{EXAMPLE_SNIPPET}}</code></pre>
+</section>
+<hr>
+
+<section id="sec-combine">
+  <h2>8. 조합 패턴 - 교차 분석</h2>
+  <ol>
+    <li>{{STEP_1}}</li>
+    <li>{{STEP_2}}</li>
+  </ol>
+</section>
+<hr>
+
+<section id="sec-checklist">
+  <h2>9. 파싱 / 인덱싱 체크리스트</h2>
+  <ul class="check-list">
+    <li>{{CHECK_1}}</li>
+    <li>{{CHECK_2}}</li>
+  </ul>
+</section>
+<hr>
+
+<section id="sec-references">
+  <h2>10. References</h2>
+  <h3>로컬 소스</h3>
+  <ol><li><code>&lt;RESEARCH_ROOT&gt;/{repo}/{path}:{line}</code> -- {{DESC}}</li></ol>
+  <h3>공식 문서</h3>
+  <ol><li><a href="{{URL}}">{{TITLE}}</a></li></ol>
+  <h3>커뮤니티 / 블로그 / 포럼</h3>
+  <ol><li><a href="{{URL}}">{{TITLE}}</a></li></ol>
+</section>
+
+<footer class="report-footer">
+  본 리포트는 <code>blockchain-research:{{CHAIN}}-researcher</code> 스킬로 생성되었습니다. &mdash; {{YYYY-MM-DD}}
+</footer>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script src="assets/mermaid-init.js"></script>
+</body>
+</html>

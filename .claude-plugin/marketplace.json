@@ -37,7 +37,7 @@
     },
     {
       "name": "blockchain-research",
-      "description": "Multi-chain blockchain protocol and on-chain data indexing research skill. Make sure to use this skill whenever the user is investigating Ethereum (EVM, EIPs, go-ethereum, reth, revm, prysm), Solana (SVM, SIMDs, PoH, agave, SPL), or Tempo (TIP-20, MPP, Simplex BFT, Payment Lanes, Fee AMM), or when indexing concerns come up (reorg, finality, ABI/IDL, asset standards, RPC, protocol-level transfers, tx envelopes, state access) - even if they just ask 'how does X work' or 'why does Y behave this way' without the word 'research'.",
+      "description": "Multi-chain blockchain protocol and on-chain indexing research plugin. Ships three chain-specific skills: blockchain-research:ethereum-researcher (EVM, EIPs, go-ethereum, reth, revm, prysm), blockchain-research:solana-researcher (SVM, SIMDs, PoH, agave, SPL, Anchor), blockchain-research:tempo-researcher (TIP-20, TIP-403, MPP, Simplex BFT, Payment Lanes, Fee AMM, tidx). Each skill covers protocol analysis plus indexing concerns (reorg / finality, asset standards, RPC / gRPC, protocol-level transfers, event / ABI / IDL decoding, transaction envelopes, state access) for the target chain and produces reports via the plugin-level shared MD / HTML templates with Mermaid and inline SVG. Use the relevant chain skill whenever the user is investigating that chain, even without the word 'research'.",
       "source": "./plugins/blockchain-research",
       "category": "development"
     },
