@@ -6,6 +6,16 @@
 
 - **절대 이모지를 사용하지 마세요.** 코드, 주석, 커밋 메시지, 문서, 응답 등 모든 출력에서 이모지를 사용하지 않습니다.
 
+## Pre-commit Hook (Skill 포맷 검증)
+
+GitHub Actions 와 동일한 검증을 커밋 단계에서 실행하려면 한 번만 다음을 실행합니다.
+
+```bash
+git config core.hooksPath .githooks
+```
+
+이후 `plugins/**` 또는 `.claude-plugin/marketplace.json` 을 건드리는 커밋이 발생할 때마다 `.githooks/pre-commit` 이 `bash .github/scripts/validate-skills.sh` 를 실행하고, 실패하면 커밋이 차단됩니다.
+
 ---
 
 # Repository 구조

@@ -75,6 +75,21 @@ has_xml_tags() {
 echo "=== Skill Format Validation ==="
 echo ""
 
+# Optional filter: comma-separated plugin names. When set, marketplace.json is
+# still checked, but only the listed plugin directories are walked. Used by the
+# pre-commit hook to avoid blocking on pre-existing issues in unrelated plugins.
+PLUGIN_FILTER="${VALIDATE_PLUGINS:-}"
+
+plugin_in_filter() {
+  local name="$1"
+  [[ -z "$PLUGIN_FILTER" ]] && return 0
+  IFS=',' read -ra wanted <<< "$PLUGIN_FILTER"
+  for w in "${wanted[@]}"; do
+    [[ "$name" == "$w" ]] && return 0
+  done
+  return 1
+}
+
 # ----------------------------------------
 # 1. Validate marketplace.json
 # ----------------------------------------
@@ -128,6 +143,9 @@ echo ""
 # ----------------------------------------
 for plugin_dir in plugins/*/; do
   plugin_name=$(basename "$plugin_dir")
+  if ! plugin_in_filter "$plugin_name"; then
+    continue
+  fi
   echo "--- plugins/$plugin_name ---"
 
   # Check plugin.json exists
