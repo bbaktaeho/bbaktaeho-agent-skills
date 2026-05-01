@@ -75,7 +75,8 @@ references/flow-modes.md
 ### Phase 0: Setup Scan
 
 1. `.kb/preset.json` 읽기 → 프리셋 / 스키마 버전 확인. 없으면 "지식베이스가 세팅되지 않음. knowledge-base-setup 스킬을 먼저 실행하세요" 로 중단
-2. 모드 확인 (사용자 지정 또는 기본 `quick`)
+2. **Tool check** — knowledge-base-setup 의 Phase 0.5 와 동일한 매트릭스로 도구 검사 (knowledge-base-setup 의 references/rule-tool-dependencies.md, references/flow-tool-check.md). frontmatter 파서 (`yq` 또는 `python3+PyYAML`) 가 둘 다 없으면 사용자에게 install 확인. skip 시 degraded 모드 (frontmatter 검증 건너뜀, 다른 검증은 정상)
+3. 모드 확인 (사용자 지정 또는 기본 `quick`)
 
 ### Phase 1: Required Checks
 
