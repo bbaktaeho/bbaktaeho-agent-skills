@@ -15,8 +15,14 @@ sections:
   - id: secrets-handling
     title: Secrets Handling Rules
     prefix: rule
+  - id: tool-dependencies
+    title: Tool Dependency Matrix and Install Flow
+    prefix: rule
   - id: pre-commit-hook
     title: Pre-commit Secret-Scan Hook
+    prefix: template
+  - id: pre-push-visibility-hook
+    title: Pre-push Visibility Hook (career only)
     prefix: template
   - id: kb-readme-template
     title: AI Entry Point Template
@@ -48,6 +54,9 @@ sections:
   - id: preset-custom
     title: Custom Preset
     prefix: preset
+  - id: preset-career
+    title: Career Preset
+    prefix: preset
   - id: questions
     title: Interactive Setup Questions
     prefix: ask
@@ -56,6 +65,9 @@ sections:
     prefix: flow
   - id: execution
     title: Execution Flow (Phase 0~4)
+    prefix: flow
+  - id: tool-check
+    title: Tool Check Flow (Phase 0.5)
     prefix: flow
   - id: overview
     title: KB Directory Layout Overview

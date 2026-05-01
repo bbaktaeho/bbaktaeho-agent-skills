@@ -33,12 +33,14 @@ Phase 1 에서 사용자에게 3개 질문을 던진다. 순서 고정.
   2) research  — 리서치 전용 (topics / experiments / notes)
   3) product   — 제품 개발 (specs / designs / api / architecture)
   4) custom    — 최소 셋업만, 디렉토리는 직접 구성
+  5) career    — 개인 커리어 (roles / resumes / projects / skills / brag / learning / reviews / goals)
 
 선택 [1]: _
 ```
 
 - 각 선택에 대응하는 references/preset-{name}.md 를 로드하여 Phase 2 에서 사용
 - `preset.json` 에 저장: `{"preset": "{name}", "version": "1.0.0"}`
+- `career` 선택 시 추가 처리: Phase 0.5 도구 매트릭스에 `gh` 추가 후 재검사 (origin 이 github.com 인 경우). Phase 2 에서 pre-push visibility 훅도 함께 설치
 
 ## Q3. AGENTS.md (AI 에이전트 진입점) 처리
 
