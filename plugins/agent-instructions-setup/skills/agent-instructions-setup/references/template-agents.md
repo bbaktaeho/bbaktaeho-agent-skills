@@ -28,6 +28,7 @@ AGENTS.md 자체는 가능한 한 짧게 유지한다 (50줄 이내 목표). 상
 - agents/guide.md — 문서 진입점·라우팅 테이블
 - agents/workflow.md — 작업 워크플로우
 - agents/*.md — 주제별 상세 문서 (각 파일의 frontmatter `description` 참고)
+- .agents/README.md — AI 메타 진입점 (schema / conventions / preset.json / hooks)
 
 ## Document Conventions
 
