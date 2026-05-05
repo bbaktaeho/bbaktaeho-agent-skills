@@ -1,0 +1,29 @@
+{
+  "defaultRoot": ".solana-research",
+  "submodules": [
+    {
+      "name": "solana",
+      "url": "https://github.com/solana-labs/solana.git",
+      "verifyPath": "runtime/",
+      "group": "client",
+      "tags": ["svm", "consensus", "rpc", "tx-envelope"],
+      "sizeApprox": "~800 MB"
+    },
+    {
+      "name": "agave",
+      "url": "https://github.com/anza-xyz/agave.git",
+      "verifyPath": "core/",
+      "group": "client",
+      "tags": ["svm", "consensus", "rpc", "geyser"],
+      "sizeApprox": "~700 MB"
+    },
+    {
+      "name": "solana-program-library",
+      "url": "https://github.com/solana-labs/solana-program-library.git",
+      "verifyPath": "token/",
+      "group": "spl",
+      "tags": ["spl", "token", "asset-standards"],
+      "sizeApprox": "~250 MB"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "defaultRoot": ".tempo-research",
+  "submodules": [
+    {
+      "name": "tempo",
+      "url": "https://github.com/tempoxyz/tempo.git",
+      "verifyPath": "crates/",
+      "group": "core",
+      "tags": ["protocol", "consensus", "tx-envelope", "rpc"]
+    },
+    {
+      "name": "tempo-go",
+      "url": "https://github.com/tempoxyz/tempo-go.git",
+      "verifyPath": ".",
+      "group": "sdk",
+      "tags": ["sdk", "rpc"]
+    },
+    {
+      "name": "mpp-go",
+      "url": "https://github.com/tempoxyz/mpp-go.git",
+      "verifyPath": ".",
+      "group": "mpp",
+      "tags": ["mpp", "payments"]
+    },
+    {
+      "name": "mpp-rs",
+      "url": "https://github.com/tempoxyz/mpp-rs.git",
+      "verifyPath": "crates/",
+      "group": "mpp",
+      "tags": ["mpp", "payments"]
+    },
+    {
+      "name": "tidx",
+      "url": "https://github.com/tempoxyz/tidx.git",
+      "verifyPath": "src/",
+      "group": "indexer",
+      "tags": ["indexer", "rpc", "decoding"]
+    }
+  ]
+}
