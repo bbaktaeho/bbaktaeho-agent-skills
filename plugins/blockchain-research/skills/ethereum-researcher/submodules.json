@@ -1,0 +1,53 @@
+{
+  "defaultRoot": ".ethereum-research",
+  "submodules": [
+    {
+      "name": "go-ethereum",
+      "url": "https://github.com/ethereum/go-ethereum",
+      "verifyPath": "core/",
+      "group": "execution",
+      "tags": ["execution", "evm", "rpc", "tx-envelope", "state-access", "event-decoding"],
+      "sizeApprox": "~1.2 GB"
+    },
+    {
+      "name": "reth",
+      "url": "https://github.com/paradigmxyz/reth",
+      "verifyPath": "crates/",
+      "group": "execution",
+      "tags": ["execution", "evm", "rpc", "tx-envelope", "state-access"],
+      "sizeApprox": "~500 MB"
+    },
+    {
+      "name": "revm",
+      "url": "https://github.com/bluealloy/revm",
+      "verifyPath": "crates/interpreter/",
+      "group": "execution",
+      "tags": ["evm", "event-decoding"],
+      "sizeApprox": "~150 MB"
+    },
+    {
+      "name": "prysm",
+      "url": "https://github.com/offchainlabs/prysm",
+      "verifyPath": "beacon-chain/",
+      "group": "consensus",
+      "tags": ["consensus", "reorg-finality", "protocol-transfers"],
+      "sizeApprox": "~600 MB"
+    },
+    {
+      "name": "forkcast",
+      "url": "https://github.com/ethereum/forkcast",
+      "verifyPath": ".",
+      "group": "spec",
+      "tags": ["hardfork", "spec"],
+      "sizeApprox": "~50 MB"
+    },
+    {
+      "name": "EIPs",
+      "url": "https://github.com/ethereum/EIPs",
+      "verifyPath": "EIPS/",
+      "group": "spec",
+      "tags": ["spec", "asset-standards", "tx-envelope"],
+      "sizeApprox": "~80 MB"
+    }
+  ]
+}

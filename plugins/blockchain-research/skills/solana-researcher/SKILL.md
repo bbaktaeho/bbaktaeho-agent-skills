@@ -34,7 +34,7 @@ metadata:
 
 # Solana Researcher
 
-Solana protocol and indexing research with local submodule analysis and a shared MD / HTML report template.
+Solana protocol and indexing research. Procedure delegated to `plugins/blockchain-research/shared/`. Chain-specific source matrix and submodule manifest live in this skill.
 
 ## When to Apply
 
@@ -44,55 +44,45 @@ Reference these guidelines when:
 - Researching Solana indexing concerns (commitment levels, Geyser, RPC / gRPC, SPL standards, program log decoding, versioned tx / ALT, inner instructions, epoch rewards)
 - Comparing Solana reference indexers (Helius, Yellowstone / Triton, Shyft, Solscan)
 
-## Skill Trigger Flow
+## Trigger Flow
 
-1. **Path Resolution** -- ask user for submodule root or use default `.solana-research`. See `references/setup-submodules.md`.
-2. **Auto-Initialize on First Use** -- if any submodule is missing, run setup commands automatically.
-3. **Update** -- run `git submodule update --remote`, report changes.
-4. **Research (local-first)** -- prefer `Grep` / `Glob` / `Read` over local `<RESEARCH_ROOT>/{submodule}/`. Use `WebFetch` only for off-repo content (forum threads, blogs, PRs, SIMDs).
-5. **Report** -- fill in `plugins/blockchain-research/templates/report.md` and `report.html` in parallel. Output to `docs/research/solana/{YYYY-MM-DD}-{slug}.md` and `.html`.
+1. **Resolution & Mode** -- see `plugins/blockchain-research/shared/flow.md` Phase 1. Mode auto-detected from message; explicit `quick:` / `full:` prefix overrides.
+2. **Source Routing** -- read this skill's `references/flow-research.md` Source Selection Matrix; intersect routed tags against `submodules.json`.
+3. **Init Policy** -- shared Phase 2: skip-if-present, ask-on-missing.
+4. **Update Cache** -- shared Phase 3: 24-hour TTL per submodule, force-refresh on user request.
+5. **Research** -- shared Phase 4: local-first, `WebFetch` only for off-repo content.
+6. **Output** -- shared Phase 5: quick = inline; full = emit MD + HTML to `docs/research/solana/{YYYY-MM-DD}-{slug}.{md,html}`.
 
-See `references/flow-research.md` for the full procedure.
+Setup procedure: see `plugins/blockchain-research/shared/setup.md`. Manifest schema: see `plugins/blockchain-research/shared/manifest.md`. Solana manifest: see `submodules.json` next to this file.
 
-## Submodules
+## Submodule Manifest
 
-| Submodule | Default Path |
-|-----------|-------------|
-| solana | `<RESEARCH_ROOT>/solana` |
-| agave | `<RESEARCH_ROOT>/agave` |
-| solana-program-library | `<RESEARCH_ROOT>/solana-program-library` |
-
-Default `<RESEARCH_ROOT>` is `.solana-research`.
+See `submodules.json` (this skill's directory). Default research root: `.solana-research`. Submodules: solana, agave, solana-program-library.
 
 ## Source Categories by Priority
 
 | Priority | Category | Impact | Prefix |
 |----------|----------|--------|--------|
-| 1 | Setup | CRITICAL | `setup-` |
-| 2 | Research Flow | CRITICAL | `flow-` |
-| 3 | Report Template | CRITICAL | `report-` |
-| 4 | Protocol Source Code / Web | HIGH | `protocol/src-`, `protocol/web-` |
-| 5 | Indexing | HIGH | `indexing/idx-` |
+| 1 | Research Flow (chain-specific source matrix) | CRITICAL | `flow-` |
+| 2 | Report Template | CRITICAL | `report-` |
+| 3 | Protocol Source Code / Web | HIGH | `protocol/src-`, `protocol/web-` |
+| 4 | Indexing | HIGH | `indexing/idx-` |
 
 ## How to Use
 
 | Path | Contents |
 |------|----------|
-| `references/setup-submodules.md` | Submodule setup and path config |
-| `references/flow-research.md` | Research procedure and source selection |
+| `references/flow-research.md` | Solana Source Selection Matrix and chain output paths |
+| `references/setup-submodules.md` | Solana-specific setup deltas (verify commands, default root) |
 | `references/report-template.md` | How to use the shared plugin-level templates |
-| `references/protocol/src-solana.md` | solana (runtime, core, poh, turbine) navigation |
-| `references/protocol/src-agave.md` | agave (validator, svm, geyser) navigation |
-| `references/protocol/src-spl.md` | solana-program-library navigation |
-| `references/protocol/web-solana-forum.md` | forum.solana.com navigation |
-| `references/protocol/web-solana-blog.md` | Solana and Anza blog navigation |
-| `references/indexing/idx-*.md` | Indexing lens references (8 files) |
+| `references/protocol/src-*.md` | Per-repo navigation |
+| `references/protocol/web-*.md` | Per-source navigation |
+| `references/indexing/idx-*.md` | Indexing lens references |
 
 ## References
 
-- https://solana.com/docs
+- https://docs.solana.com/
 - https://github.com/solana-labs/solana
 - https://github.com/anza-xyz/agave
 - https://github.com/solana-labs/solana-program-library
-- https://github.com/solana-foundation/solana-improvement-documents
 - https://forum.solana.com/

@@ -32,7 +32,7 @@ metadata:
 
 # Tempo Researcher
 
-Tempo protocol and indexing research with local submodule analysis and a shared MD / HTML report template.
+Tempo protocol and indexing research. Procedure delegated to `plugins/blockchain-research/shared/`. Chain-specific source matrix and submodule manifest live in this skill.
 
 ## When to Apply
 
@@ -42,60 +42,46 @@ Reference these guidelines when:
 - Researching Tempo indexing concerns (tidx sync, Tempo-specific tx fields, Fee AMM attribution, ABI decoding, `/query` API)
 - Analyzing TIP-20, TIP-403, or Machine Payments Protocol (MPP)
 
-## Skill Trigger Flow
+## Trigger Flow
 
-1. **Path Resolution** -- ask user for submodule root or use default `.tempo-research`. See `references/setup-submodules.md`.
-2. **Auto-Initialize on First Use** -- if any submodule is missing, run setup commands automatically.
-3. **Update** -- run `git submodule update --remote`, report changes.
-4. **Research (local-first)** -- prefer `Grep` / `Glob` / `Read` over local `<RESEARCH_ROOT>/{submodule}/`. Use `WebFetch` only for off-repo content (Tempo docs, blogs, MPP spec).
-5. **Report** -- fill in `plugins/blockchain-research/templates/report.md` and `report.html` in parallel. Output to `docs/research/tempo/{YYYY-MM-DD}-{slug}.md` and `.html`.
+1. **Resolution & Mode** -- see `plugins/blockchain-research/shared/flow.md` Phase 1. Mode auto-detected from message; explicit `quick:` / `full:` prefix overrides.
+2. **Source Routing** -- read this skill's `references/flow-research.md` Source Selection Matrix; intersect routed tags against `submodules.json`.
+3. **Init Policy** -- shared Phase 2: skip-if-present, ask-on-missing.
+4. **Update Cache** -- shared Phase 3: 24-hour TTL per submodule, force-refresh on user request.
+5. **Research** -- shared Phase 4: local-first, `WebFetch` only for off-repo content.
+6. **Output** -- shared Phase 5: quick = inline; full = emit MD + HTML to `docs/research/tempo/{YYYY-MM-DD}-{slug}.{md,html}`.
 
-See `references/flow-research.md` for the full procedure.
+Setup procedure: see `plugins/blockchain-research/shared/setup.md`. Manifest schema: see `plugins/blockchain-research/shared/manifest.md`. Tempo manifest: see `submodules.json` next to this file.
 
-## Submodules
+## Submodule Manifest
 
-| Submodule | Default Path |
-|-----------|-------------|
-| tempo | `<RESEARCH_ROOT>/tempo` |
-| tempo-go | `<RESEARCH_ROOT>/tempo-go` |
-| mpp-go | `<RESEARCH_ROOT>/mpp-go` |
-| mpp-rs | `<RESEARCH_ROOT>/mpp-rs` |
-| tidx | `<RESEARCH_ROOT>/tidx` |
-
-Default `<RESEARCH_ROOT>` is `.tempo-research`.
+See `submodules.json` (this skill's directory). Default research root: `.tempo-research`. Submodules: tempo, tempo-go, mpp-go, mpp-rs, tidx.
 
 ## Source Categories by Priority
 
 | Priority | Category | Impact | Prefix |
 |----------|----------|--------|--------|
-| 1 | Setup | CRITICAL | `setup-` |
-| 2 | Research Flow | CRITICAL | `flow-` |
-| 3 | Report Template | CRITICAL | `report-` |
-| 4 | Protocol Source Code / Web | HIGH | `protocol/src-`, `protocol/web-` |
-| 5 | Indexing | HIGH | `indexing/idx-` |
+| 1 | Research Flow (chain-specific source matrix) | CRITICAL | `flow-` |
+| 2 | Report Template | CRITICAL | `report-` |
+| 3 | Protocol Source Code / Web | HIGH | `protocol/src-`, `protocol/web-` |
+| 4 | Indexing | HIGH | `indexing/idx-` |
 
 ## How to Use
 
 | Path | Contents |
 |------|----------|
-| `references/setup-submodules.md` | Submodule setup and path config |
-| `references/flow-research.md` | Research procedure and source selection |
+| `references/flow-research.md` | Tempo Source Selection Matrix and chain output paths |
+| `references/setup-submodules.md` | Tempo-specific setup deltas (verify commands, default root) |
 | `references/report-template.md` | How to use the shared plugin-level templates |
-| `references/protocol/src-tempo.md` | tempo core navigation |
-| `references/protocol/src-tempo-go.md` | tempo-go SDK navigation |
-| `references/protocol/src-mpp-go.md` | mpp-go SDK navigation |
-| `references/protocol/src-mpp-rs.md` | mpp-rs SDK navigation |
-| `references/protocol/src-tidx.md` | tidx indexer navigation |
-| `references/protocol/web-tempo-docs.md` | Tempo docs and blog navigation |
-| `references/protocol/web-mpp.md` | MPP protocol docs navigation |
-| `references/indexing/idx-*.md` | Indexing lens references (8 files) |
+| `references/protocol/src-*.md` | Per-repo navigation |
+| `references/protocol/web-*.md` | Per-source navigation |
+| `references/indexing/idx-*.md` | Indexing lens references |
 
 ## References
 
-- https://docs.tempo.xyz
+- Tempo docs (per spec)
 - https://github.com/tempoxyz/tempo
 - https://github.com/tempoxyz/tempo-go
 - https://github.com/tempoxyz/mpp-go
 - https://github.com/tempoxyz/mpp-rs
 - https://github.com/tempoxyz/tidx
-- https://mpp.dev

@@ -1,8 +1,8 @@
 {
   "name": "blockchain-research",
-  "description": "Multi-chain blockchain protocol and on-chain indexing research. Ships three chain-specific skills: blockchain-research:ethereum-researcher (go-ethereum, reth, revm, prysm, forkcast, EIPs), blockchain-research:solana-researcher (solana, agave, SPL, Anchor, Geyser), blockchain-research:tempo-researcher (tempo, tempo-go, mpp-go, mpp-rs, tidx, TIP-20, MPP, Simplex BFT). Each skill covers protocol analysis plus indexing concerns (reorg / finality, asset standards, RPC / gRPC, protocol-level transfers, event / ABI / IDL decoding, transaction envelopes, state access / commitment / archive) for the target chain and produces structured reports via the plugin-level shared MD / HTML templates with Mermaid and inline SVG visualizations. Use the relevant chain skill whenever the user is investigating that chain, even if they just ask 'how does X work' without the word 'research'.",
+  "description": "Multi-chain blockchain protocol and on-chain indexing research. Ships three chain-specific skills: blockchain-research:ethereum-researcher (go-ethereum, reth, revm, prysm, forkcast, EIPs), blockchain-research:solana-researcher (solana, agave, SPL, Anchor, Geyser), blockchain-research:tempo-researcher (tempo, tempo-go, mpp-go, mpp-rs, tidx, TIP-20, MPP, Simplex BFT). All skills share a chain-agnostic procedure base (mode branching, on-demand submodule init, 24-hour update cache) and a manifest-driven setup. Use the relevant chain skill whenever the user is investigating that chain, even if they just ask 'how does X work' without the word 'research'.",
   "author": {
     "name": "bbaktaeho"
   },
-  "version": "2.0.0"
+  "version": "3.0.0"
 }
