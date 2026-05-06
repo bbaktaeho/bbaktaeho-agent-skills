@@ -18,9 +18,10 @@ agents 문서는 짧게 유지하는 게 핵심. 임계값은 kb 보다 훨씬 s
 | 파일 유형 | Target | Soft warn | Hard warn |
 |-----------|--------|-----------|-----------|
 | `AGENTS.md` (루트) | 50줄 | 80줄 | 120줄 |
-| `agents/guide.md` | 80줄 | 100줄 | 150줄 |
-| `agents/*.md` (그 외) | 80줄 | 100줄 | 150줄 |
-| 디렉토리 README.md | 50줄 | 80줄 | 120줄 |
+| `.agents/README.md` | 80줄 | 120줄 | 200줄 |
+| `<dir>/README.md` (모든 깊이) | 80줄 | 120줄 | 200줄 |
+| `.agents/*.md` (그 외) | 80줄 | 120줄 | 200줄 |
+| 일반 콘텐츠 파일 (frontmatter 있음) | 자유 | — | — |
 
 - `tags` 에 `length-exempt` 있으면 검사 제외
 - soft 초과: 한 번 확인. "keep" 선택 시 이번 분량은 묵시적 허용
@@ -44,15 +45,15 @@ agents 문서는 짧게 유지하는 게 핵심. 임계값은 kb 보다 훨씬 s
 ```
 {path}: {lines}줄 (hard 임계값 {hard}줄 초과)
 
-agents/ 문서는 짧게 유지해야 합니다 (target {target}줄). 분할을 강력 권장합니다.
+라우팅 README 는 짧게 유지해야 합니다 (target {target}줄). 분할을 강력 권장합니다.
 
 권장 분할 패턴:
-  agents/{topic}.md            # 단일 파일
+  <dir>/README.md              # 단일 라우팅
   ↓
-  agents/{topic}/
-  ├── README.md                # 요약 + 라우팅
-  ├── overview.md
-  └── details-{aspect}.md
+  <dir>/
+  ├── README.md                # 그룹별 라우팅 (얇은 인덱스)
+  ├── <group-a>/README.md
+  └── <group-b>/README.md
 
   y) 예 — 분리 계획
   n) 아니오 — 현재 크기 유지
@@ -86,7 +87,7 @@ agents/ 문서는 짧게 유지해야 합니다 (target {target}줄). 분할을 
 
 - 어디서도 `relations` 로 참조되지 않음
 - 본인의 `relations` 도 비어있음
-- 디렉토리 `README.md` 는 제외
+- 라우팅 README (`README.md`) 는 제외 — 라우팅 표로 연결되므로 별도 처리
 - `.agents/` 메타 파일은 제외
 
 ### 확인 질문
@@ -174,7 +175,7 @@ agents/ 문서는 짧게 유지해야 합니다 (target {target}줄). 분할을 
 
 ### 검출
 
-- `agents/{dir}/README.md` 의 `summary` 가 placeholder 그대로
+- 라우팅 `<dir>/README.md` 의 `summary` 가 placeholder 그대로
 
 ### 확인 질문
 

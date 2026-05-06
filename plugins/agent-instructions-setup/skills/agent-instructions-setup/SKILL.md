@@ -1,130 +1,116 @@
 ---
 name: agent-instructions-setup
 description: >
-  AI coding agent instruction file init and retrofit across three modes: solo,
-  project-team, and cross-project hub. Creates AGENTS.md as the single source
-  of truth, symlinks across major AI tools (Claude Code, Cursor, Copilot,
-  Windsurf, Cline, Roo Code, Gemini CLI, Codex, Zed, Antigravity, Amp, Aider,
-  Continue), an AI-first agents/ content directory, and a .agents/ meta
-  directory (README, schema, conventions, preset.json, hooks, local) mirroring
-  the .kb/ pattern. Project-team mode adds onboarding, ADR, RFC, runbook,
-  postmortem, glossary, security, CODEOWNERS. Hub mode builds a cross-project
-  catalog (project registry, tech radar, shared libraries, infra, incident
-  response, org-level ADRs). Use whenever the user wants to initialize a
-  project, bootstrap AGENTS.md, unify instruction files, retrofit a project,
-  set up a team knowledge base, create a hub, or evolve agents/ docs - even
-  if they only say "AI rules" or "agent config".
+  AI coding agent instruction file init and retrofit. Builds a single
+  routing chain so every AI tool (Claude Code, Cursor, Copilot,
+  Windsurf, Cline, Roo Code, Gemini CLI, Codex, Zed, Antigravity, Amp,
+  Aider, Continue) reads the same source. The chain is tool-symlink
+  to AGENTS.md to .agents/README.md (overview plus top-level
+  directory routing table) to each top-level directory README.md to
+  detail files. Sets up AGENTS.md, idempotent symlinks across tools,
+  and a .agents/ meta directory (README, schema, conventions,
+  preset.json, hooks/pre-commit-secrets.sh, local). No agents/
+  content directory is created. Use whenever the user wants to
+  initialize a project, bootstrap AGENTS.md, unify instruction files
+  across AI tools, retrofit an existing project, or make a repo
+  AI-navigable - even if they just say "AI rules" or "agent config".
 license: MIT
 metadata:
   author: bbaktaeho
-  version: "3.3.0"
+  version: "4.0.0"
   date: May 2026
   abstract: >
-    Init and retrofit skill with three modes: solo, project-team, hub. Phase
-    0 scans state, Phase 1 sets up AGENTS.md and idempotent symlinks, Phase 2
-    interactively generates agents/guide.md (routing index) and workflow.
-    Phase 2B (project-team): onboarding, team, glossary, security, plus
-    ADR/RFC/runbook/postmortem templates and CODEOWNERS. Phase 2C (hub):
-    project registry, tech-radar, shared-libraries, infrastructure,
-    cross-service incident-response, org-level ADR. Phase 3 verifies.
-    Philosophy: AI-first. Hub is NOT a team wiki; it is a cross-project
-    meta-index for AI agents to route cross-project work.
+    Init and retrofit skill that wires a 4-hop routing chain. Phase 0
+    scans state. Phase 1 creates AGENTS.md (slim) and the .agents/
+    meta directory plus idempotent tool symlinks. Phase 2 detects
+    top-level project directories, populates the .agents/README.md
+    routing index, and scaffolds a README.md inside each top-level
+    directory the user opts in. Phase 3 verifies the chain. No
+    agents/ content directory, no project-team or hub modes, no team
+    template families. Philosophy: AI-first findability through
+    structure (frontmatter + README chain), not behavior rules.
 ---
 
 # Agent Instructions Setup
 
-AGENTS.md 를 single source of truth 로 두고, `agents/` 디렉토리를 AI 탐색 최적화된 형태로 구축·유지한다.
+AGENTS.md 를 single source of truth 로 두고 모든 AI 도구가 같은 라우팅 체인을 읽게 만든다.
 
-## Core Philosophy
+## Routing Chain
 
-"AI 행동을 바꾸려 하지 말고, AI 가 잘 찾을 수 있도록 문서를 최적화한다."
+```
+도구 심링크 (CLAUDE.md, .cursorrules, GEMINI.md, ...)
+  -> AGENTS.md                       # 50줄 이내, 진입점만
+       -> .agents/README.md          # 개요 + 상위 디렉토리 요약 + 라우팅 표
+            -> <top-level-dir>/README.md   # 도메인 요약 + 하위 라우팅
+                 -> 상세 파일 / 하위 README
+```
 
-AGENTS.md 와 agents/guide.md 는 행동 지시문이 아니라 **탐색 라우팅** 역할이다. 상세: references/rule-findability.md
+행동 지시문이 아니라 **README 체인** 으로 AI 가 자연스럽게 올바른 문서에 도달하게 한다. 상세: references/rule-findability.md
 
 ## Directory Layout
 
-레포 루트에 두 개 디렉토리가 셋업된다:
+```
+{repo}/
+├── AGENTS.md                          # 라우팅 루트 (50줄 이내)
+├── .agents/                           # 메타 + 라우팅 인덱스
+│   ├── README.md                      # 라우팅 인덱스 (개요 + 상위 dir 요약)
+│   ├── schema.md                      # README.md frontmatter 스키마
+│   ├── conventions.md                 # 네이밍 / lifecycle / findability
+│   ├── preset.json                    # kind=agents, version
+│   ├── .tag-index                     # gitignored
+│   ├── hooks/pre-commit-secrets.sh    # 민감 정보 차단
+│   ├── local/                         # gitignored
+│   └── local.example/
+├── <top-level-dir>/README.md          # 각 상위 dir 의 라우팅 README
+└── (도구 심링크: CLAUDE.md, .cursorrules, ...)
+```
 
-- `agents/` — 컨텐츠 (guide.md / workflow.md / 도메인 문서)
-- `.agents/` — 메타 (AI 진입점, schema, conventions, preset.json, hooks, local). references/layout-overview.md
-
-기존 소스에 `agents/` 디렉토리가 있으면 Phase 0 에서 충돌을 감지하고 컨텐츠 fallback 이름(`_agents/`) 을 제안한다. `.agents/` 는 항상 메타 전용으로 예약.
+`.agents/` 만 메타 전용. 상위 디렉토리는 사용자 기존 구조(`docs/`, `src/`, `apps/`, ...) 를 그대로 사용. 상세: references/layout-overview.md
 
 ## Execution Flow
 
 ### Phase 0: State Scan
 
-현재 프로젝트 상태를 스캔하여 진행 모드를 결정한다.
-
-1. AGENTS.md, 도구별 instruction 파일, `agents/` 디렉토리 유무 확인
-2. `package.json`, `pyproject.toml`, `Cargo.toml`, `go.mod`, `Gemfile` 스캔하여 스택 자동 감지
-3. 모드 분기:
-   - Fresh → Phase 1 부터 진행
-   - Legacy files only → 병합 후 Phase 1 (references/link-symlink-strategy.md 병합 절차)
-   - Already set up → 업그레이드·문서 추가 모드 (references/evolve-principles.md 원칙 적용)
+1. `AGENTS.md` / 도구별 instruction 파일 / `.agents/` 존재 여부
+2. 매니페스트 (`package.json`, `pyproject.toml`, `Cargo.toml`, `go.mod`, `Gemfile`) 로 스택 추정
+3. 분기: Fresh / Legacy 병합 / 기존 셋업 업그레이드 (references/link-symlink-strategy.md)
 
 ### Phase 1: Structure Setup
 
 1. AGENTS.md 생성 또는 병합 (references/template-agents.md)
-2. `agents/` 컨텐츠 디렉토리 생성 (충돌 시 `_agents/` fallback)
-3. `.agents/` 메타 디렉토리 생성: README/schema/conventions/preset.json + local/, local.example/, hooks/pre-commit-secrets.sh + `.git/hooks/pre-commit` 자동 연결 (references/template-meta-*.md, references/template-pre-commit-hook.md)
-4. `ln -sfn` 으로 도구별 심링크 멱등 생성 (references/link-symlink-strategy.md, references/map-file-paths.md)
-5. `.gitignore` 에 미사용 도구 파일 + `.agents/.tag-index` + `.agents/local/` 추가
+2. `.agents/` 메타 디렉토리: README/schema/conventions/preset.json + local/ + local.example/ + hooks/pre-commit-secrets.sh + `.git/hooks/pre-commit` symlink (references/template-meta-*.md, references/template-pre-commit-hook.md)
+3. `ln -sfn` 으로 도구별 심링크 멱등 생성 (references/link-symlink-strategy.md, references/map-file-paths.md)
+4. `.gitignore` 에 `.agents/.tag-index`, `.agents/local/`, 미사용 도구 파일 라인 추가
 
-### Phase 2: Interactive Setup
+### Phase 2: Routing Population
 
-5. references/ask-questions.md 로 Q1~Q10 질문 (Q10: n / project / hub)
-6. Q3 에 따라 agents/guide.md (routing index, 80줄 이내) 생성
-7. Q5 에 따라 agents/workflow.md (lite / full) 생성
-8. Q10=project → Phase 2B, Q10=hub → Phase 2C, Q10=n → Phase 3
-
-### Phase 2B: Project Team Mode (Q10=project)
-
-9. T1~T7 질문, 팀 전용 문서 생성:
-   - 기본: onboarding (T1≠solo), team, glossary, security, stack
-   - T3 선택 항목만: decisions / rfc / runbook / postmortem TEMPLATE.md
-10. T2=y 면 `.github/CODEOWNERS` 에 `agents/ @{handle}` 추가
-11. AGENTS.md 에 Ownership 섹션, guide.md 에 팀 라우팅 행 추가
-12. 거버넌스 원칙: references/rule-team-governance.md
-
-### Phase 2C: Hub Mode (Q10=hub)
-
-9. HUB1~HUB6 질문, 허브 문서 생성:
-   - AGENTS.md: template-hub-agents.md (카탈로그 루트)
-   - agents/guide.md: template-hub-guide.md (프로젝트 대시보드)
-   - agents/projects/{name}.md: HUB3 등록 프로젝트별 (template-project-registry.md)
-   - agents/decisions/ (org-level ADR)
-   - agents/team.md, glossary.md, security.md, onboarding.md (2-hop 버전)
-   - HUB4 선택 항목: tech-radar / shared-libraries / infrastructure / incident-response / architecture/
-10. `.github/CODEOWNERS` + HUB6=pr-template 시 PR 템플릿에 registry 체크박스 추가
-11. 허브 원칙: references/rule-hub-principles.md (AI-first, registry sync, 2-hop onboarding)
+5. references/ask-questions.md 의 Q1~Q6 질문 (프로젝트명 / 1줄 설명 / 언어 / 도구 / 상위 dir / 스타일)
+6. Q5 로 결정된 상위 디렉토리 목록을 `.agents/README.md` 의 라우팅 표에 채운다
+7. 각 상위 dir 에 `README.md` 가 없으면 references/template-dir-readme.md 로 스캐폴드 (사용자 opt-in)
+8. 기존 `<dir>/README.md` 에 frontmatter 가 없으면 보완 (사용자 확인)
 
 ### Phase 3: Verification
 
-12. 심링크 타겟 검증: `ls -la`, `diff AGENTS.md CLAUDE.md`
-13. agents/ 파일 frontmatter 6~8줄 확인
-14. `.agents/` 메타 검증: README.md / schema.md / conventions.md / preset.json (`kind: "agents"`) 존재, `.git/hooks/pre-commit` symlink, `.gitignore` 라인
-15. Project/Hub 모드: CODEOWNERS 동기화, security.md grep 패턴 스캔
-16. Hub 모드: agents/projects/ 양방향 링크 (프로젝트 레포 ↔ 허브 registry) 확인 권고
-17. 응답 마지막에 읽은·생성한 파일 나열 + 다음 단계 안내: `meta-validator` 실행
+9. 심링크 확인: `ls -la`, `diff AGENTS.md CLAUDE.md`
+10. AGENTS.md 가 `.agents/README.md` 를 가리키는지 확인
+11. `.agents/README.md` 라우팅 표의 모든 경로가 실제 존재하는지 확인
+12. `.agents/preset.json` (`kind: "agents"`), `.git/hooks/pre-commit` symlink, `.gitignore` 라인 검증
+13. 응답 마지막에 읽은·생성한 파일 나열 + 다음 단계 안내: `meta-validator` 실행
 
 ## Companion Skill
 
-`meta-validator` — 같은 플러그인 내 별도 스킬. 셋업 후 `agents/*.md` 와 `.agents/` 의 frontmatter / relations / timestamps / tag-index / 시크릿 / 길이 (AGENTS.md 50/80/120, agents/*.md 80/100/150) 를 검증/자동수정한다.
+`meta-validator` — 같은 플러그인 내 별도 스킬. 셋업 후 `AGENTS.md`, `.agents/*.md`, 그리고 라우팅 표가 가리키는 `<dir>/README.md` 의 frontmatter / relations / git timestamps / tag-index / 시크릿 / 길이 (AGENTS.md 50/80/120, README.md 80/120/200) 를 검증·자동수정한다.
 
 ## Reference Categories
 
 | Priority | Category | Prefix | 대표 파일 |
 |----------|----------|--------|-----------|
-| CRITICAL | Findability / Team / Hub Principles | `rule-` | findability, team-governance, hub-principles |
-| CRITICAL | File Mapping / Frontmatter | `map-`, `meta-` | file-paths, frontmatter |
-| HIGH | Symlink / Evolve / Questions | `link-`, `evolve-`, `ask-` | symlink-strategy, principles, questions |
-| HIGH | Solo Templates | `template-` | agents, dev-guide, dev-workflow, docs-guide, docs-workflow |
-| HIGH | Meta / Hooks Templates | `template-`, `layout-` | meta-readme, meta-schema, meta-conventions, meta-preset, pre-commit-hook, layout-overview |
-| HIGH (project-team) | Project Team Templates | `template-` | onboarding, team, glossary, security, decision, rfc, runbook, postmortem |
-| HIGH (hub) | Hub Templates | `template-` | hub-agents, hub-guide, project-registry, tech-radar, shared-libraries, infrastructure, incident-response |
+| CRITICAL | Findability / File Mapping / Frontmatter | `rule-`, `map-`, `meta-` | findability, file-paths, frontmatter |
+| HIGH | Symlink / Evolve / Questions | `link-`, `evolve-`, `ask-` | symlink-strategy, evolve-principles, ask-questions |
+| HIGH | Templates (Root / Routing / Dir) | `template-`, `layout-` | agents, meta-readme, dir-readme, layout-overview |
+| HIGH | Meta Files / Hooks | `template-` | meta-schema, meta-conventions, meta-preset, pre-commit-hook |
 
-전체 목록은 references/_sections.md 참고.
+전체 목록: references/_sections.md
 
 - https://agents.md
 - https://docs.cursor.com/context/rules

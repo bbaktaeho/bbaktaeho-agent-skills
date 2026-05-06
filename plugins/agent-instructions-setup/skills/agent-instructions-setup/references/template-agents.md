@@ -1,15 +1,25 @@
 ---
 title: AGENTS.md Template
 impact: CRITICAL
-impactDescription: AGENTS.md is a routing root, not a behavior rulebook
-tags: agents-md, template, routing, findability, root
+impactDescription: AGENTS.md 는 라우팅 체인의 1번째 hop. 50줄 이내 슬림 진입점
+tags: agents-md, template, routing, root, entry-point
 ---
 
 ## Purpose
 
-AGENTS.md 는 행동 규칙 모음이 아니라 **프로젝트 문서 라우팅 루트** 다. 자세한 설계 원칙: references/rule-findability.md
+AGENTS.md 는 행동 규칙 모음이 아니라 **라우팅 체인의 진입점** 이다. 도구별 instruction 파일 (`CLAUDE.md`, `.cursorrules`, `GEMINI.md` 등) 이 모두 이 파일을 가리키게 심링크한다.
 
-AGENTS.md 자체는 가능한 한 짧게 유지한다 (50줄 이내 목표). 상세 내용은 `agents/` 하위로 분리한다.
+라우팅 체인:
+
+```
+도구 심링크 → AGENTS.md → .agents/README.md → <dir>/README.md → 상세
+```
+
+AGENTS.md 본인은 가능한 한 짧게 (50줄 이내). 모든 상세 라우팅은 `.agents/README.md` 가 담당한다.
+
+## 생성 경로
+
+`{repo}/AGENTS.md`
 
 ## Template
 
@@ -20,26 +30,18 @@ AGENTS.md 자체는 가능한 한 짧게 유지한다 (50줄 이내 목표). 상
 
 ## Entry Point
 
-작업을 시작하기 전에 agents/guide.md 를 읽는다. agents/guide.md 는 작업 유형별로 읽어야 할 문서를 라우팅한다.
+작업을 시작하기 전에 `.agents/README.md` 를 읽는다. 이 파일이 상위 디렉토리 요약과 라우팅 표를 제공한다.
 
-## Directory Map
+상세 라우팅:
 
-- AGENTS.md — 이 파일. 라우팅 루트
-- agents/guide.md — 문서 진입점·라우팅 테이블
-- agents/workflow.md — 작업 워크플로우
-- agents/*.md — 주제별 상세 문서 (각 파일의 frontmatter `description` 참고)
-- .agents/README.md — AI 메타 진입점 (schema / conventions / preset.json / hooks)
-
-## Document Conventions
-
-- 모든 agents/ 파일은 6~8줄 이내 frontmatter 로 시작한다
-- frontmatter 의 `description` 은 "언제 읽어야 하는지 + 얻는 것" 형식으로 작성한다
-- 섹션 첫 줄은 1문장 요약이다
-- 파일 분해 기준과 문서 추가·수정·삭제 원칙: agents/guide.md 의 "문서 진화" 섹션
+- `.agents/README.md` — 라우팅 인덱스 (개요 + 상위 디렉토리 요약 + 라우팅 표)
+- `<top-level-dir>/README.md` — 각 도메인의 라우팅 README (예: `docs/README.md`, `src/README.md`)
+- `.agents/schema.md` — README.md frontmatter 스키마
+- `.agents/conventions.md` — 네이밍 / lifecycle / findability 규칙
 
 ## Project Style
 
-{Q9 답변으로 채운다. 답변이 없으면 이 섹션 자체를 생략한다.}
+{Q6 스타일 답변. 답변이 없으면 이 섹션 자체를 생략한다.}
 
 예시:
 - 응답 언어: 한국어
@@ -49,56 +51,50 @@ AGENTS.md 자체는 가능한 한 짧게 유지한다 (50줄 이내 목표). 상
 
 ## 작성 가이드
 
-1. `{Project Name}` 과 `{프로젝트 1줄 설명}` 은 Q1, Q2 답변으로 치환한다
-2. `Project Style` 섹션은 Q9 답변이 있을 때만 포함한다. 없으면 섹션 제목까지 제거
+1. `{Project Name}` 과 `{프로젝트 1줄 설명}` 은 Q1, Q2 답변으로 치환
+2. `Project Style` 섹션은 Q6 답변이 있을 때만 포함. 없으면 섹션 제목까지 제거
 3. **행동 지시문을 넣지 않는다**. 금지 예시:
-   - "AI 는 매 대화마다 guide.md 를 읽어라"
+   - "AI 는 매 대화마다 .agents/README.md 를 읽어라"
    - "답하기 전에 한번 더 검토해라"
    - "기억에 의존하지 말고 파일을 먼저 읽어라"
    - 이유: references/rule-findability.md 의 Anti-Patterns 참조
-4. 행동 지시문 대신 **구조로 유도**한다. Entry Point 섹션의 "agents/guide.md 를 읽는다" 는 행동 지시가 아니라 **라우팅 지도**이므로 허용
-5. AGENTS.md 가 50줄을 넘기면 어떤 섹션이 상세화됐는지 확인하고 `agents/` 하위로 분리한다
+4. "Entry Point" 섹션의 "`.agents/README.md` 를 읽는다" 는 행동 지시가 아니라 **라우팅 지도** 이므로 허용
+5. AGENTS.md 가 50줄을 넘기면 본문을 `.agents/README.md` 또는 `<dir>/README.md` 로 옮긴다. AGENTS.md 자체는 항상 라우팅 진입점으로만 유지
+6. AGENTS.md 자체에 frontmatter 는 두지 않는다. 도구별 호환을 위해 `# {Project Name}` 부터 시작
 
 ## 병합 모드 (기존 instruction 파일이 있을 때)
 
-references/link-symlink-strategy.md 의 "병합 절차" 에 따라 기존 파일 내용을 AGENTS.md 로 흡수한다. 이때 다음 원칙을 적용한다.
+references/link-symlink-strategy.md 의 "병합 절차" 에 따라 기존 파일 내용을 흡수한다. 단 다음 원칙을 적용:
 
-- Anti-Pattern (행동 지시문) 에 해당하는 내용은 **제외**하거나 `Project Style` 섹션으로 재분류한다
-- 프로젝트 구조·모듈 설명은 AGENTS.md 가 아니라 `agents/stack.md` 또는 `agents/structure.md` 로 옮긴다
-- 워크플로우·PR 규칙은 `agents/workflow.md` 로 옮긴다
-- AGENTS.md 는 끝까지 라우팅 루트로만 남긴다
+- Anti-Pattern (행동 지시문) 에 해당하는 내용은 **제외** 하거나 `Project Style` 섹션으로 재분류
+- 프로젝트 구조·모듈 설명은 AGENTS.md 가 아니라 `.agents/README.md` 또는 해당 `<dir>/README.md` 로 이동
+- 워크플로우·PR 규칙은 `<dir>/README.md` (예: `docs/development/README.md`) 로 이동
+- AGENTS.md 는 끝까지 라우팅 진입점으로만 남긴다
 
-## 팀 모드 AGENTS.md 변형
+## 검증
 
-Q10=y (팀 모드) 선택 시 AGENTS.md 에 `Ownership` 섹션을 추가한다.
+심링크 확인:
 
-```markdown
-## Ownership
-
-- agents/ 의 owner: `.github/CODEOWNERS` 참고
-- agents/ 변경은 PR 리뷰 필수 (팀 규모별 승인 수: agents/workflow.md)
-- 거버넌스 원칙 요약: agents/guide.md 의 "문서 진화" 섹션
-- 민감 정보 redaction 규칙: agents/security.md
+```bash
+diff AGENTS.md CLAUDE.md   # 동일 내용이어야 함
+diff AGENTS.md GEMINI.md   # 동일 내용이어야 함
 ```
 
-또한 `Directory Map` 섹션에 팀 전용 파일이 추가된다:
+AGENTS.md 가 `.agents/README.md` 를 본문에 명시하는지 확인:
 
-```markdown
-## Directory Map
-
-- AGENTS.md — 이 파일. 라우팅 루트
-- agents/guide.md — 문서 진입점·라우팅 테이블
-- agents/workflow.md — 작업 워크플로우
-- agents/onboarding.md — 신규 입사자 진입 (팀 모드)
-- agents/team.md — 팀 구조·Owner (팀 모드)
-- agents/glossary.md — 도메인 용어 (팀 모드)
-- agents/security.md — 민감 정보 금지 규칙 (팀 모드)
-- agents/stack.md — 기술 스택 상세 (팀 모드 또는 필요 시)
-- agents/decisions/ — ADR (T3=adr 선택 시)
-- agents/rfc/ — RFC (T3=rfc 선택 시)
-- agents/runbook/ — 운영 플레이북 (T3=runbook 선택 시)
-- agents/postmortem/ — 인시던트 포스트모템 (T3=postmortem 선택 시)
-- agents/*.md — 기타 주제별 상세 (각 파일 frontmatter description 참고)
+```bash
+grep -E '\.agents/README\.md' AGENTS.md
 ```
 
-Directory Map 에서 비선택 항목은 포함하지 않는다.
+## 멱등 마커 (재셋업 안전성)
+
+AGENTS.md 를 재생성/병합할 때 사용자 추가 내용을 보존하기 위해 자동 생성 영역을 마커로 감쌀 수 있다.
+
+```markdown
+<!-- agent-instructions-setup:start -->
+## Entry Point
+...
+<!-- agent-instructions-setup:end -->
+```
+
+마커 사이 내용은 재실행 시 덮어쓰기. 마커 밖 사용자 작성 내용은 보존.

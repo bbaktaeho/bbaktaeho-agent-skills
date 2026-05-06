@@ -17,7 +17,7 @@ meta-validator 가 Phase 1 (Required Checks) 에서 스캔하는 민감 정보 �
 
 ## 스캔 범위
 
-- 대상: `agents/**/*.md` + `.agents/*.md`
+- 대상: `AGENTS.md` + `.agents/**/*.md` + 라우팅 표가 가리키는 모든 `<dir>/README.md` (재귀)
 - 제외:
   - `.agents/local/` (gitignored)
   - `.agents/.tag-index`
@@ -69,9 +69,9 @@ meta-validator 가 Phase 1 (Required Checks) 에서 스캔하는 민감 정보 �
 ```
 [SECRETS] 2 potential secrets detected. Validator halted with ERROR.
 
-  agents/security.md:42
+  docs/runbook/README.md:42
     DB 접속 예시: postgres://admin:Sup3r...@10.0.1.5:5432/app
-  agents/onboarding.md:73
+  .agents/conventions.md:73
     GitHub PAT 사용: ghp_aBcDeFgH1234567890aBcDeFgH1234567890aBcD
 
 Resolution:
@@ -94,7 +94,7 @@ Validator will refuse to rebuild .agents/.tag-index while secrets remain.
 ## `.agents/local/` 와의 상호작용
 
 - `.agents/local/` 내부 파일은 스캔 **제외**
-- 다만 거기 있는 secret 을 다른 agents/*.md 에 복붙한 경우 일반 스캔에 걸림
+- 다만 거기 있는 secret 을 다른 라우팅 README 에 복붙한 경우 일반 스캔에 걸림
 
 ## 패턴 동기화
 

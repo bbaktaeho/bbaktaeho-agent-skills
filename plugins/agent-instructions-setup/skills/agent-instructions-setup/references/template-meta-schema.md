@@ -1,13 +1,13 @@
 ---
 title: .agents/schema.md Template
 impact: CRITICAL
-impactDescription: agents/*.md frontmatter 단일 표준 정의
-tags: template, schema, frontmatter, meta
+impactDescription: 라우팅 README frontmatter 단일 표준 정의
+tags: template, schema, frontmatter, meta, readme
 ---
 
 # `.agents/schema.md`
 
-`agents/*.md` 와 `.agents/*.md` 의 frontmatter 스키마. meta-validator 가 이 파일을 기준으로 검증한다.
+라우팅 체인의 모든 README (`<dir>/README.md`, `<dir>/<sub>/README.md`) 와 `.agents/*.md` 의 frontmatter 스키마. meta-validator 가 이 파일을 기준으로 검증한다.
 
 ## 생성 경로
 
@@ -20,7 +20,7 @@ tags: template, schema, frontmatter, meta
 title: Agents Frontmatter Schema
 created: {ISO8601}
 updated: {ISO8601}
-summary: agents/ 와 .agents/ 의 모든 .md 파일이 따라야 하는 frontmatter 스키마.
+summary: 라우팅 README 와 .agents/ 의 모든 .md 파일이 따라야 하는 frontmatter 스키마.
 tags: [meta, schema, frontmatter]
 status: active
 relations:
@@ -30,7 +30,7 @@ relations:
 
 # Frontmatter Schema
 
-모든 `agents/*.md` 와 `.agents/*.md` (디렉토리 README.md 포함) 에 필수.
+모든 라우팅 README (`<dir>/README.md`, `<dir>/<sub>/README.md`) 와 `.agents/*.md` 에 필수. 일반 콘텐츠 파일 (`docs/foo.md` 등) 과 `AGENTS.md` 자체는 frontmatter 자유.
 
 ## Required Fields
 
@@ -77,11 +77,16 @@ relations:
 
 ## Non-Markdown Attachments
 
-agents/ 가 참조하는 비-`.md` 파일 (JSON, 다이어그램 SVG 등) 은 frontmatter 가 없어도 됨. `.tag-index` 는 `.md` 만 인덱싱한다.
+라우팅 README 가 참조하는 비-`.md` 파일 (JSON, 다이어그램 SVG 등) 은 frontmatter 가 없어도 됨. `.tag-index` 는 `.md` 중 frontmatter 가 있는 것만 인덱싱한다.
+
+## Scope
+
+이 스키마는 **라우팅 체인의 README** 만 강제한다. 일반 콘텐츠 파일 (`docs/architecture.md`, `src/api/notes.md` 등) 은 사용자 자유. 단 `relations` 로 라우팅 README 와 연결할 때 frontmatter 가 있으면 양방향 추적 가능.
 ```
 
 ## 작성 가이드
 
 - frontmatter 자체는 6~8줄 권장. tags 가 1줄에 안 들어가면 다음 줄에 array literal 사용
 - `relations` 는 빈 배열 `[]` 도 허용. 없으면 명시적으로 `relations: []` 라고 작성
-- AGENTS.md 자체는 frontmatter 가 없는 게 표준 (라우팅 루트). meta-validator 는 AGENTS.md 의 frontmatter 부재를 허용
+- AGENTS.md 자체는 frontmatter 가 없는 게 표준 (라우팅 진입점). meta-validator 는 AGENTS.md 의 frontmatter 부재를 허용
+- 일반 콘텐츠 파일에 frontmatter 가 있다면 같은 스키마를 따른다. meta-validator 는 frontmatter 가 있는 모든 `.md` 를 검증

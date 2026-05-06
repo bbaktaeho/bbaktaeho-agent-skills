@@ -7,7 +7,7 @@ tags: frontmatter, docs, metadata, head, scannable, description
 
 ## Purpose
 
-`agents/` 하위 모든 파일은 YAML frontmatter 로 시작한다. agent 는 head 6줄만 읽고 이 문서를 더 읽을지 판단한다.
+라우팅 체인 README (`<dir>/README.md`, `.agents/*.md`) 는 YAML frontmatter 로 시작한다. agent 는 head 6~8줄만 읽고 이 문서를 더 읽을지 판단한다. 일반 콘텐츠 파일 (`docs/foo.md`, `src/api/notes.md`) 의 frontmatter 는 권장이지만 강제하지 않는다.
 
 ## 필수 필드
 
@@ -26,7 +26,7 @@ created: YYYY-MM-DD
 
 ```yaml
 updated: YYYY-MM-DD              # 마지막 수정일. 신선도 판단
-depends_on: [agents/stack.md]    # 선행 읽기 권장 문서
+depends_on: [docs/architecture/README.md]  # 선행 읽기 권장 문서
 ```
 
 ## description 작성법 (가장 중요)

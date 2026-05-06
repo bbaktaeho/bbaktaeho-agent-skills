@@ -1,25 +1,26 @@
 ---
 name: meta-validator
 description: >
-  Validate and auto-fix agents/ instruction docs and the .agents/
-  meta directory set up by agent-instructions-setup. Checks every
-  .md against the frontmatter schema (title, created, updated,
-  summary, tags, status, relations), syncs timestamps from git log,
-  prunes broken relations, rebuilds .agents/.tag-index, verifies
-  every directory has README.md, enforces tight length limits
-  (AGENTS.md 50/80/120, agents/*.md 80/100/150), and scans for
-  secrets using the same patterns as the .agents/hooks/ pre-commit
-  hook. Required checks auto-fix except secrets, which halt with
-  ERROR. Recommended checks (length, deprecated refs, orphans,
-  tag counts, summary, moved files, stale README summary) prompt
-  the user. Use after editing AGENTS.md or agents/, before merging,
-  after retrofit, when tag search is stale, when the pre-commit
-  hook was bypassed, or to verify agents docs - even if the user
-  says "check agents docs", "validate AGENTS.md", or "scan secrets".
+  Validate and auto-fix the routing chain set up by
+  agent-instructions-setup: AGENTS.md, .agents/*.md (README, schema,
+  conventions, preset), and every README.md in the routing tables.
+  Checks each file against the frontmatter schema (title, created,
+  updated, summary, tags, status, relations), syncs timestamps from
+  git log, prunes broken relations, rebuilds .agents/.tag-index,
+  enforces tight length limits (AGENTS.md 50/80/120, README.md
+  80/120/200), and scans for secrets using the same patterns as the
+  .agents/hooks/ pre-commit hook. Required checks auto-fix except
+  secrets, which halt with ERROR. Recommended checks (length,
+  deprecated refs, orphans, tag counts, summary, moved files, stale
+  README summary) prompt the user. Use after editing AGENTS.md or
+  any routing README, before merging, after retrofit, when tag
+  search is stale, when the pre-commit hook was bypassed, or to
+  verify the chain - even if the user says "check agents docs",
+  "validate AGENTS.md", or "scan secrets".
 license: MIT
 metadata:
   author: bbaktaeho
-  version: "1.0.0"
+  version: "2.0.0"
   date: May 2026
   abstract: >
     Validator companion skill to agent-instructions-setup. Operates
@@ -27,25 +28,34 @@ metadata:
     (required + recommended, recommended needs y/n), dry-run (report
     only, no writes). Required checks: frontmatter schema compliance,
     status enum, tag normalization, relations point to existing
-    files, created/updated match git log, every agents/ subdirectory
-    has README.md, .agents/.tag-index rebuilt, .agents/preset.json
-    valid (kind=="agents"), AGENTS.md exists with idempotent marker,
-    .gitignore has .agents/.tag-index and .agents/local/, secret
-    scan with detection-only ERROR halt. Recommended checks: length
-    overflow (50/80 for AGENTS.md, 80/100/150 for agents/*.md - much
-    stricter than kb docs), deprecated references, orphans, tag
-    over/under count, summary too short, moved files, README stale
-    summary. All rules in references/rule-*.md. Reads .agents/
-    preset.json mode (solo|project|hub) for mode-specific checks.
+    files, created/updated match git log, .agents/.tag-index rebuilt,
+    .agents/preset.json valid (kind=="agents"), AGENTS.md links to
+    .agents/README.md, .agents/README.md routing table targets exist,
+    .gitignore has .agents/.tag-index and .agents/local/, secret scan
+    halt. Recommended checks: length overflow, deprecated refs,
+    orphans, tag over/under count, summary too short, moved files,
+    README stale summary. All rules in references/rule-*.md. No
+    project/hub mode branching - the routing chain is single-mode.
 ---
 
 # Meta Validator
 
-`agent-instructions-setup` 으로 셋업된 `.agents/` 메타 디렉토리와 `agents/` 컨텐츠를 검증 / 자동수정한다. 같은 플러그인 안에 동거하는 companion skill.
+`agent-instructions-setup` 으로 셋업된 라우팅 체인을 검증·자동수정한다. 체인:
+
+```
+도구 심링크 → AGENTS.md → .agents/README.md → <dir>/README.md → 상세
+```
+
+검증 대상:
+
+- `AGENTS.md` (frontmatter 부재 허용, 본문에 `.agents/README.md` 링크 필수)
+- `.agents/*.md` (README, schema, conventions)
+- 라우팅 표가 가리키는 모든 `<dir>/README.md` (재귀)
+- frontmatter 가 있는 다른 콘텐츠 `.md` (옵션, frontmatter 가 있다면)
 
 ## When to Run
 
-- `agents/*.md` 또는 `AGENTS.md` 추가 / 삭제 / 편집 후
+- AGENTS.md / 라우팅 README 추가 / 삭제 / 편집 후
 - 병합 / PR 전
 - 초기 셋업 직후 한 번
 - 태그 검색이 stale 해 보일 때
@@ -78,27 +88,29 @@ references/flow-modes.md
 ### Phase 0: Setup Scan
 
 1. `.agents/preset.json` 읽기 → `kind == "agents"` 확인. 없거나 다르면 "agent-instructions-setup 을 먼저 실행하세요" 로 중단
-2. **Tool check** — `yq` 또는 `python3+PyYAML` 등 frontmatter 파서 존재 확인. 없으면 사용자에게 install 옵션 (references/rule-tool-dependencies.md). skip 시 degraded 모드 (frontmatter 검증 건너뜀)
-3. 모드 확인 (사용자 지정 또는 기본 `quick`)
+2. `AGENTS.md` 부재 → ERROR
+3. **Tool check** — `yq` 또는 `python3+PyYAML` 등 frontmatter 파서 존재 확인. 없으면 사용자에게 install 옵션 (references/rule-tool-dependencies.md). skip 시 degraded 모드
+4. 모드 확인 (사용자 지정 또는 기본 `quick`)
 
 ### Phase 1: Required Checks
 
-각 `agents/*.md` 와 `.agents/*.md` 에 대해:
+`AGENTS.md`, `.agents/*.md`, 그리고 라우팅 표가 가리키는 모든 `README.md` 에 대해:
 
-1. frontmatter 파싱. 유효 YAML 아니면 오류 보고 (수정 거부, 사용자 개입 필요). AGENTS.md 의 frontmatter 부재는 허용
+1. frontmatter 파싱 (AGENTS.md 의 frontmatter 부재는 허용)
 2. 필수 필드 검사 / 누락 자동 보강
 3. `status` enum 검증
 4. `tags` 정규화 (소문자 + 하이픈)
 5. `relations` 각 경로 존재 여부 → 없으면 제거
 6. `created` / `updated` git log 동기화 (references/rule-git-timestamp-sync.md)
-7. 디렉토리마다 `README.md` 존재 확인. 없으면 템플릿으로 생성
-8. `.gitignore` 에 `.agents/.tag-index`, `.agents/local/` 라인 보장
-9. **Secret Scan** — 민감 정보 감지 (references/rule-secret-scan.md). 매칭되면 ERROR 로 마감 준비 + Phase 2 의 tag-index 재생성 보류
+7. `AGENTS.md` 본문에 `.agents/README.md` 링크 존재 확인. 없으면 `Entry Point` 섹션에 라인 추가
+8. `.agents/README.md` 의 `Top-Level Directories` 표가 가리키는 경로 모두 존재 확인. broken link 는 표에서 제거
+9. `.gitignore` 에 `.agents/.tag-index`, `.agents/local/` 라인 보장
+10. **Secret Scan** — 매칭되면 ERROR (references/rule-secret-scan.md). Phase 2 의 tag-index 재생성 보류
 
 ### Phase 2: Tag Index Rebuild
 
 - Phase 1 에서 secret 검출이 **없는 경우에만** `.agents/.tag-index` 전체 재생성 (references/rule-tag-index-rebuild.md)
-- Secret 검출이 있으면 기존 인덱스 유지 (위치 노출 방지)
+- frontmatter 가 있는 모든 `.md` (라우팅 README + 일반 콘텐츠) 를 인덱싱
 
 ### Phase 3: Recommended Checks (full 모드만)
 

@@ -49,8 +49,8 @@ Phase 0 ~ 4 전부. Phase 3 는 references/rule-recommended-checks.md 의 룰을
 [Rule 1/7] Length Overflow
 3 files exceed recommended length.
 
-  agents/guide.md (162 lines, hard 150 초과)
-  agents/decisions/0001-monorepo.md (108 lines, soft 100 초과)
+  .agents/README.md (212 lines, hard 200 초과)
+  docs/README.md (135 lines, soft 120 초과)
   AGENTS.md (88 lines, soft 80 초과)
 
 Continue? [y/n/skip-all]: y

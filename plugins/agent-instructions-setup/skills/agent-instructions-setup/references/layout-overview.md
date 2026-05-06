@@ -1,56 +1,79 @@
 ---
-title: Agents Directory Layout Overview
+title: Layout Overview
 impact: HIGH
-impactDescription: AI 가 한눈에 instruction 구조를 파악하도록 단일 진입점과 디렉토리 배치를 정의
-tags: layout, structure, directory, agents, meta
+impactDescription: 라우팅 체인 (도구 심링크 → AGENTS.md → .agents/README.md → dir/README.md) 의 디렉토리 배치 정의
+tags: layout, structure, routing-chain, agents-md, meta
 ---
 
-# Agents Directory Layout
+# Layout Overview
 
-`AGENTS.md` 는 라우팅 루트, 컨텐츠는 `agents/`, 메타는 `.agents/` 에 격리한다. 지식베이스 (`.kb/`) 와 동일한 패턴.
+`AGENTS.md` 는 라우팅 체인의 진입점. 모든 도구별 instruction 파일은 AGENTS.md 로 심링크되고, AGENTS.md 는 `.agents/README.md` 를, `.agents/README.md` 는 각 상위 디렉토리의 `README.md` 를 가리킨다.
+
+## 라우팅 체인 (4 hops)
+
+```
+[hop 1] 도구 심링크 (CLAUDE.md, .cursorrules, GEMINI.md, ...)
+            ↓ ln -sfn AGENTS.md
+[hop 2] AGENTS.md                            (50줄 이내, 진입점)
+            ↓ "Entry Point" 섹션
+[hop 3] .agents/README.md                    (라우팅 인덱스)
+            ↓ Top-Level Directories 표
+[hop 4] <top-level-dir>/README.md            (도메인 라우팅)
+            ↓ Contents 표
+        하위 README 또는 상세 파일
+```
+
+각 hop 은 **1~2 화면 안에 들어오는 짧은 분량**. AI 가 head frontmatter 만 읽고 다음 hop 으로 진행 가능.
 
 ## 전체 트리
 
 ```
 {repo}/
-├── AGENTS.md                          # 라우팅 루트 (50줄 이내 슬림)
-├── README.md                          # 사람용 GitHub 랜딩
+├── AGENTS.md                          # hop 2: 라우팅 진입점 (50줄)
+├── README.md                          # 사람용 GitHub 랜딩 (별개)
 ├── .gitignore                         # .agents/.tag-index, .agents/local/ 포함
-├── .agents/                           # 메타만 격리
-│   ├── README.md                      # AI 탐색 진입점 (디렉토리 맵, 규칙 요약)
-│   ├── schema.md                      # agents/*.md frontmatter 스키마
+├── .agents/                           # 메타 + 라우팅 인덱스
+│   ├── README.md                      # hop 3: 라우팅 인덱스
+│   ├── schema.md                      # README.md frontmatter 스키마
 │   ├── conventions.md                 # findability / lifecycle / 네이밍
 │   ├── preset.json                    # meta-validator 가 참조
 │   ├── .tag-index                     # gitignored. 태그 인덱스
 │   ├── hooks/
-│   │   └── pre-commit-secrets.sh      # agents/ + .agents/ 민감정보 차단
-│   ├── local/                         # gitignored. 로컬 전용 메모
-│   └── local.example/                 # 커밋 대상. 로컬 파일 템플릿
-└── agents/
-    ├── guide.md                       # 라우팅 인덱스 (80줄 이내)
-    ├── workflow.md
-    ├── onboarding.md  (project)
-    ├── team.md        (project)
-    ├── glossary.md    (project)
-    ├── security.md    (project)
-    ├── decisions/, rfc/, runbook/, postmortem/  (project, T3 선택)
-    ├── projects/, tech-radar.md, infrastructure.md, ...  (hub, HUB4 선택)
-    └── ...
+│   │   └── pre-commit-secrets.sh      # 민감 정보 차단
+│   ├── local/                         # gitignored. 로컬 메모
+│   └── local.example/                 # 커밋. local 파일 템플릿
+├── docs/
+│   └── README.md                      # hop 4: docs 도메인 라우팅
+├── src/
+│   └── README.md                      # hop 4: src 도메인 라우팅
+├── scripts/
+│   └── README.md                      # hop 4: scripts 도메인 라우팅
+└── (도구 심링크: CLAUDE.md, .cursorrules, ...)
 ```
 
 ## 핵심 원칙
 
-- **AI 진입점은 `.agents/README.md`** — 디렉토리 맵과 규칙 요약. AI 가 한 파일만 읽고도 구조 파악 가능
-- **사람 진입점은 `AGENTS.md`** — 50줄 이내 라우팅 루트
-- **`agents/` 는 컨텐츠 디렉토리** — guide.md, workflow.md, 도메인별 문서. 80~150줄 권장
-- **메타는 `.agents/` 에만** — schema / conventions / preset.json / hooks / local. 컨텐츠 섞지 않음
-- **각 `agents/` 하위 디렉토리에 `README.md` 필수** — meta-validator 가 강제
+- **AGENTS.md 는 hop 2** — 50줄 이내. 본문은 `Entry Point` 한 섹션만
+- **`.agents/README.md` 는 hop 3** — 라우팅 인덱스 + 메타 파일 참조. 80~120줄
+- **`<dir>/README.md` 는 hop 4** — 도메인 라우팅. 80~120줄
+- **`agents/` 콘텐츠 디렉토리는 만들지 않는다** — 모든 콘텐츠는 사용자의 기존 디렉토리 (`docs/`, `src/`, ...) 에 머문다
+- **frontmatter 는 `.agents/*.md` 와 `<dir>/README.md` 에만 필수** — AGENTS.md 와 일반 콘텐츠 파일 (`docs/foo.md`) 은 frontmatter 자유
 - **민감 정보는 `.agents/local/`** — gitignored. 커밋 대상 템플릿은 `.agents/local.example/`
 
 ## `.kb/` 와의 관계
 
-같은 레포에 지식베이스 (`.kb/`) 와 instruction 셋업 (`.agents/`) 이 공존 가능. 두 메타 디렉토리는 독립적으로 유지되며 각자의 컴패니언 스킬 (`kb-validator`, `meta-validator`) 이 검증한다. 둘 다 셋업되어 있으면 `AGENTS.md` 에 README + `.kb/README.md` + `.agents/README.md` 모두 라우팅.
+지식베이스 (`.kb/`) 와 instruction 셋업 (`.agents/`) 이 공존 가능. 두 메타 디렉토리는 독립이며 각자의 컴패니언 스킬 (`kb-validator`, `meta-validator`) 이 검증한다. 둘 다 셋업되어 있으면 `.agents/README.md` 의 `Top-Level Directories` 표에 `../.kb/README.md` 행 추가 권장.
 
-## fallback 디렉토리 이름
+## 도구 심링크 위치
 
-기존 소스에 `agents/` 디렉토리가 충돌하면 컨텐츠 디렉토리는 `_agents/` 로 fallback. 메타 디렉토리는 항상 `.agents/`.
+`CLAUDE.md`, `.cursorrules`, `.windsurfrules`, `.clinerules`, `.roorules`, `GEMINI.md`, `.github/copilot-instructions.md`, `.agent/rules/rules.md`, `CONVENTIONS.md` 등. 전체 목록: references/map-file-paths.md
+
+`AGENTS.md` 를 직접 읽는 도구 (Codex / Zed / Amp) 는 심링크 불필요.
+
+## 왜 README.md 체인인가
+
+- 모든 도구가 동일하게 `README.md` 를 인지·우선 표시 (GitHub UI, IDE 트리)
+- 사람이 디렉토리에 들어가면 자연스럽게 README 부터 읽음 — AI 도 동일 동선
+- frontmatter `summary` 만 읽고도 진입 여부 판단 가능
+- 디렉토리가 추가될 때마다 README.md 만 추가하면 라우팅이 자동 확장
+- 콘텐츠를 별도 `agents/` 로 옮기지 않으므로 기존 프로젝트 구조에 침습 없음

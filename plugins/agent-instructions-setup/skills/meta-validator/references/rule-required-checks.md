@@ -2,18 +2,25 @@
 title: Required Checks (Auto-Fix)
 impact: CRITICAL
 impactDescription: 사용자 confirm 없이 자동 수정되는 필수 검증 항목
-tags: validation, auto-fix, required
+tags: validation, auto-fix, required, routing-chain
 ---
 
 # Required Checks
 
-아래 항목들은 **사용자 confirm 없이 자동 수정** 된다. agents 문서의 일관성을 깨는 종류의 문제이기 때문.
+아래 항목들은 **사용자 confirm 없이 자동 수정** 된다. 라우팅 체인의 일관성을 깨는 종류의 문제이기 때문.
+
+## 검증 대상
+
+- `AGENTS.md` (루트)
+- `.agents/*.md` (README, schema, conventions)
+- `.agents/README.md` 의 `Top-Level Directories` 표가 가리키는 모든 `README.md` (재귀적으로 그 README 가 가리키는 하위 README 도 포함)
+- frontmatter 가 있는 모든 `.md` 파일 (선택적, frontmatter 가 있다면 검증)
 
 ## 1. Frontmatter Missing / Malformed
 
 ### 검출
 
-- `agents/*.md`, `.agents/*.md` 상단에 frontmatter 없음 (단 `AGENTS.md` 자체는 예외)
+- 라우팅 README 상단에 frontmatter 없음 (단 `AGENTS.md` 자체는 예외)
 - frontmatter 가 유효한 YAML 이 아님 (파싱 실패)
 - 필수 필드 누락: `title`, `created`, `updated`, `summary`, `tags`, `status`, `relations`
 
@@ -21,7 +28,7 @@ tags: validation, auto-fix, required
 
 - YAML 파싱 실패는 **수정 불가**. 오류 리포트 후 해당 파일 skip
 - 누락 필드는 기본값으로 채움:
-  - `title` — 첫 H1 헤딩, 없으면 파일명에서 추론
+  - `title` — 첫 H1 헤딩, 없으면 디렉토리 이름에서 추론
   - `created` / `updated` — git log 기준 (references/rule-git-timestamp-sync.md)
   - `summary` — 첫 비어있지 않은 문단 첫 줄 또는 빈 문자열
   - `tags` — `[]`
@@ -80,46 +87,31 @@ tags: validation, auto-fix, required
 
 references/rule-git-timestamp-sync.md 참조
 
-## 6. Missing Directory README.md
-
-### 검출
-
-- `agents/` 하위 디렉토리에 `README.md` 부재 (예: `agents/decisions/README.md`)
-- `.agents/README.md` 부재 (이건 셋업 누락 — 별도 ERROR)
-- gitignored / 서브모듈은 스킵
-
-### 자동 수정
-
-- `agents/` 하위: agent-instructions-setup 의 dir-readme 템플릿으로 생성
-- `.agents/README.md` 부재: ERROR. agent-instructions-setup 재실행 권장
-
-## 7. Tag Index Staleness
+## 6. Tag Index Staleness
 
 ### 검출
 
 - `.agents/.tag-index` 부재
-- `generated_at` 이 가장 최근 `.md` mtime 보다 오래됨
+- `generated_at` 이 가장 최근 라우팅 README mtime 보다 오래됨
 - JSON 파싱 실패
 
 ### 자동 수정
 
 - 전체 재생성 (references/rule-tag-index-rebuild.md)
 
-## 8. `.agents/preset.json` 유효성
+## 7. `.agents/preset.json` 유효성
 
 ### 검출
 
 - 파일 부재
 - JSON 파싱 실패
 - `kind` 필드가 `"agents"` 가 아님
-- `mode` 가 `solo` / `project` / `hub` 중 하나가 아님
 
 ### 처리
 
 - 파일 부재 / 파싱 실패 / `kind != "agents"` → **ERROR**. "agent-instructions-setup 을 먼저 실행하세요"
-- 알려지지 않은 `mode` → 경고와 함께 `solo` 로 fallback
 
-## 9. `.gitignore` 필수 라인
+## 8. `.gitignore` 필수 라인
 
 ### 검출
 
@@ -132,23 +124,35 @@ references/rule-git-timestamp-sync.md 참조
 - 누락된 라인 추가 (멱등)
 - `.agents/` 전체 ignore → **수정 안함. 경고만** (사용자가 직접 조정)
 
-## 9.5. AI Entry Points (AGENTS.md)
+## 9. AGENTS.md Entry Point
 
 ### 검출
 
 - 레포 루트에 `AGENTS.md` 부재
-- `AGENTS.md` 본문에 `./.agents/README.md` 로의 링크 부재
+- `AGENTS.md` 본문에 `.agents/README.md` 로의 링크 부재
 
 ### 자동 수정
 
 - AGENTS.md 부재 → ERROR. agent-instructions-setup 재실행 권장
 - 링크 부재 → "Entry Point" 섹션에 라인 추가 (멱등 마커 사이)
 
-## 10. Secret Scan
+## 10. `.agents/README.md` Routing Table Integrity
 
 ### 검출
 
-`agents/**/*.md` + `.agents/**/*.md` 를 스캔 (단 `.agents/local/` 및 gitignored 제외). 상세: references/rule-secret-scan.md
+- `.agents/README.md` 의 `Top-Level Directories` 표가 가리키는 경로 중 존재하지 않는 항목
+- `<dir>/README.md` 의 `Contents` 표가 가리키는 경로 중 존재하지 않는 항목
+
+### 자동 수정
+
+- 표에서 broken 행 제거
+- 같은 파일명이 다른 경로에 존재 → 권장 검사 (Phase 3) 에서 사용자 확인 후 갱신
+
+## 11. Secret Scan
+
+### 검출
+
+라우팅 README + `.agents/**/*.md` 를 스캔 (단 `.agents/local/` 및 gitignored 제외). 상세: references/rule-secret-scan.md
 
 ### 자동 수정
 

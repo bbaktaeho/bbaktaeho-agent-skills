@@ -88,6 +88,7 @@ ln -sfn AGENTS.md CONVENTIONS.md
    - 충돌하는 규칙 → 사용자에게 확인 요청, 선택 반영
    - 유효한 고유 규칙 → AGENTS.md 의 적절한 섹션(Rules / Project Style 등)에 추가
    - 단, 행동 지시문은 references/rule-findability.md 의 Anti-Patterns 에 해당하는지 확인하고, 해당하면 포함하지 않는다
+  - 라우팅 / 도메인 상세는 AGENTS.md 가 아니라 `.agents/README.md` 또는 `<dir>/README.md` 로 이동
 5. 병합 완료 후 사용자 확인
 6. `.bak` 삭제 및 심링크 생성 (`ln -sfn AGENTS.md CLAUDE.md`)
 

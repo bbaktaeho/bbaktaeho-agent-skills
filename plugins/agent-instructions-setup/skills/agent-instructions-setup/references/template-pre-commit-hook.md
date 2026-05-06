@@ -1,13 +1,13 @@
 ---
 title: .agents/hooks/pre-commit-secrets.sh Template
 impact: CRITICAL
-impactDescription: agents/ 와 .agents/ 의 .md 파일에 민감 정보가 커밋되는 것을 차단
+impactDescription: 라우팅 README 와 .agents/ 의 .md 파일에 민감 정보가 커밋되는 것을 차단
 tags: template, hooks, pre-commit, security, agents
 ---
 
 # Pre-commit Secret-Scan Hook
 
-agent-instructions-setup 이 생성/설치하는 git pre-commit 훅. 스테이징된 `agents/**/*.md` 와 `.agents/**/*.md` 에 대해 민감 정보 패턴 검사.
+agent-instructions-setup 이 생성/설치하는 git pre-commit 훅. 스테이징된 `**/README.md` 와 `.agents/**/*.md` 에 대해 민감 정보 패턴 검사.
 
 ## 생성 경로
 
@@ -27,13 +27,13 @@ agent-instructions-setup 이 생성/설치하는 git pre-commit 훅. 스테이�
 ```bash
 #!/usr/bin/env bash
 # .agents/hooks/pre-commit-secrets.sh
-# Scans staged agents/**/*.md and .agents/**/*.md for potential secrets.
+# Scans staged README.md and .agents/**/*.md for potential secrets.
 # Managed by agent-instructions-setup. Do not edit inline.
 
 set -euo pipefail
 
 staged=$(git diff --cached --name-only --diff-filter=ACM \
-    | grep -E '^(agents/|\.agents/).*\.md$' \
+    | grep -E '(^|/)README\.md$|^AGENTS\.md$|^\.agents/.*\.md$' \
     | grep -v '^\.agents/\.tag-index$' \
     | grep -v '^\.agents/local/' \
     || true)

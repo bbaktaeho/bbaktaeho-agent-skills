@@ -3,12 +3,6 @@ sections:
   - id: findability
     title: AI Findability Philosophy
     prefix: rule
-  - id: team-governance
-    title: Team Governance Principles
-    prefix: rule
-  - id: hub-principles
-    title: Team Knowledge Hub Principles
-    prefix: rule
   - id: file-mapping
     title: AI Tool File Path Mapping
     prefix: map
@@ -24,14 +18,17 @@ sections:
   - id: questions
     title: Interactive Setup Questions
     prefix: ask
-  - id: templates
-    title: Project Templates
-    prefix: template
   - id: layout
-    title: Agents Directory Layout Overview
+    title: Layout Overview (Routing Chain)
     prefix: layout
+  - id: agents-md
+    title: AGENTS.md Template (hop 2)
+    prefix: template
   - id: meta-readme
-    title: .agents/README.md Template
+    title: .agents/README.md Template (hop 3)
+    prefix: template
+  - id: dir-readme
+    title: Top-Level Directory README.md Template (hop 4)
     prefix: template
   - id: meta-schema
     title: .agents/schema.md Template

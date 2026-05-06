@@ -12,8 +12,8 @@ tags: validation, tag-index, rebuild
 ## Input
 
 - 레포 루트 디렉토리
-- 스캔 대상: `agents/**/*.md`
-- 제외: `.agents/` 하위 파일 (**메타는 인덱싱 대상 아님**), gitignored, submodule 내부, AGENTS.md 자체
+- 스캔 대상: frontmatter 가 있는 모든 `.md` (라우팅 README + 일반 콘텐츠 파일 중 frontmatter 보유)
+- 제외: `.agents/` 하위 파일 (**메타는 인덱싱 노이즈**), gitignored, submodule 내부, AGENTS.md 자체
 
 ## Output 포맷
 
@@ -21,8 +21,8 @@ tags: validation, tag-index, rebuild
 {
   "generated_at": "2026-05-05T10:30:00Z",
   "tags": {
-    "workflow": ["agents/workflow.md"],
-    "security": ["agents/security.md", "agents/onboarding.md"]
+    "routing": ["docs/README.md", "src/README.md"],
+    "api": ["docs/api/README.md", "src/api/notes.md"]
   }
 }
 ```
@@ -37,7 +37,7 @@ tags: validation, tag-index, rebuild
 ```
 tags = {}
 
-for each .md in agents/ (excluding gitignored, submodules):
+for each .md with frontmatter (excluding .agents/, AGENTS.md, gitignored, submodules):
     parse frontmatter
     for tag in frontmatter.tags:
         normalized = normalize(tag)
