@@ -18,6 +18,61 @@ git config core.hooksPath .githooks
 
 ---
 
+# Git Worktree (병렬/격리 작업)
+
+같은 저장소에서 여러 브랜치를 동시에 작업하거나, 진행 중인 작업과 충돌 없이 격리된 공간에서 새 작업을 시작할 때 `git worktree` 를 사용합니다.
+
+## 기본 규칙
+
+- worktree 디렉토리는 **항상 `.worktrees/<branch-name>`** 으로 생성합니다 (프로젝트 로컬, 숨김).
+- `.worktrees/` 는 `.gitignore` 에 등록되어 있어 추적되지 않습니다.
+- 새 worktree 는 **항상 최신 `origin/main`** 기준으로 생성합니다.
+- 작업 완료 후에는 `git worktree remove` 로 정리합니다.
+
+## 표준 워크플로
+
+```bash
+# 1. 최신 main 동기화
+git fetch origin
+
+# 2. main 기준으로 새 브랜치 + worktree 생성
+git worktree add .worktrees/<branch-name> -b <branch-name> origin/main
+
+# 3. 해당 디렉토리에서 작업
+cd .worktrees/<branch-name>
+
+# 4. 커밋/푸시/PR (저장소 루트와 동일한 흐름)
+git add <files>
+git commit -m "<message>"
+git push -u origin <branch-name>
+gh pr create
+
+# 5. 머지 후 정리 (브랜치 삭제는 별도)
+cd -
+git worktree remove .worktrees/<branch-name>
+```
+
+## 보조 명령
+
+```bash
+git worktree list                          # worktree 목록 확인
+git worktree prune                         # 손실된 worktree 메타데이터 정리
+git worktree remove --force <path>         # 더티 상태 강제 제거 (주의)
+```
+
+## 언제 사용하는가
+
+- 메인 브랜치에서 진행 중인 작업이 있는데, 별도의 핫픽스/리뷰/실험을 동시에 해야 할 때
+- 여러 PR 을 병렬로 검증하거나, 의존성 충돌 없이 격리된 환경이 필요할 때
+- AI 에이전트가 사용자 작업과 분리된 공간에서 작업해야 할 때
+
+## 주의
+
+- worktree 안에서는 같은 브랜치를 두 곳에서 체크아웃할 수 없습니다 (Git 제약).
+- worktree 디렉토리를 직접 `rm -rf` 로 지우면 메타데이터가 남으므로 반드시 `git worktree remove` 또는 이후 `git worktree prune` 을 실행합니다.
+
+---
+
 # Repository 구조
 
 ```
